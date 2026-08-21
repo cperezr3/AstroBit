@@ -1,18 +1,21 @@
 using UnityEngine;
 
-// Punto de entrega/ejecucion de la mision de almacenamiento. Solo puede interactuarse una vez
-// que el archivo fue encontrado en algun FileShelf (StorageMission.FileFound); antes de eso
-// CanInteract es false, asi que PlayerInteraction ni siquiera lo ofrece como objetivo de mirada.
+// Representa visualmente el "almacenamiento principal" de la sala (el GameObject se llama
+// "server" por el asset de terceros, pero para la narrativa educativa NO es un servidor de
+// red: es simplemente donde se recupera el archivo antes de llevarlo a la computadora).
+// Solo puede interactuarse una vez que el archivo fue encontrado en algun FileShelf
+// (StorageMission.FileFound); antes de eso CanInteract es false, asi que PlayerInteraction
+// ni siquiera lo ofrece como objetivo de mirada.
 public class StorageServer : MonoBehaviour, IInteractable
 {
     [Header("Identidad")]
-    [SerializeField] private string labelTitle = "SERVIDOR";
-    [SerializeField] private string labelSubtitle = "Procesamiento de archivos";
-    [SerializeField] private string promptText = "[E] Ejecutar archivo";
+    [SerializeField] private string labelTitle = "ALMACENAMIENTO PRINCIPAL";
+    [SerializeField] private string labelSubtitle = "Representacion del disco duro";
+    [SerializeField] private string promptText = "[E] Recoger archivo";
 
     [Header("Proximidad")]
     [SerializeField] private float proximityRadius = 10f;
-    [SerializeField] private float labelHeight = 2.2f;
+    [SerializeField] private float labelHeight = 5f;
 
     private bool delivered;
 

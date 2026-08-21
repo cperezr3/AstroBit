@@ -1455,12 +1455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &20100999 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
@@ -1478,12 +1474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &20786414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2045,12 +2037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &37815111
 GameObject:
   m_ObjectHideFlags: 0
@@ -4256,12 +4244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &79538957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4879,7 +4863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.2859347
+      value: 1.8227358
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4887,7 +4871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6060,12 +6044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &111835573
 GameObject:
   m_ObjectHideFlags: 0
@@ -8237,7 +8217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -8249,7 +8229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8867,12 +8847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &169689535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10539,12 +10515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &214293939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12451,12 +12423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &266901395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14447,6 +14415,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 974261196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &320947147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5411569968453932687, guid: 827062553953ace449df65073bc88caa, type: 3}
+  m_PrefabInstance: {fileID: 837715730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &320947149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320947147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300cf5957267fd5468ce50e1c699af68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionStepPoint
+  step: 0
+  promptText: '[E] Abrir archivo'
+  labelTitle: COMPUTADORA
+  labelSubtitle: Interfaz para abrir archivos
+  proximityRadius: 10
+  labelHeight: 2.5
 --- !u!1001 &324736420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14800,70 +14791,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326688047}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &327662017
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_RootOrder
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 42.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -58.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_Name
-      value: Shelf with Crates (3)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1404512442}
-  m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &329992595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15637,7 +15564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -15649,7 +15576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16024,7 +15951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -16036,7 +15963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20200,7 +20127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.5
+      value: 47.94
       objectReference: {fileID: 0}
     - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21746,12 +21673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &462182202
 GameObject:
   m_ObjectHideFlags: 0
@@ -22408,11 +22331,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4cccda7a530394c9a030e7fd5bfca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StorageServer
-  labelTitle: SERVIDOR
-  labelSubtitle: Procesamiento de archivos
-  promptText: '[E] Ejecutar archivo'
+  labelTitle: ALMACENAMIENTO PRINCIPAL
+  labelSubtitle: Representacion del disco duro
+  promptText: '[E] Recoger archivo'
   proximityRadius: 10
-  labelHeight: 2.2
+  labelHeight: 5
 --- !u!1001 &475618986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24659,70 +24582,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513087216}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &514343708
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_RootOrder
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 42.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -67.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      propertyPath: m_Name
-      value: Shelf with Crates (6)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1398201331}
-  m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &515829342
 GameObject:
   m_ObjectHideFlags: 0
@@ -27888,12 +27747,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!4 &573534797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
@@ -29792,7 +29647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -29800,11 +29655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.913998
+      value: 54.914
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34077,7 +33932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -34089,7 +33944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34610,12 +34465,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &725825229
 GameObject:
   m_ObjectHideFlags: 0
@@ -35721,12 +35572,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &746984080
 GameObject:
   m_ObjectHideFlags: 0
@@ -40107,7 +39954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -40119,7 +39966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -40525,7 +40372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.2859347
+      value: 1.8227358
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalPosition.x
@@ -40533,7 +40380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
       propertyPath: m_LocalPosition.z
@@ -41147,7 +40994,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5411569968453932687, guid: 827062553953ace449df65073bc88caa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 320947149}
   m_SourcePrefab: {fileID: 100100000, guid: 827062553953ace449df65073bc88caa, type: 3}
 --- !u!1001 &838047988
 PrefabInstance:
@@ -47537,7 +47387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -47549,7 +47399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -55694,7 +55544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -55706,7 +55556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -56821,12 +56671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &1206218802
 GameObject:
   m_ObjectHideFlags: 0
@@ -58172,7 +58018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -58184,7 +58030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -59836,12 +59682,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &1243108690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61351,7 +61193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -61363,7 +61205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -62260,6 +62102,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 1281543333}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1282942438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1282942441}
+  - component: {fileID: 1282942440}
+  - component: {fileID: 1282942439}
+  m_Layer: 0
+  m_Name: FileMission_RamLoad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1282942439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282942438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300cf5957267fd5468ce50e1c699af68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionStepPoint
+  step: 2
+  promptText: '[E] Cargar programa'
+  labelTitle: CARGA EN MEMORIA
+  labelSubtitle: El programa se prepara para ejecutarse
+  proximityRadius: 10
+  labelHeight: 2.5
+--- !u!65 &1282942440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282942438}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 2, z: 1.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1282942441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282942438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 99.67, y: 2.3, z: 11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1284179879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64434,7 +64348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -64446,7 +64360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -64680,7 +64594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.5
+      value: 47.94
       objectReference: {fileID: 0}
     - target: {fileID: 1754611878057632740, guid: f355da60777d10946920a8b633e6b316, type: 3}
       propertyPath: m_LocalPosition.y
@@ -65975,7 +65889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -65987,7 +65901,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -68331,29 +68245,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
   m_PrefabInstance: {fileID: 1397638881}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1398201329 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
-  m_PrefabInstance: {fileID: 514343708}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1398201331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1398201329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
-  promptText: '[E] Buscar'
-  containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &1399685078
 GameObject:
   m_ObjectHideFlags: 0
@@ -68652,29 +68543,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2137195129188807160, guid: 4f019145598ea474b899ca25a03acd09, type: 3}
   m_PrefabInstance: {fileID: 1404438468}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1404512440 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
-  m_PrefabInstance: {fileID: 327662017}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1404512442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404512440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
-  promptText: '[E] Buscar'
-  containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &1406224580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70297,7 +70165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -70309,7 +70177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -71808,12 +71676,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &1480658124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72500,7 +72364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -72512,7 +72376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -72762,12 +72626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &1500546934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74401,6 +74261,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 1525591697}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1528291041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528291044}
+  - component: {fileID: 1528291043}
+  - component: {fileID: 1528291042}
+  m_Layer: 0
+  m_Name: FileMission_RamExecute
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1528291042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528291041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300cf5957267fd5468ce50e1c699af68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionStepPoint
+  step: 3
+  promptText: '[E] Ejecutar programa'
+  labelTitle: EJECUCION
+  labelSubtitle: El programa en memoria puede ejecutarse
+  proximityRadius: 10
+  labelHeight: 2.5
+--- !u!65 &1528291043
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528291041}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 2, z: 1.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1528291044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528291041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 99.67, y: 2.3, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1529801638
 GameObject:
   m_ObjectHideFlags: 0
@@ -81048,7 +80980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -81060,7 +80992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -81273,12 +81205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &1711268706
 GameObject:
   m_ObjectHideFlags: 0
@@ -82981,12 +82909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 1
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &1753308926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83680,12 +83604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1 &1774188789
 GameObject:
   m_ObjectHideFlags: 0
@@ -85709,6 +85629,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2137195129188807160, guid: 4f019145598ea474b899ca25a03acd09, type: 3}
   m_PrefabInstance: {fileID: 1819678970}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1820424041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820424044}
+  - component: {fileID: 1820424043}
+  - component: {fileID: 1820424042}
+  m_Layer: 0
+  m_Name: FileMission_CpuProcess
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1820424042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820424041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300cf5957267fd5468ce50e1c699af68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionStepPoint
+  step: 1
+  promptText: '[E] Procesar archivo'
+  labelTitle: PROCESAMIENTO
+  labelSubtitle: Aqui se interpreta y procesa el archivo
+  proximityRadius: 10
+  labelHeight: 2.5
+--- !u!65 &1820424043
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820424041}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 2, z: 1.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1820424044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820424041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.3, y: 0.5, z: 78.32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1820456643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85805,7 +85797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -85817,7 +85809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -86963,7 +86955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -86975,7 +86967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -94080,12 +94072,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FileShelf
-  labelTitle: ALMACENAMIENTO
-  labelSubtitle: Modulo de archivos
   promptText: '[E] Buscar'
   containsFile: 0
-  proximityRadius: 10
-  labelHeight: 2
 --- !u!1001 &1999009860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96665,7 +96653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -96677,7 +96665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -99293,7 +99281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -99301,11 +99289,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.913998
+      value: 54.914
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.120000005
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -99852,7 +99840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.4303
+      value: 1.9378483
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalScale.z
@@ -99864,7 +99852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.12
       objectReference: {fileID: 0}
     - target: {fileID: 5675013305860159573, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -101499,13 +101487,11 @@ SceneRoots:
   - {fileID: 1414683553}
   - {fileID: 803940238}
   - {fileID: 1594213348}
-  - {fileID: 327662017}
   - {fileID: 282948585}
   - {fileID: 2110892539}
   - {fileID: 566083187}
   - {fileID: 63963426}
   - {fileID: 1204110476}
-  - {fileID: 514343708}
   - {fileID: 1795762395}
   - {fileID: 1331161949}
   - {fileID: 725825233}
@@ -101570,3 +101556,6 @@ SceneRoots:
   - {fileID: 1549315795}
   - {fileID: 1724685945}
   - {fileID: 37815115}
+  - {fileID: 1820424044}
+  - {fileID: 1282942441}
+  - {fileID: 1528291044}

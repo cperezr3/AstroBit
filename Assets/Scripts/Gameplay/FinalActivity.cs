@@ -45,14 +45,21 @@ public class FinalActivity : MonoBehaviour
     }
 
     private int questionIndex;
+    private bool started;
 
     private void Awake()
     {
         ObjectiveSystem.Instance.OnAllStepsCompleted.AddListener(BeginFinalActivity);
     }
 
+    // Prompt 19: OnAllStepsCompleted ahora puede dispararse desde dos rutas independientes
+    // (el recorrido original de 8 piezas CPU/RAM, o la mision de almacenamiento). Idempotente
+    // para no reabrir la actividad si ambas rutas se completan en la misma partida.
     private void BeginFinalActivity()
     {
+        if (started) return;
+        started = true;
+
         questionIndex = 0;
         ObjectiveSystem.Instance.SetObjective("Actividad final: repasa el flujo completo.");
         ObjectiveSystem.Instance.SetHint("Responde correctamente cada pregunta para terminar el recorrido.");
