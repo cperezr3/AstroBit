@@ -279,8 +279,11 @@ public class GameHUD : MonoBehaviour
             new Vector2(0, 190), new Vector2(660, 50), new Color(0.35f, 0.95f, 1f), FontStyle.Bold);
         panelSubtitleText = CreatePanelText(boxGO.transform, "Subtitle", font, 22, TextAnchor.UpperCenter,
             new Vector2(0, 145), new Vector2(660, 35), new Color(0.75f, 0.9f, 0.95f), FontStyle.Normal);
-        panelBodyText = CreatePanelText(boxGO.transform, "Body", font, 19, TextAnchor.UpperLeft,
+        panelBodyText = CreatePanelText(boxGO.transform, "Body", font, 24, TextAnchor.UpperLeft,
             new Vector2(0, 10), new Vector2(660, 230), Color.white, FontStyle.Normal);
+        // Texto informativo (Panel 1) y de recompensa (Panel 3): igual que la pregunta del
+        // Panel 2, nunca debe cortarse aunque la descripcion sea larga.
+        panelBodyText.verticalOverflow = VerticalWrapMode.Overflow;
         panelQuestionText = CreatePanelText(boxGO.transform, "Question", font, 28, TextAnchor.MiddleCenter,
             new Vector2(0, 90), new Vector2(660, 130), Color.white, FontStyle.Bold);
         // Las preguntas conceptuales pueden ocupar 2-3 lineas; a diferencia del resto de textos
