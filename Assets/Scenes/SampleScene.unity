@@ -390,7 +390,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.95, y: 0.5, z: 91.77}
-  m_LocalScale: {x: 2.1218426, y: 0.75767, z: 2.0520258}
+  m_LocalScale: {x: 8.74, y: 0.75767, z: 8.74}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1438,6 +1438,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
+--- !u!1 &15632360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 426095678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &15632362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15632360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
+--- !u!1 &20100999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 199118602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &20101001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20100999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &20786414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1497,7 +1543,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 264362215}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &23820433
 GameObject:
@@ -1979,6 +2028,110 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34649405}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &36021051 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1204110476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &36021053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36021051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
+--- !u!1 &37815111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 37815115}
+  - component: {fileID: 37815114}
+  - component: {fileID: 37815113}
+  - component: {fileID: 37815112}
+  m_Layer: 0
+  m_Name: Zone_Storage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &37815112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37815111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a7ae728ab0651409e58847eb46e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StorageZoneTrigger
+--- !u!114 &37815113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37815111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2cfac61be6c9e4a99fdb6b11a1d4ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationZone
+  locationName: ALMACENAMIENTO
+  locationDescription: 'Sala de almacenamiento: servidores y modulos de archivos'
+--- !u!65 &37815114
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37815111}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 38, y: 8, z: 38}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &37815115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37815111}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 63, y: 2.5, z: -51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &39406306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3592,7 +3745,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 111590391}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &66294855
 PrefabInstance:
@@ -4083,6 +4239,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75218954}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &77901946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1813906617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &77901948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77901946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &79538957
 GameObject:
   m_ObjectHideFlags: 0
@@ -5864,6 +6043,29 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb2cfde91ad31bf4bad84b2c70e9816e, type: 3}
+--- !u!1 &111590389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 63963426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &111590391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111590389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &111835573
 GameObject:
   m_ObjectHideFlags: 0
@@ -8648,6 +8850,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 166741428}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &168245560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 2058729819}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &168245562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168245560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &169689535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9946,7 +10171,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 20101001}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &201890300
 GameObject:
@@ -10294,6 +10522,29 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
+--- !u!1 &210492476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 2105527976}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &210492478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210492476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &214293939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12183,6 +12434,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262506821}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &264362213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 20786414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &264362215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264362213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &266901395
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12880,7 +13154,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1752805336}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &283451277
 GameObject:
@@ -14582,7 +14859,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1404512442}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &329992595
 PrefabInstance:
@@ -16663,7 +16943,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998738878}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &357902715
 GameObject:
@@ -17832,7 +18115,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 460964830}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &384873379
 GameObject:
@@ -19959,7 +20245,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 15632362}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &430054337
 GameObject:
@@ -21440,6 +21729,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459475097}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &460964828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 382215841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &460964830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460964828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &462182202
 GameObject:
   m_ObjectHideFlags: 0
@@ -22079,6 +22391,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
+--- !u!1 &473819007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5010925442796397295, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
+  m_PrefabInstance: {fileID: 2110316724}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &473819012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473819007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b4cccda7a530394c9a030e7fd5bfca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StorageServer
+  labelTitle: SERVIDOR
+  labelSubtitle: Procesamiento de archivos
+  promptText: '[E] Ejecutar archivo'
+  proximityRadius: 10
+  labelHeight: 2.2
 --- !u!1001 &475618986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22954,7 +23288,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 725013652}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &488366771
 GameObject:
@@ -24381,7 +24718,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1398201331}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &515829342
 GameObject:
@@ -27266,7 +27606,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1243041626}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!134 &566692277
 PhysicsMaterial:
@@ -27528,6 +27871,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 569975411}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &573242091 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1001790965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &573242093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573242091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!4 &573534797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
@@ -34227,6 +34593,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 724647288}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &725013650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 488298552}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &725013652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725013650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &725825229
 GameObject:
   m_ObjectHideFlags: 0
@@ -35315,6 +35704,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 1002391948}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &746495087 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1414683553}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &746495089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746495087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &746984080
 GameObject:
   m_ObjectHideFlags: 0
@@ -38681,7 +39093,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1472671876}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &803988734
 GameObject:
@@ -47574,7 +47989,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 573242093}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &1002391948
 PrefabInstance:
@@ -56311,7 +56729,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 36021053}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &1204977946
 PrefabInstance:
@@ -56383,6 +56804,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 1204977946}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1205166184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1795762395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1205166186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205166184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &1206218802
 GameObject:
   m_ObjectHideFlags: 0
@@ -59375,6 +59819,29 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
+--- !u!1 &1243041624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 566083187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1243041626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243041624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &1243108690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64258,7 +64725,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1773946451}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1 &1315549390
 GameObject:
@@ -67861,6 +68331,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
   m_PrefabInstance: {fileID: 1397638881}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1398201329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 514343708}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1398201331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398201329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &1399685078
 GameObject:
   m_ObjectHideFlags: 0
@@ -68159,6 +68652,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2137195129188807160, guid: 4f019145598ea474b899ca25a03acd09, type: 3}
   m_PrefabInstance: {fileID: 1404438468}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1404512440 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 327662017}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1404512442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404512440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &1406224580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68442,7 +68958,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 746495089}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!4 &1418392805 stripped
 Transform:
@@ -71272,6 +71791,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 1472152702}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1472671874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 803940238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1472671876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472671874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &1480658124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72203,6 +72745,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3452931867044665262, guid: 32467b8dc355cd04da356b17dbac4f29, type: 3}
   m_PrefabInstance: {fileID: 1498094695}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1500119380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1594213348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1500119382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500119380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &1500546934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76439,7 +77004,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1500119382}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &1599031998
 PrefabInstance:
@@ -80688,6 +81256,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 1705110176}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1706048183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 2110892539}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1706048185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706048183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &1711268706
 GameObject:
   m_ObjectHideFlags: 0
@@ -82373,6 +82964,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1796530286}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1752805334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 282948585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1752805336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752805334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 1
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &1753308926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83049,6 +83663,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
   m_PrefabInstance: {fileID: 1769914100}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1773946449 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 1313825949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1773946451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773946449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1 &1774188789
 GameObject:
   m_ObjectHideFlags: 0
@@ -84313,7 +84950,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1205166186}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!4 &1796433891 stripped
 Transform:
@@ -84846,7 +85486,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 77901948}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &1814125012
 PrefabInstance:
@@ -93420,6 +94063,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1998738876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+  m_PrefabInstance: {fileID: 356622383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1998738878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998738876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10973b4f0c707714fbfdec5397c54a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FileShelf
+  labelTitle: ALMACENAMIENTO
+  labelSubtitle: Modulo de archivos
+  promptText: '[E] Buscar'
+  containsFile: 0
+  proximityRadius: 10
+  labelHeight: 2
 --- !u!1001 &1999009860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96670,7 +97336,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 168245562}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &2059407671
 PrefabInstance:
@@ -98975,7 +99644,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 210492478}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!1001 &2105932779
 PrefabInstance:
@@ -99241,7 +99913,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5010925442796397295, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 473819012}
   m_SourcePrefab: {fileID: 100100000, guid: 2f3fe288da751a2428fc82d8e5ed9f7e, type: 3}
 --- !u!1001 &2110892539
 PrefabInstance:
@@ -99302,7 +99977,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3315489266759930359, guid: f355da60777d10946920a8b633e6b316, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1706048185}
   m_SourcePrefab: {fileID: 100100000, guid: f355da60777d10946920a8b633e6b316, type: 3}
 --- !u!4 &2113377822 stripped
 Transform:
@@ -100891,3 +101569,4 @@ SceneRoots:
   - {fileID: 1007536754}
   - {fileID: 1549315795}
   - {fileID: 1724685945}
+  - {fileID: 37815115}

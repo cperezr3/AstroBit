@@ -75,7 +75,10 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
         if (!CanInteract) return;
 
         state = State.PanelOpen;
-        GameHUD.Instance?.ShowEducationalPanel(title, subtitle, description, "Resolver actividad", OpenActivity, CloseWithoutCompleting);
+        // Prompt 18: ya no hay actividad/pregunta individual por componente. El boton del
+        // panel informativo (Panel 1) completa el componente directamente (Panel 3 = recompensa).
+        // OpenActivity/SubmitChoice/SubmitMathAnswer quedan sin usar aqui (compatibilidad interna).
+        GameHUD.Instance?.ShowEducationalPanel(title, subtitle, description, "Entendido", HandleCorrectAnswer, CloseWithoutCompleting);
     }
 
     private void OpenActivity()
@@ -192,7 +195,9 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
         if (playerTransform == null) return;
 
         float dist = Vector3.Distance(playerTransform.position, transform.position);
-        bool shouldShow = dist <= proximityRadius && state == State.Idle;
+        // Prompt 18: la etiqueta (nombre del componente) debe permanecer visible incluso
+        // despues de completado; solo se oculta mientras hay un panel abierto encima.
+        bool shouldShow = dist <= proximityRadius && state != State.PanelOpen && state != State.ActivityOpen;
 
         if (shouldShow != labelVisible)
         {
