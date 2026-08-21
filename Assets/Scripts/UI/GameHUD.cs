@@ -27,6 +27,8 @@ public class GameHUD : MonoBehaviour
     private Text locationSubtitleText;
     private Coroutine locationSubtitleRoutine;
 
+    private Text progressText;
+
     private GameObject panelRoot;
     private Text panelTitleText;
     private Text panelSubtitleText;
@@ -64,12 +66,14 @@ public class GameHUD : MonoBehaviour
         ObjectiveSystem.Instance.OnObjectiveChanged.AddListener(SetObjectiveText);
         ObjectiveSystem.Instance.OnHintChanged.AddListener(SetHintText);
         ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(ShowFeedback);
+        ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(_ => UpdateProgressText());
 
         SetObjectiveText(ObjectiveSystem.Instance.CurrentObjective);
         SetHintText(ObjectiveSystem.Instance.CurrentHint);
         HidePrompt();
         HideFeedbackImmediate();
         SetLocation("", "");
+        UpdateProgressText();
     }
 
     private void BuildUI()
@@ -107,6 +111,18 @@ public class GameHUD : MonoBehaviour
         locationSubtitleText = CreateText(canvasGO.transform, "LocationSubtitleText", font, 18, TextAnchor.UpperCenter,
             new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -56), new Vector2(500, 30));
         locationSubtitleText.color = new Color(0.85f, 0.85f, 0.85f);
+
+        progressText = CreateText(canvasGO.transform, "ProgressText", font, 22, TextAnchor.UpperRight,
+            new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -20), new Vector2(200, 36));
+        progressText.color = new Color(0.75f, 0.9f, 0.95f);
+    }
+
+    // Contador simple "X/8" de componentes comprendidos. Se actualiza con el mismo evento
+    // que ya dispara el feedback de ObjectiveSystem, sin logica de progresion nueva.
+    private void UpdateProgressText()
+    {
+        if (progressText == null) return;
+        progressText.text = ObjectiveSystem.Instance.CompletedSteps + "/" + ObjectiveSystem.Instance.TotalSteps;
     }
 
     private static Text CreateText(Transform parent, string name, Font font, int size, TextAnchor anchor,
@@ -265,8 +281,11 @@ public class GameHUD : MonoBehaviour
             new Vector2(0, 145), new Vector2(660, 35), new Color(0.75f, 0.9f, 0.95f), FontStyle.Normal);
         panelBodyText = CreatePanelText(boxGO.transform, "Body", font, 19, TextAnchor.UpperLeft,
             new Vector2(0, 10), new Vector2(660, 230), Color.white, FontStyle.Normal);
-        panelQuestionText = CreatePanelText(boxGO.transform, "Question", font, 38, TextAnchor.MiddleCenter,
-            new Vector2(0, 60), new Vector2(660, 70), Color.white, FontStyle.Bold);
+        panelQuestionText = CreatePanelText(boxGO.transform, "Question", font, 28, TextAnchor.MiddleCenter,
+            new Vector2(0, 90), new Vector2(660, 130), Color.white, FontStyle.Bold);
+        // Las preguntas conceptuales pueden ocupar 2-3 lineas; a diferencia del resto de textos
+        // del panel (que se truncan si no caben), esta nunca debe cortarse.
+        panelQuestionText.verticalOverflow = VerticalWrapMode.Overflow;
         panelResultText = CreatePanelText(boxGO.transform, "Result", font, 20, TextAnchor.MiddleCenter,
             new Vector2(0, -30), new Vector2(660, 35), new Color(1f, 0.45f, 0.45f), FontStyle.Normal);
 

@@ -1,14 +1,12 @@
-# PROMPT 16 — CORRECCIÓN DEL PANEL DE ACTIVIDADES + MEJORAS DE EXPERIENCIA EDUCATIVA
+# PROMPT 15 — AJUSTE DE ACTIVIDADES, GUÍA Y MEJORAS DE JUGABILIDAD
 
 Proyecto: AstroBit — Unity
 
 ---
 
-# CONTEXTO ACTUAL
+# CONTEXTO
 
-AstroBit ya cuenta con una base funcional de jugabilidad educativa implementada en los prompts anteriores.
-
-Actualmente existen y funcionan:
+AstroBit actualmente tiene funcionando:
 
 - ALU
 - Cache L1
@@ -19,888 +17,525 @@ Actualmente existen y funcionan:
 - RAM1
 - RAM2
 
-Cada componente utiliza:
+El sistema actual funciona correctamente:
 
-- Collider
-- EducationalInteractable
-- Label flotante
-- interacción mediante [E]
-- GameHUD
-- panel educativo
-- actividad
-- respuesta
-- recompensa
-- ObjectiveSystem
-- progresión educativa
+Jugador
+↓
+Etiqueta
+↓
+[E] Examinar
+↓
+Panel educativo
+↓
+Actividad conceptual
+↓
+Respuesta
+↓
+Recompensa
+↓
+Progresión
 
 También existen actualmente:
 
 - GameHUD
 - ObjectiveSystem
-- PlayerInteraction
 - EducationalInteractable
+- PlayerInteraction
 - LocationZone
 - FinalActivity
 
-Y existen dos zonas físicas:
+La progresión educativa y el sistema de ubicación implementados en el Prompt 14 funcionan correctamente.
 
-- Zone_CPU
-- Zone_RAM
-
-La arquitectura actual funciona correctamente y NO debe ser reemplazada.
-
----
-
-# PROBLEMA ACTUAL DETECTADO
-
-Durante las pruebas reales del juego se detectó un problema visual en las actividades de tipo Choice.
-
-IMPORTANTE:
-
-El problema NO es necesariamente que las preguntas estén mal planteadas.
-
-El problema principal es que:
-
-**EL PANEL DE LA ACTIVIDAD ES DEMASIADO PEQUEÑO Y/O ESTÁ DEMASIADO ABAJO.**
-
-Como consecuencia, cuando una pregunta tiene suficiente longitud, el texto queda recortado.
-
-Ejemplo observado actualmente en Cache L2:
-
-La actividad muestra algo parecido a:
-
-"LA CACHE L1 NO TIENE EL DATO QUE LA..."
-
-y el resto de la pregunta no aparece.
-
-Esto hace que una pregunta que conceptualmente sí puede tener sentido parezca incompleta o incoherente.
-
-La captura proporcionada en la conversación debe utilizarse como referencia visual del problema.
+NO rehacer estos sistemas.
 
 ---
 
 # OBJETIVO PRINCIPAL
 
-Corregir EXCLUSIVAMENTE el tamaño y posición del panel correspondiente a la actividad de preguntas Choice.
+Corregir el diseño visual del panel de actividades conceptuales.
 
-NO modificar innecesariamente:
+Actualmente las preguntas de las actividades pueden aparecer cortadas porque el espacio destinado al texto de la pregunta es demasiado pequeño.
 
-- panel de información
-- panel de recompensa
-- panel inicial
-- sistema de interacción
-- labels
-- cámara
-- jugador
-- ALU
-- lógica de detección
-- lógica de recompensas
+La captura proporcionada como referencia muestra exactamente el problema:
 
-El objetivo inmediato es:
+La pregunta aparece dentro del panel, pero el texto se corta antes de mostrar todo su contenido.
 
-1. Mover el panel de actividad un poco más arriba.
-2. Reducir/ajustar su tamaño visual si es necesario.
-3. Hacer que la pregunta completa sea visible.
-4. Mantener visibles todas las opciones.
-5. Mantener visible el botón Cerrar.
-6. Mantener el panel centrado y visualmente equilibrado.
-7. Aplicar la corrección a TODAS las actividades Choice.
+Por ejemplo, se puede alcanzar a leer algo como:
+
+"La Cache L1 no tiene el dato que la..."
+
+pero la pregunta completa no aparece.
+
+Esto hace que algunas actividades parezcan incoherentes o sin sentido cuando en realidad el problema es que la interfaz está recortando el texto.
 
 ---
 
-# MUY IMPORTANTE — NO QUIERO AGRANDAR EL PANEL
+# CAMBIO 1 — CORREGIR EL TAMAÑO DE LA PREGUNTA
 
-No solucionar el problema simplemente haciendo el panel gigante.
+Modificar EXCLUSIVAMENTE el área visual correspondiente al texto de la pregunta dentro del panel de actividad.
 
-La intención visual es exactamente la contraria:
+NO cambiar innecesariamente:
 
-El panel de actividad debe quedar:
+- el tamaño general del panel
+- los botones de respuesta
+- el botón Cerrar
+- el título
+- el subtítulo
+- el sistema de interacción
+- la lógica de actividades
+- la progresión
+- las recompensas
 
-- un poco más arriba
-- más compacto
-- mejor aprovechado verticalmente
-- suficientemente pequeño para no tapar demasiado la escena
-- pero suficientemente grande para mostrar la pregunta completa
+La prioridad es que la pregunta completa sea visible.
 
-Debe verse como un panel educativo limpio y compacto.
+## Ajuste deseado
 
-La referencia visual actual muestra que el panel puede ocupar menos espacio vertical y colocarse ligeramente más arriba.
+Quiero que el texto de la pregunta:
 
----
+1. Suba ligeramente dentro del panel.
+2. Tenga un tamaño de fuente ligeramente menor.
+3. Disponga de suficiente espacio vertical para mostrar preguntas completas.
+4. No quede pegado a los botones.
+5. No se superponga con ninguna otra parte del panel.
+6. Mantenga una lectura cómoda.
 
-# COMPORTAMIENTO ESPERADO
+NO hacer la fuente excesivamente pequeña.
 
-Actualmente:
+El objetivo NO es simplemente "hacerla caber" reduciéndola muchísimo.
 
-┌───────────────────────────────┐
-│ DIAGNÓSTICO DE CACHE L2       │
-│                               │
-│ La Cache L1 no tiene el dato  │
-│ que la...                     │  ← TEXTO RECORTADO
-│                               │
-│ CACHE L2                      │
-│ RAM                           │
-│ CACHE L1                      │
-│                               │
-│ Cerrar                        │
-└───────────────────────────────┘
+La idea es:
 
-Debe quedar aproximadamente:
-
-┌───────────────────────────────┐
-│ DIAGNÓSTICO DE CACHE L2       │
-│                               │
-│ La Cache L1 no tiene el dato  │
-│ que la CPU necesita. ¿Cuál es │
-│ el siguiente nivel de caché   │
-│ que debería consultar?        │
-│                               │
-│ CACHE L2                      │
-│ RAM                           │
-│ CACHE L1                      │
-│                               │
-│ Cerrar                        │
-└───────────────────────────────┘
-
-La cantidad exacta de líneas dependerá del ancho disponible.
-
-NO cortar frases.
-
-NO truncar texto con "...".
-
-NO reducir el texto de la pregunta solamente para solucionar el problema.
-
-Primero debe solucionarse el layout.
+- subir un poco la pregunta
+- reducir moderadamente el tamaño
+- darle algo más de espacio
+- mantener una apariencia visual limpia
 
 ---
 
-# REGLA IMPORTANTE SOBRE EL TAMAÑO
+# IMPORTANTE — USAR WRAP
 
-El tamaño debe adaptarse a la cantidad de texto.
+Antes de reducir demasiado el tamaño de fuente, comprobar que el texto de la pregunta tenga correctamente configurado:
 
-Si la pregunta ocupa una línea:
+- Word Wrapping
+- Overflow adecuado
+- alineación
+- altura del RectTransform
 
-→ panel compacto.
-
-Si ocupa dos líneas:
-
-→ panel ligeramente más alto.
-
-Si ocupa tres líneas:
-
-→ panel debe crecer lo necesario.
-
-Pero siempre:
-
-- mantenerlo centrado
-- mantenerlo ligeramente elevado respecto al centro actual
-- dejar espacio suficiente para las opciones
-- dejar espacio suficiente para Cerrar
-- evitar que salga de los límites de la pantalla
-
-No crear diferentes prefabs para cada pregunta.
-
-La solución debe estar en el sistema general de GameHUD.
-
----
-
-# IMPLEMENTACIÓN DEL PANEL
-
-Antes de modificar:
-
-Inspeccionar exactamente cómo GameHUD construye actualmente:
-
-- Choice panel
-- título
-- pregunta
-- botones de opciones
-- botón Cerrar
-- RectTransform
-- Text / TMP
-- tamaños
-- anchors
-- offsets
-- posiciones verticales
-
-Determinar cuál elemento está causando el recorte.
-
-Preferir una solución mínima.
-
-Si el sistema utiliza RectTransform y TextMeshPro:
-
-aprovechar correctamente:
-
-- preferredHeight
-- preferredWidth
-- wrapping
-- overflow
-- anchors
-- layout
-- tamaño dinámico
-
-No inventar un sistema de UI paralelo.
-
----
-
-# POSICIÓN DEL PANEL
-
-El panel Choice debe quedar ligeramente más arriba que actualmente.
-
-No debe quedar pegado al borde superior.
-
-Debe existir margen suficiente entre:
-
-- título
-- pregunta
-- opciones
-- botón Cerrar
-
-El resultado debe ser visualmente equilibrado.
-
-IMPORTANTE:
-
-No cambiar la posición de los demás modos del GameHUD si no es necesario.
-
-La corrección solicitada es principalmente para:
-
-**Choice / Activity Panel**
-
----
-
-# PRUEBA OBLIGATORIA DEL PANEL
-
-Probar preguntas de diferente longitud.
-
-Como mínimo:
-
-1. Pregunta corta.
-2. Pregunta de dos líneas.
-3. Pregunta larga de tres líneas o más.
-
-Confirmar que:
-
-- ninguna pregunta se corta
-- ninguna pregunta desaparece
-- ninguna opción queda fuera
-- Cerrar sigue visible
-- el panel no sale de la pantalla
-- el panel no ocupa una cantidad excesiva de pantalla
-
----
-
-# PARTE 2 — REVISAR LAS ACTIVIDADES EDUCATIVAS
-
-Una vez solucionado el problema visual del panel:
-
-revisar las preguntas actuales.
-
-IMPORTANTE:
-
-No cambiar preguntas solamente porque inicialmente parecen extrañas.
-
-Primero comprobar cómo se ven completas después de solucionar el tamaño del panel.
-
-La captura demuestra que parte del problema de coherencia aparente viene de que el texto está siendo cortado.
-
-Después de corregir el layout:
-
-revisar cada actividad para comprobar que:
-
-- la pregunta sea clara
-- la pregunta tenga relación con el componente
-- la respuesta correcta no sea simplemente obvia porque el componente tiene el mismo nombre
-- la actividad enseñe realmente algo
-- las opciones incorrectas sean plausibles
-- la actividad ayude a comprender la arquitectura
-
----
-
-# OBJETIVO EDUCATIVO DE LAS ACTIVIDADES
-
-Las actividades NO deben ser simples preguntas de:
-
-"¿Qué componente es este?"
-
-Ejemplo que NO quiero:
-
-Estás en Unidad de Control.
-
-¿Qué componente coordina la CPU?
-
-[ ALU ]
-[ UNIDAD DE CONTROL ]
-[ RAM ]
-
-Esto es demasiado obvio porque el jugador está literalmente examinando la Unidad de Control.
-
-Las actividades deben plantear una situación.
-
-La pregunta debe hacer que el jugador piense:
-
-"¿Qué ocurriría en este escenario?"
-
-y utilizar el componente que está estudiando.
-
----
-
-# ACTIVIDADES DESEADAS
-
-## ALU
-
-Concepto:
-
-La ALU realiza operaciones y transformaciones sobre datos.
-
-Ejemplo:
-
-"La CPU necesita comparar dos valores para determinar cuál es mayor. ¿Qué componente realiza esta operación?"
-
-Opciones:
-
-- ALU
-- RAM
-- Unidad de Control
-
-Correcta:
-
-ALU
-
-Esto enseña qué hace la ALU, en lugar de simplemente preguntar dónde está.
-
----
-
-# REGISTROS
-
-Concepto:
-
-Los registros almacenan temporalmente datos que la CPU necesita utilizar rápidamente.
-
-Ejemplo:
-
-"Durante la ejecución de una instrucción, la CPU necesita conservar temporalmente un valor que está utilizando en ese momento. ¿Qué opción representa mejor este almacenamiento?"
-
-Opciones:
-
-- Registro
-- RAM
-- Disco
-
-Correcta:
-
-Registro
-
----
-
-# UNIDAD DE CONTROL
-
-La actividad debe representar una situación de coordinación.
-
-Ejemplo:
-
-"Una instrucción acaba de llegar a la CPU y debe coordinarse qué componentes participarán en su ejecución. ¿Qué parte de la CPU dirige esa coordinación?"
-
-Opciones:
-
-- Unidad de Control
-- ALU
-- Cache
-
-Correcta:
-
-Unidad de Control
-
-Esto es mucho más coherente que preguntar simplemente:
-
-"¿Qué componente coordina?"
-
----
-
-# CACHE L1
-
-Concepto:
-
-L1 es una caché muy rápida y cercana al procesador.
-
-Ejemplo:
-
-"La CPU acaba de utilizar un dato y vuelve a necesitarlo inmediatamente. ¿Qué nivel de memoria conviene consultar primero?"
-
-Opciones:
-
-- Cache L1
-- RAM
-- Disco
-
-Correcta:
-
-Cache L1
-
----
-
-# CACHE L2
-
-Concepto:
-
-L2 es un nivel posterior a L1 y normalmente más grande, aunque con mayor latencia que L1.
-
-Ejemplo:
-
-"La CPU necesita un dato, pero la búsqueda en Cache L1 no lo encontró. ¿Qué nivel de caché puede consultar a continuación?"
-
-Opciones:
-
-- Cache L2
-- RAM
-- Disco
-
-Correcta:
-
-Cache L2
-
-Esta pregunta sí tiene relación directa con el aprendizaje del funcionamiento de la jerarquía.
-
----
-
-# CACHE L3
-
-Concepto:
-
-L3 es otro nivel de caché que se encuentra antes de llegar a RAM en la representación educativa del juego.
-
-Ejemplo:
-
-"La CPU no encontró el dato en L1 ni en L2. Antes de acudir a la RAM, ¿qué nivel de caché puede consultar?"
-
-Opciones:
-
-- Cache L3
-- RAM
-- Disco
-
-Correcta:
-
-Cache L3
-
----
-
-# RAM
-
-Concepto:
-
-La RAM mantiene temporalmente los programas y datos que están siendo utilizados.
-
-Ejemplo:
-
-"Un programa está ejecutándose y necesita mantener sus datos disponibles mientras trabaja. ¿Dónde se mantienen temporalmente esos datos?"
-
-Opciones:
-
-- RAM
-- Cache L1
-- Disco
-
-Correcta:
-
-RAM
-
----
-
-# RAM2
-
-RAM2 debe servir para reforzar el concepto de memoria y módulos de RAM.
-
-No hacer una pregunta artificial como:
-
-"¿Qué se puede agregar para tener más memoria?"
-
-si no aporta realmente al aprendizaje.
-
-Buscar una pregunta coherente con el concepto de:
-
-- capacidad
-- almacenamiento temporal
-- módulos de memoria
-- datos en uso
-
-Mantenerla sencilla.
-
----
-
-# REGLA PARA TODAS LAS ACTIVIDADES
-
-Cada actividad debe responder a:
-
-"¿Qué estoy aprendiendo de este componente?"
-
-y no simplemente:
-
-"¿Cuál es el nombre de este componente?"
-
-La respuesta debe poder explicarse fácilmente durante una presentación.
-
----
-
-# PARTE 3 — FEEDBACK EDUCATIVO
-
-Agregar/mejorar feedback cuando el jugador responde.
-
-Si responde incorrectamente:
-
-NO limitarse a:
-
-"Respuesta incorrecta."
-
-Mostrar una pequeña explicación educativa.
-
-Ejemplo:
-
-"Incorrecto. La L2 se consulta después de la L1 cuando el dato no está disponible allí."
-
-Debe ser:
-
-- corto
-- claro
-- educativo
-
-Máximo aproximadamente 1-2 líneas cuando sea posible.
-
-No revelar directamente la respuesta antes de que el jugador tenga oportunidad de intentarlo.
-
----
-
-# PARTE 4 — RECOMPENSAS EDUCATIVAS
-
-Mantener el sistema actual de recompensas.
-
-Pero mejorar ligeramente el texto para reforzar lo aprendido.
-
-Ejemplos:
-
-✓ ALU COMPRENDIDA
-
-"Realiza operaciones sobre los datos."
-
-✓ REGISTROS COMPRENDIDOS
-
-"Guardan temporalmente datos que la CPU necesita."
-
-✓ UNIDAD DE CONTROL COMPRENDIDA
-
-"Coordina la ejecución de las instrucciones."
-
-✓ CACHE COMPRENDIDA
-
-"Permite acceder rápidamente a datos utilizados con frecuencia."
-
-✓ RAM COMPRENDIDA
-
-"Mantiene temporalmente programas y datos en uso."
-
-No hacer paneles nuevos.
-
-Utilizar el sistema actual de GameHUD.
-
----
-
-# PARTE 5 — INDICADOR DE PROGRESO
-
-Implementar la mejora recomendada:
-
-mostrar de manera discreta cuánto ha avanzado el jugador.
-
-Ejemplo:
-
-"3/8 COMPONENTES"
-
-o:
-
-"PROGRESO: 3/8"
-
-Debe ser pequeño y no competir visualmente con:
-
-- objetivo
-- pista
-- ubicación
-
-Puede colocarse cerca del objetivo actual.
-
-IMPORTANTE:
-
-La actividad final NO debe contarse como un componente adicional.
-
-El progreso representa los 8 componentes educativos:
-
-1. ALU
-2. Registros
-3. Unidad de Control
-4. Cache L1
-5. Cache L2
-6. Cache L3
-7. RAM1
-8. RAM2
-
-Cuando todos estén comprendidos:
-
-8/8
-
-y posteriormente aparece la actividad final.
-
----
-
-# PARTE 6 — MENSAJE DE PRIMERA ENTRADA A UNA ZONA
-
-Mejorar ligeramente el sistema de ubicación ya existente.
-
-Cuando el jugador entra por primera vez a una zona:
-
-CPU
-
-mostrar durante unos segundos:
-
-"CPU"
-
-"Centro de procesamiento"
-
-Para RAM:
-
-"RAM"
-
-"Memoria temporal de programas y datos"
-
-Debe ser un mensaje corto.
-
-No mostrarlo constantemente.
-
-Después de unos segundos:
-
-solo queda:
-
-CPU
-
-o:
-
-RAM
-
-como ya funciona actualmente.
-
-No crear otro HUD.
-
-Utilizar GameHUD existente.
-
----
-
-# PARTE 7 — UBICACIÓN RAM
-
-Actualmente Zone_RAM funciona correctamente, pero su radio/zona resulta demasiado ajustado.
-
-El jugador tiene que estar prácticamente al lado de la RAM para que aparezca:
-
-RAM
-
-Aumentar ligeramente el tamaño de Zone_RAM.
-
-IMPORTANTE:
-
-No exagerar.
-
-Debe cubrir cómodamente la sala de RAM y permitir que el jugador sepa que está en la zona.
-
-Debe ser comparable a la experiencia de Zone_CPU.
-
-No modificar la interacción de RAM.
-
-No modificar proximityRadius.
-
-No modificar interactionDistance.
-
-Modificar solamente la zona de ubicación.
-
----
-
-# PARTE 8 — ZONA CPU
-
-Zone_CPU actualmente funciona bien.
-
-La zona cubre aproximadamente el 80-90% de la sala.
-
-Si al inspeccionarla se considera seguro:
-
-ampliarla ligeramente para que cubra mejor la sala.
-
-NO hacerla gigantesca.
-
-NO hacer que invada la zona de RAM.
-
-NO crear zonas nuevas artificiales.
-
-Mantener la separación física real existente.
-
----
-
-# PARTE 9 — POSIBLE MEJORA ADICIONAL
-
-Durante la implementación:
-
-analiza si existe alguna mejora pequeña que realmente aumente la experiencia educativa sin complicar el juego.
+La pregunta debe poder ocupar varias líneas.
 
 Por ejemplo:
 
-- un pequeño mensaje al completar un componente
-- una frase que conecte el componente anterior con el siguiente
-- una indicación breve de por qué ahora se estudia el siguiente componente
-- una pequeña explicación al completar la progresión
-- un mensaje de transición entre CPU y RAM
+En lugar de intentar mostrar:
 
-IMPORTANTE:
+"La Cache L1 no tiene el dato que la CPU necesita"
 
-No implementar ideas por implementar.
+en una sola línea, permitir:
 
-Si detectas una mejora que realmente aporte:
+"La Cache L1 no tiene el dato que la CPU necesita"
 
-1. Explicarla.
-2. Justificarla.
-3. Implementarla solamente si es pequeña, estable y coherente con el sistema existente.
+en 2 o 3 líneas si es necesario.
 
-Máximo 2-3 mejoras adicionales.
-
-NO convertir AstroBit en un RPG.
+La pregunta completa debe permanecer visible.
 
 ---
 
-# PARTE 10 — FLUJO EDUCATIVO FINAL
+# NO CAMBIAR EL CONTENIDO DE LAS PREGUNTAS EN ESTE PASO
 
-El flujo debería sentirse aproximadamente así:
+Primero corregir la interfaz.
 
-ENTRAR AL JUEGO
+No reemplazar las preguntas actuales simplemente porque se ven incompletas.
 
+Quiero comprobar primero cómo quedan una vez que todo el texto sea visible.
+
+Si después de ver la pregunta completa detectas que alguna pregunta realmente no tiene coherencia educativa, puedes señalarlo en el informe final y proponer una mejora.
+
+Pero NO cambiar contenido educativo innecesariamente durante este ajuste visual.
+
+---
+
+# APLICAR A TODAS LAS ACTIVIDADES
+
+El cambio debe hacerse de forma general.
+
+NO corregir solamente Cache L2.
+
+Todas las actividades conceptuales deben utilizar el mismo layout corregido:
+
+- ALU
+- Registros
+- Unidad de Control
+- Cache L1
+- Cache L2
+- Cache L3
+- RAM1
+- RAM2
+- Actividad final, si utiliza el mismo panel de preguntas
+
+La solución debe estar en GameHUD o en el sistema común que construye el panel.
+
+NO crear un panel diferente para cada componente.
+
+---
+
+# REFERENCIA VISUAL
+
+La captura proporcionada muestra cómo está actualmente la actividad.
+
+Úsala solamente como referencia visual del problema.
+
+La solución buscada es aproximadamente:
+
+┌──────────────────────────────────────────┐
+│          DIAGNÓSTICO DE CACHE L2         │
+│                                          │
+│  La Cache L1 no tiene el dato que la     │
+│  CPU necesita. ¿Dónde debería buscar?    │
+│                                          │
+│              CACHE L2                    │
+│              RAM                         │
+│              CACHE L1                    │
+│                                          │
+│       Cerrar                            │
+└──────────────────────────────────────────┘
+
+No tiene que quedar exactamente así.
+
+Lo importante es:
+
+PREGUNTA COMPLETA
 ↓
-
-UBICACIÓN
-
-CPU
-
+OPCIONES COMPLETAS
 ↓
+BOTONES SIN SUPERPOSICIÓN
 
-OBJETIVO
+---
+
+# CAMBIO 2 — ESPACIADO DEL OBJETIVO Y PISTA
+
+También corregir el pequeño problema visual existente en la esquina superior izquierda.
+
+Actualmente aparecen:
+
+OBJETIVO ACTUAL
+Conoce la ALU.
+
+y debajo:
+
+PISTA: Busca el componente marcado como ALU dentro de la CPU.
+
+El texto de la pista queda demasiado cerca del objetivo y puede parecer que se superpone.
+
+Aumentar ligeramente el espacio vertical entre:
+
+- objetivo
+- pista
+
+Mantener ambos dentro del mismo GameHUD.
+
+NO crear otro Canvas.
+
+NO moverlos a otra interfaz.
+
+La estructura debe seguir siendo:
+
+OBJETIVO ACTUAL
 
 Conoce la ALU.
 
-↓
-
 PISTA
 
-Busca el componente marcado como ALU.
+Busca el componente marcado como ALU dentro de la CPU.
 
-↓
-
-EXPLORACIÓN
-
-↓
-
-ALU
-
-↓
-
-[E] EXAMINAR
-
-↓
-
-EXPLICACIÓN
-
-"La ALU realiza operaciones sobre los datos."
-
-↓
-
-ACTIVIDAD
-
-Situación relacionada con la ALU.
-
-↓
-
-RESPUESTA
-
-↓
-
-FEEDBACK
-
-↓
-
-RECOMPENSA
-
-✓ ALU COMPRENDIDA
-
-↓
-
-PROGRESO
-
-1/8
-
-↓
-
-NUEVO OBJETIVO
-
-Conoce los Registros.
-
-↓
-
-...
-
-↓
-
-CACHE L1
-
-↓
-
-CACHE L2
-
-↓
-
-CACHE L3
-
-↓
-
-RAM
-
-↓
-
-8/8
-
-↓
-
-ACTIVIDAD FINAL
-
-↓
-
-RECORRIDO COMPLETADO
+Con una separación visual clara.
 
 ---
 
-# PARTE 11 — RESTRICCIONES ABSOLUTAS
+# CAMBIO 3 — UBICACIÓN DE RAM
+
+El sistema de ubicación ya funciona correctamente.
+
+Actualmente:
+
+CPU
+→ funciona correctamente.
+
+RAM
+→ funciona, pero la zona de detección resulta demasiado ajustada.
+
+El jugador prácticamente tiene que estar al lado de los módulos RAM para que aparezca:
+
+RAM
+
+Quiero ampliar ligeramente Zone_RAM.
+
+NO hacerla gigantesca.
+
+NO cubrir habitaciones que no correspondan.
+
+Simplemente aumentar su área para que la ubicación "RAM" aparezca de manera natural cuando el jugador entre a la sala de RAM.
+
+Mantener:
+
+- Zone_RAM
+- LocationZone
+- el mismo sistema actual
+- una sola ubicación activa
+
+Ajustar únicamente el tamaño/posición del BoxCollider de Zone_RAM si es suficiente.
+
+NO modificar el código de detección si no es necesario.
+
+---
+
+# CAMBIO 4 — ZONA CPU
+
+La zona CPU actualmente funciona muy bien.
+
+La CPU cubre aproximadamente el 80–90 % de la habitación y eso está bien.
+
+Si al inspeccionar la geometría real resulta seguro ampliar ligeramente Zone_CPU para cubrir un poco más de la habitación, hacerlo de manera moderada.
+
+NO hacer que invada zonas que claramente pertenecen a RAM u otras áreas.
+
+La prioridad es conservar el comportamiento actual.
+
+Si Zone_CPU ya está suficientemente bien, NO modificarla.
+
+---
+
+# CAMBIO 5 — MEJORA DE LAS ACTIVIDADES
+
+Después de corregir visualmente el panel, revisar las preguntas conceptuales actuales.
+
+Ahora que se puede leer correctamente el texto completo, verificar si cada actividad tiene sentido desde el punto de vista educativo.
+
+El objetivo de cada actividad debe ser:
+
+"Estoy inspeccionando este componente y la actividad me ayuda a entender qué hace y cómo se relaciona con los demás."
+
+Evitar preguntas cuya respuesta sea simplemente el nombre del objeto que estoy mirando sin enseñar nada.
+
+Por ejemplo, una pregunta como:
+
+"La CPU necesita ejecutar una instrucción. ¿Qué componente es?"
+
+con:
+
+ALU
+UNIDAD DE CONTROL
+RAM
+
+puede resultar demasiado obvia si estoy parado frente a la Unidad de Control.
+
+No quiero ese tipo de pregunta trivial.
+
+---
+
+# CRITERIO PARA LAS ACTIVIDADES
+
+Cada actividad debe tener:
+
+1. Una situación sencilla.
+2. Una pequeña decisión del jugador.
+3. Una relación con el funcionamiento del componente.
+4. Una respuesta correcta clara.
+5. Opciones incorrectas razonables.
+6. Una explicación breve después de responder.
+
+Ejemplo:
+
+## UNIDAD DE CONTROL
+
+Situación:
+
+"La CPU recibe una instrucción y necesita coordinar qué debe ocurrir primero."
+
+Pregunta:
+
+"¿Qué componente se encarga de coordinar esta ejecución?"
+
+Opciones:
+
+- Unidad de Control
+- Cache L1
+- RAM
+
+Pero también puedes diseñar algo mejor si encuentras una interacción más interesante.
+
+La respuesta NO debe ser obvia solamente porque el jugador está parado frente al componente.
+
+---
+
+# PROPONER ACTIVIDADES MÁS JUGABLES
+
+No limitarse obligatoriamente a preguntas de selección múltiple si existe una alternativa sencilla que sea mejor.
+
+Puedes proponer actividades como:
+
+- elegir entre opciones
+- ordenar 2–4 pasos
+- seleccionar el componente adecuado para una situación
+- identificar qué ocurre primero
+- decidir dónde buscar un dato
+- relacionar dos componentes
+- seleccionar qué componente interviene en una situación
+
+Pero siempre mantenerlas simples.
 
 NO crear:
 
-- otro Canvas
-- otro GameHUD
-- otro sistema de actividades
-- otro sistema de interacción
-- otro sistema de objetivos
-- otro sistema de recompensas
-- otro sistema de ubicación
+- simuladores complejos
+- CPU real
+- emuladores
+- sistemas de instrucciones reales
+- sistemas de memoria reales
+- mecánicas complicadas
 
-Reutilizar:
+Debe sentirse como un pequeño juego educativo.
 
-- GameHUD
-- ObjectiveSystem
-- EducationalInteractable
-- LocationZone
-- FinalActivity
-- PlayerInteraction
+---
+
+# EJEMPLO DE EXPERIENCIA DESEADA
+
+El jugador llega a la Unidad de Control.
+
+Ve:
+
+[E] Examinar
+
+Abre:
+
+UNIDAD DE CONTROL
+
+"La Unidad de Control coordina la ejecución de las instrucciones."
+
+Luego:
+
+ACTIVIDAD
+
+"La CPU debe ejecutar una instrucción. ¿Qué debería hacer primero?"
+
+Opciones razonables.
+
+El jugador toma una decisión.
+
+Después:
+
+✓ UNIDAD DE CONTROL COMPRENDIDA
+
+"Ahora sabes que la Unidad de Control coordina los pasos necesarios para ejecutar una instrucción."
+
+Esto debe enseñar algo.
+
+---
+
+# CAMBIO 6 — CONECTAR LOS COMPONENTES
+
+Quiero que las actividades ayuden progresivamente a comprender la arquitectura completa.
+
+No quiero que sean 8 preguntas independientes.
+
+La progresión educativa debería construir una idea.
+
+Por ejemplo:
+
+ALU
+→ qué hace con los datos
+
+REGISTROS
+→ dónde mantiene temporalmente datos inmediatos
+
+UNIDAD DE CONTROL
+→ cómo coordina la ejecución
+
+CACHE
+→ cómo ayuda a obtener datos rápidamente
+
+RAM
+→ dónde se mantienen programas y datos en uso
+
+Y al final:
+
+¿Cómo se relacionan?
+
+---
+
+# ACTIVIDAD FINAL
+
+Revisar la actividad final actual.
+
+Debe funcionar como una pequeña reconstrucción del flujo aprendido.
+
+No debe sentirse como un examen.
+
+Debe ser una actividad corta y entretenida que conecte los conceptos.
+
+Por ejemplo, presentar una situación:
+
+"Un programa necesita ejecutar una operación."
+
+Y hacer que el jugador identifique de forma sencilla:
+
+- quién coordina
+- dónde puede estar un dato rápidamente
+- dónde se mantienen los datos en uso
+- quién realiza la operación
+
+La actividad final debe reforzar:
+
+INSTRUCCIÓN
+↓
+UNIDAD DE CONTROL
+↓
+REGISTROS / CACHE
+↓
+ALU
+↓
+RESULTADO
+↓
+MEMORIA
+
+Mantenerlo como una representación educativa simplificada, no como una implementación real de CPU.
+
+---
+
+# PROPUESTA DE MEJORA
+
+Además de los cambios solicitados, inspecciona el estado actual del juego y piensa si existe UNA mejora adicional pequeña que aumente la experiencia educativa.
+
+Puede ser, por ejemplo:
+
+- una pequeña explicación contextual al completar un componente
+- una transición más clara entre objetivos
+- un mensaje que conecte el componente actual con el siguiente
+- un contador sencillo de progreso como "3/8 componentes"
+- una pequeña guía contextual
+- una indicación de "lo aprendido"
+- una interacción sencilla entre dos componentes
+
+NO implementes automáticamente una mejora grande.
+
+Primero determina cuál tendría más impacto con menor riesgo.
+
+Si existe una mejora pequeña y claramente beneficiosa, puedes implementarla.
+
+Si no es necesario, simplemente propónla en el informe final.
+
+La prioridad siempre es:
+
+ESTABILIDAD > CALIDAD EDUCATIVA > NUEVAS FUNCIONES.
+
+---
+
+# RESTRICCIONES
 
 NO modificar innecesariamente:
 
 - PlayerInteraction.cs
-- interactionDistance
-- proximityRadius
+- EducationalInteractable.cs
+- ObjectiveSystem.cs
+- LocationZone.cs
+- FinalActivity.cs
 - Cinemachine
 - cámara
 - jugador
@@ -908,347 +543,274 @@ NO modificar innecesariamente:
 - CharacterSkinController
 - Input System
 
-NO crear componentes físicos inexistentes:
+Si alguna modificación de código es estrictamente necesaria para mejorar GameHUD o las actividades:
 
-- Storage
-- Disco
-- ROM
-- Bus
-- CPU física
-- otros componentes no existentes
+primero analizarla y modificar solamente lo necesario.
 
-NO inventar nuevas salas.
+NO crear:
 
-NO crear nuevos objetos educativos del mapa.
+- otro Canvas
+- otro GameHUD
+- otro sistema de actividades
+- otro sistema de ubicación
+- otro sistema de objetivos
+- otro sistema de interacción
 
-NO hacer una refactorización general.
+Reutilizar la arquitectura existente.
 
 ---
 
-# PARTE 12 — PROTEGER LO QUE YA FUNCIONA
+# MUY IMPORTANTE — NO ROMPER LO ACTUAL
 
 Antes de modificar:
 
-comprobar el estado actual.
+verificar que el proyecto compila y que el flujo actual funciona.
 
-Después de cada cambio importante:
+Después de modificar:
 
-probar.
+volver a comprobar:
 
-La ALU sigue siendo la referencia principal.
+ALU
+Cache L1
+Cache L2
+Cache L3
+Registros
+Unidad de Control
+RAM1
+RAM2
 
-Debe continuar funcionando:
+Comprobar especialmente:
 
-ALU_Label
-
-↓
-
-[E]
-
-↓
-
-Panel
-
-↓
-
-Actividad Choice
-
-↓
-
-Respuesta
-
-↓
-
-Recompensa
-
-↓
-
-Objetivo siguiente
-
-↓
-
-Progreso
-
-No aceptar una implementación que arregle el panel pero rompa la ALU.
+- Label
+- [E]
+- Panel
+- pregunta completa
+- opciones
+- respuesta correcta
+- respuesta incorrecta
+- recompensa
+- progresión
+- ubicación
 
 ---
 
-# PRUEBAS OBLIGATORIAS
+# PLAN DE TRABAJO
 
-## PRUEBA 1 — PANEL
+## FASE 1 — AUDITORÍA
 
-Abrir actividades de:
+Inspeccionar:
 
-- ALU
-- Registros
-- Unidad de Control
-- Cache L1
-- Cache L2
-- Cache L3
-- RAM1
-- RAM2
+- GameHUD.cs
+- EducationalInteractable.cs
+- ObjectiveSystem.cs
+- LocationZone.cs
+- FinalActivity.cs
+- configuración actual de los 8 interactuables
+- Zone_CPU
+- Zone_RAM
 
-Confirmar que todas muestran la pregunta completa.
+Determinar exactamente dónde se construye el texto de la pregunta.
 
----
-
-## PRUEBA 2 — PREGUNTA LARGA
-
-Utilizar una pregunta de varias líneas.
-
-Confirmar:
-
-- texto completo
-- sin clipping
-- sin overflow visual
-- opciones visibles
-- Cerrar visible
+NO modificar hasta localizar el origen del problema.
 
 ---
 
-## PRUEBA 3 — PREGUNTA CORTA
+## FASE 2 — CORRECCIÓN VISUAL
 
-Confirmar que el panel no queda innecesariamente grande.
+Corregir el layout de la pregunta:
 
----
+- subir ligeramente
+- reducir ligeramente la fuente
+- permitir wrapping
+- aumentar el espacio disponible
+- comprobar varias líneas
 
-## PRUEBA 4 — ALU
-
-Confirmar:
-
-Label
-
-↓
-
-[E]
-
-↓
-
-Panel
-
-↓
-
-Actividad
-
-↓
-
-Respuesta
-
-↓
-
-Recompensa
-
-↓
-
-Objetivo siguiente
-
-↓
-
-Progreso 1/8
+Aplicarlo al sistema común para todas las actividades.
 
 ---
 
-## PRUEBA 5 — REGISTROS
+## FASE 3 — CORRECCIÓN DEL HUD
 
-Confirmar actividad conceptual y progreso.
+Separar visualmente:
 
----
+OBJETIVO ACTUAL
 
-## PRUEBA 6 — UNIDAD DE CONTROL
+de:
 
-Confirmar que la pregunta tiene sentido y no es simplemente:
+PISTA
 
-"¿Cuál es la Unidad de Control?"
-
-Debe representar una situación.
+Sin crear otra interfaz.
 
 ---
 
-## PRUEBA 7 — CACHE
+## FASE 4 — UBICACIÓN
+
+Ajustar ligeramente Zone_RAM.
+
+Solo modificar Zone_CPU si realmente necesita una pequeña ampliación.
+
+---
+
+## FASE 5 — REVISIÓN EDUCATIVA
+
+Con el texto completo visible, revisar las preguntas.
+
+Identificar preguntas:
+
+- demasiado obvias
+- poco coherentes
+- que no enseñan el concepto
+- que no relacionan el componente con la arquitectura
+
+Mejorarlas manteniendo actividades sencillas.
+
+---
+
+## FASE 6 — MEJORA ADICIONAL
+
+Determinar si existe una pequeña mejora de alto valor para la experiencia.
+
+Implementarla solamente si es segura y coherente.
+
+---
+
+## FASE 7 — PRUEBAS
 
 Probar como mínimo:
 
-L1
+### ALU
 
-L2
+Pregunta completa.
 
-L3
+### Cache L1
 
-Confirmar que las preguntas enseñan la jerarquía.
+Pregunta completa.
 
----
+### Cache L2
 
-## PRUEBA 8 — RAM
+Pregunta completa.
 
-Confirmar:
+### Cache L3
 
-- zona RAM
-- indicador RAM
-- actividad
-- recompensa
-- progreso
+Pregunta completa.
 
----
+### Registros
 
-## PRUEBA 9 — UBICACIÓN
+Pregunta completa.
 
-Caminar:
+### Unidad de Control
 
-CPU → RAM
+Pregunta completa.
 
-y:
+### RAM
 
-RAM → CPU
+Pregunta completa.
 
-Confirmar que el indicador cambia correctamente.
+### Actividad final
 
----
+Preguntas completas.
 
-## PRUEBA 10 — PROGRESO
+Además:
 
-Completar los 8 componentes.
-
-Confirmar:
-
-1/8
-2/8
-3/8
-...
-8/8
-
-y posteriormente:
-
-Actividad final.
+- comprobar respuestas correctas
+- comprobar respuestas incorrectas
+- comprobar botones
+- comprobar recompensa
+- comprobar progresión
+- comprobar CPU
+- comprobar RAM
+- comprobar exploración
 
 ---
 
-## PRUEBA 11 — EXPLORACIÓN LIBRE
+# CRITERIO DE ÉXITO
 
-Confirmar que el jugador puede seguir explorando libremente.
+Al abrir cualquier actividad, debe ser posible leer la pregunta COMPLETA sin que el jugador tenga que adivinar qué dice.
 
-No bloquear físicamente el movimiento.
+Debe verse aproximadamente:
 
----
+TÍTULO
 
-## PRUEBA 12 — ACTIVIDAD FINAL
+↓
 
-Confirmar que continúa funcionando después de los cambios.
+PREGUNTA COMPLETA
 
----
+↓
 
-# CRITERIO VISUAL DE ÉXITO
+OPCIONES
 
-El panel de actividad debe verse:
+↓
 
-- compacto
-- ligeramente más arriba
-- centrado
-- limpio
-- completamente legible
-- sin tapar innecesariamente la escena
+CERRAR
 
-La pregunta debe ser completamente visible.
+Sin superposición.
 
-Las opciones deben estar separadas.
+La pregunta debe seguir siendo legible y no parecer comprimida.
 
-Cerrar debe ser claramente visible.
+El HUD superior izquierdo debe verse claramente separado:
 
-No debe parecer un panel gigante.
+OBJETIVO ACTUAL
 
----
+Conoce la Cache L1.
 
-# CRITERIO EDUCATIVO DE ÉXITO
+PISTA
 
-Cada actividad debe permitir que un estudiante explique:
+Busca la memoria caché más cercana al procesador.
 
-"Estoy aprendiendo esto porque..."
+Y la ubicación debe funcionar:
 
-ALU:
+CPU
 
-"Aprendo que realiza operaciones sobre datos."
+↓
 
-Registros:
+RAM
 
-"Aprendo que almacenan temporalmente datos que la CPU necesita."
+↓
 
-Unidad de Control:
+CPU
 
-"Aprendo que coordina la ejecución de instrucciones."
-
-Cache:
-
-"Aprendo que permite acceder rápidamente a datos utilizados."
-
-RAM:
-
-"Aprendo que mantiene temporalmente programas y datos en uso."
-
-La actividad debe reforzar ese aprendizaje.
+sin tener que colocarse prácticamente encima de los módulos RAM.
 
 ---
 
 # INFORME FINAL OBLIGATORIO
 
-Al terminar, entregar un informe con:
+Al terminar informar:
 
-1. Problema exacto encontrado en el panel Choice.
-2. Qué elemento causaba el recorte de la pregunta.
-3. Qué cambio hiciste en GameHUD.
-4. Cómo quedó ajustada la posición del panel.
-5. Cómo se calcula/adapta el tamaño del panel.
-6. Confirmación de que las preguntas completas son visibles.
-7. Qué preguntas conceptuales quedaron configuradas.
-8. Respuesta correcta de cada actividad.
-9. Qué feedback educativo se agregó.
-10. Qué recompensas educativas se configuraron.
-11. Cómo quedó el indicador de progreso.
-12. Cómo se actualiza el progreso.
-13. Cómo quedó Zone_RAM.
-14. Cómo quedó Zone_CPU.
-15. Cómo funciona el mensaje de primera entrada a cada zona.
-16. Qué mejoras adicionales implementaste y por qué.
-17. Qué scripts modificaste.
-18. Qué cambios hiciste en Inspector.
-19. Qué GameObjects nuevos creaste, si alguno.
-20. Confirmación de que no se creó otro Canvas/HUD/sistema paralelo.
-21. Confirmación de que ALU sigue funcionando.
-22. Confirmación de que Registros sigue funcionando.
-23. Confirmación de que Unidad de Control sigue funcionando.
-24. Confirmación de que Cache L1/L2/L3 siguen funcionando.
-25. Confirmación de que RAM1/RAM2 siguen funcionando.
-26. Confirmación de que la progresión sigue funcionando.
-27. Confirmación de que la actividad final sigue funcionando.
-28. Errores nuevos.
-29. Warnings nuevos.
-30. Qué quedó pendiente.
-
----
-
-# REGLA FINAL
+1. Qué causaba el recorte de las preguntas.
+2. Qué cambios hiciste en el layout.
+3. Qué posición/tamaño final tiene el texto de pregunta.
+4. Si se utilizó Word Wrapping.
+5. Si se modificó el tamaño general del panel.
+6. Qué actividades fueron revisadas.
+7. Qué preguntas fueron modificadas y por qué.
+8. Qué respuestas correctas tiene cada actividad.
+9. Qué mejora adicional propusiste o implementaste.
+10. Qué cambio se hizo en el espaciado de Objetivo/Pista.
+11. Qué cambio se hizo en Zone_RAM.
+12. Si se modificó Zone_CPU.
+13. Qué archivos fueron modificados.
+14. Qué cambios se hicieron en Inspector.
+15. Si la ALU sigue funcionando.
+16. Si Cache L1/L2/L3 siguen funcionando.
+17. Si Registros sigue funcionando.
+18. Si Unidad de Control sigue funcionando.
+19. Si RAM1/RAM2 siguen funcionando.
+20. Si la progresión sigue funcionando.
+21. Si la ubicación CPU/RAM sigue funcionando.
+22. Errores nuevos.
+23. Warnings nuevos.
+24. Qué quedó pendiente.
 
 NO continuar con funcionalidades nuevas después de completar este prompt.
 
-Primero dejar completamente estable:
+Primero dejar esta mejora completamente estable.
 
-1. Panel Choice corregido.
-2. Preguntas completas y legibles.
-3. Actividades conceptuales coherentes.
-4. Feedback educativo.
-5. Recompensas educativas.
-6. Progreso 0/8 → 8/8.
-7. Ubicación CPU/RAM.
-8. Guía.
-9. Actividad final.
-10. Todas las pruebas.
+La prioridad es:
 
-Si durante la implementación encuentras una mejora adicional importante:
-
-NO la implementes automáticamente si puede cambiar demasiado la arquitectura.
-
-Primero indícala en el informe como propuesta.
-
-La prioridad absoluta es:
-
-NO ROMPER LO QUE YA FUNCIONA.
-
-Y convertir AstroBit en una experiencia educativa sencilla, jugable, coherente y fácil de demostrar.
+1. Que todas las preguntas se vean completas.
+2. Que las actividades tengan sentido educativo.
+3. Que sean sencillas y entretenidas.
+4. Que la guía sea clara.
+5. Que la ubicación funcione naturalmente.
+6. Mantener intacto todo lo que ya funciona.

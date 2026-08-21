@@ -63,6 +63,9 @@ public class ObjectiveSystem : MonoBehaviour
     public string CurrentObjective { get; private set; } = InitialObjective;
     public string CurrentHint { get; private set; } = InitialHint;
 
+    public int CompletedSteps => achievedKeys.Count;
+    public int TotalSteps => Sequence.Length;
+
     private int currentIndex;
     private bool sequenceStarted;
     private readonly HashSet<string> achievedKeys = new HashSet<string>();
