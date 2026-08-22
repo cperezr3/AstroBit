@@ -20,7 +20,9 @@ public class FileShelf : MonoBehaviour, IInteractable
     private bool alreadyChecked;
 
     public string PromptText => promptText;
-    public bool CanInteract => !alreadyChecked;
+    // Prompt 20: no responde hasta que la mision realmente arranco (CPU/RAM aprendidos) --
+    // el jugador puede entrar fisicamente a la sala antes, pero los Shelves no ofrecen [E].
+    public bool CanInteract => !alreadyChecked && StorageMission.Instance.MissionStarted;
 
     public void Interact()
     {

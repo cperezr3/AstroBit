@@ -34,7 +34,7 @@ public class MissionStepPoint : MonoBehaviour, IInteractable
             {
                 case Step.OpenOnComputer: return StorageMission.Instance.CanOpenOnComputer;
                 case Step.CpuProcess: return StorageMission.Instance.CanProcessAtCpu;
-                case Step.RamLoad: return StorageMission.Instance.CanLoadRam;
+                case Step.RamLoad: return StorageMission.Instance.CanAttemptRamLoad;
                 case Step.RamExecute: return StorageMission.Instance.CanExecuteRam;
                 default: return false;
             }
@@ -57,7 +57,7 @@ public class MissionStepPoint : MonoBehaviour, IInteractable
         {
             case Step.OpenOnComputer: StorageMission.Instance.ReportOpenedOnComputer(); break;
             case Step.CpuProcess: StorageMission.Instance.ReportCpuProcessed(); break;
-            case Step.RamLoad: StorageMission.Instance.ReportRamLoaded(); break;
+            case Step.RamLoad: StorageMission.Instance.ReportRamLoadAttempt(); break;
             case Step.RamExecute: StorageMission.Instance.ReportRamExecuted(); break;
         }
     }

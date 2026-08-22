@@ -28,6 +28,7 @@ public class GameHUD : MonoBehaviour
     private Coroutine locationSubtitleRoutine;
 
     private Text progressText;
+    private Text inventoryText;
 
     private GameObject panelRoot;
     private Text panelTitleText;
@@ -115,6 +116,11 @@ public class GameHUD : MonoBehaviour
         progressText = CreateText(canvasGO.transform, "ProgressText", font, 22, TextAnchor.UpperRight,
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -20), new Vector2(200, 36));
         progressText.color = new Color(0.75f, 0.9f, 0.95f);
+
+        inventoryText = CreateText(canvasGO.transform, "InventoryText", font, 20, TextAnchor.UpperRight,
+            new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -60), new Vector2(200, 30));
+        inventoryText.color = new Color(0.75f, 0.9f, 0.95f);
+        inventoryText.enabled = false;
     }
 
     // Contador simple "X/8" de componentes comprendidos. Se actualiza con el mismo evento
@@ -123,6 +129,17 @@ public class GameHUD : MonoBehaviour
     {
         if (progressText == null) return;
         progressText.text = ObjectiveSystem.Instance.CompletedSteps + "/" + ObjectiveSystem.Instance.TotalSteps;
+    }
+
+    // Indicador de inventario minimalista (Prompt 20), p.ej. "RAM x2". Generico a proposito:
+    // GameHUD no sabe nada de RAM/mision, solo muestra el texto que le pasen; se oculta con
+    // texto vacio.
+    public void SetInventoryText(string text)
+    {
+        if (inventoryText == null) return;
+        bool show = !string.IsNullOrEmpty(text);
+        inventoryText.text = text ?? "";
+        inventoryText.enabled = show;
     }
 
     private static Text CreateText(Transform parent, string name, Font font, int size, TextAnchor anchor,

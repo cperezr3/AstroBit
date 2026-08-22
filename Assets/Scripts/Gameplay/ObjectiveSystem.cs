@@ -103,6 +103,14 @@ public class ObjectiveSystem : MonoBehaviour
         return currentIndex < Sequence.Length && Sequence[currentIndex].Key == key;
     }
 
+    // Verdadero si "key" ya fue completado (en cualquier orden). Usado por Prompt 20 para
+    // distinguir el subconjunto CPU (ALU, REGISTROS, UNIDAD_CONTROL, CACHE_L1/2/3) del
+    // subconjunto RAM (RAM1, RAM2) dentro de los mismos 8 pasos.
+    public bool IsKeyAchieved(string key)
+    {
+        return achievedKeys.Contains(key);
+    }
+
     // Unica forma de avanzar la progresion real: una actividad resuelta correctamente.
     // Si "key" no es el paso esperado, se registra igualmente (para no repetirlo cuando
     // la progresion llegue a el) pero NO mueve el objetivo actual ni la pista.

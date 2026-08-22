@@ -1,8 +1,8 @@
 using UnityEngine;
 
-// Conclusion educativa corta (4 preguntas) que se dispara automaticamente cuando
-// ObjectiveSystem reporta que los 8 componentes fueron completados. Reutiliza
-// GameHUD.ShowChoicePanel/ShowReward, no crea un panel ni un sistema de actividades nuevo.
+// Conclusion educativa corta (4 preguntas) que se dispara al terminar el recorrido completo
+// (ver BeginFinalActivity, llamado por StorageMission). Reutiliza GameHUD.ShowChoicePanel/
+// ShowReward, no crea un panel ni un sistema de actividades nuevo.
 public class FinalActivity : MonoBehaviour
 {
     private struct Question
@@ -34,6 +34,7 @@ public class FinalActivity : MonoBehaviour
     private const string ActivityTitle = "ACTIVIDAD FINAL";
 
     private static FinalActivity _instance;
+    public static FinalActivity Instance => _instance;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -47,15 +48,12 @@ public class FinalActivity : MonoBehaviour
     private int questionIndex;
     private bool started;
 
-    private void Awake()
-    {
-        ObjectiveSystem.Instance.OnAllStepsCompleted.AddListener(BeginFinalActivity);
-    }
-
-    // Prompt 19: OnAllStepsCompleted ahora puede dispararse desde dos rutas independientes
-    // (el recorrido original de 8 piezas CPU/RAM, o la mision de almacenamiento). Idempotente
-    // para no reabrir la actividad si ambas rutas se completan en la misma partida.
-    private void BeginFinalActivity()
+    // Prompt 20: ya no escucha ObjectiveSystem.OnAllStepsCompleted directamente -- ese evento
+    // ahora solo marca "CPU/RAM aprendidos" (ver StorageMission.OnCpuRamLearned) y desbloquea
+    // la sala de almacenamiento. StorageMission llama a BeginFinalActivity() explicitamente
+    // al terminar el recorrido completo (archivo ejecutado tras instalar la RAM de repuesto).
+    // Idempotente por si en el futuro hubiera mas de una ruta de finalizacion.
+    public void BeginFinalActivity()
     {
         if (started) return;
         started = true;
