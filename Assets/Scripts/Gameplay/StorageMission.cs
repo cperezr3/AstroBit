@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 // Mision extendida del recorrido del archivo (Prompts 18-20): CPU/RAM educativos ->
@@ -69,6 +68,17 @@ public class StorageMission : MonoBehaviour
         "Este modulo no contiene el archivo solicitado.",
     };
 
+    // Fuerza la creacion temprana (mismo patron que FinalActivity/GameHUD): StorageMission debe
+    // registrar su listener de OnAllStepsCompleted ANTES de que el jugador pueda completar los
+    // 8 pasos CPU/RAM, o el evento se dispara sin nadie escuchando y CpuRamLearned nunca pasa a
+    // true. Con el singleton puramente perezoso de antes, esto fallaba si el jugador completaba
+    // CPU/RAM sin haber tocado antes ninguna interaccion de la sala de almacenamiento.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void Bootstrap()
+    {
+        _ = Instance;
+    }
+
     private static StorageMission _instance;
     public static StorageMission Instance
     {
@@ -106,7 +116,6 @@ public class StorageMission : MonoBehaviour
     private bool ramExecuted;
     private int wrongShelfIndex;
     private int ramModulesInstalled;
-    private readonly List<GameObject> collectedRamObjects = new List<GameObject>();
 
     // Detecta hitos dentro de los 8 pasos educativos de CPU/RAM (sin esperar a los 8/8) para
     // avisar en cuanto se completa el subconjunto CPU. RAM completo ya lo cubre OnCpuRamLearned.
@@ -208,8 +217,9 @@ public class StorageMission : MonoBehaviour
     {
         if (!RamInsufficientDetected) return;
 
+        // El modulo recogido solo representa haberlo obtenido; no se reutiliza visualmente
+        // (la instalacion activa RAM3/RAM4, ya colocadas a mano -- ver ReportRamModuleInstalled).
         moduleObject.SetActive(false);
-        collectedRamObjects.Add(moduleObject);
         Inventory.Instance.AddItem(RamItemId);
         int count = Inventory.Instance.GetItemCount(RamItemId);
         UpdateInventoryDisplay();
@@ -222,19 +232,15 @@ public class StorageMission : MonoBehaviour
         }
     }
 
-    // Llamado por cada InstallRamSlot en la Room RAM. Consume una RAM del inventario y
-    // reubica fisicamente el modulo ya recogido en la posicion/rotacion del slot.
-    public void ReportRamModuleInstalled(Transform slotTransform)
+    // Llamado por cada InstallRamSlot en la Room RAM. Consume una RAM del inventario y activa
+    // la representacion visual ya colocada a mano en la escena (RAM3/RAM4). Prompt 21: ya no
+    // reubica el modulo recogido en la bodega -- ese solo se desactiva al recogerlo y no se
+    // vuelve a usar visualmente.
+    public void ReportRamModuleInstalled(GameObject visualObject)
     {
         if (!Inventory.Instance.RemoveItem(RamItemId)) return;
 
-        if (collectedRamObjects.Count > 0)
-        {
-            var moduleObject = collectedRamObjects[collectedRamObjects.Count - 1];
-            collectedRamObjects.RemoveAt(collectedRamObjects.Count - 1);
-            moduleObject.transform.SetPositionAndRotation(slotTransform.position, slotTransform.rotation);
-            moduleObject.SetActive(true);
-        }
+        if (visualObject != null) visualObject.SetActive(true);
 
         ramModulesInstalled++;
         UpdateInventoryDisplay();
