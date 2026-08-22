@@ -66,6 +66,12 @@ public class ObjectiveSystem : MonoBehaviour
     public int CompletedSteps => achievedKeys.Count;
     public int TotalSteps => Sequence.Length;
 
+    // Expone (solo lectura) la clave del paso que la progresion espera ahora mismo, o null si
+    // ya se completaron todos. Prompt 23: usado por MissionNavigation para saber a que
+    // GameObject de la escena debe apuntar el marcador de mundo/minimapa, sin duplicar ni
+    // modificar la logica de progresion de esta clase.
+    public string CurrentStepKey => currentIndex < Sequence.Length ? Sequence[currentIndex].Key : null;
+
     private int currentIndex;
     private bool sequenceStarted;
     private readonly HashSet<string> achievedKeys = new HashSet<string>();
