@@ -13,11 +13,15 @@ public class InstallRamSlot : MonoBehaviour, IInteractable
     [SerializeField] private string promptText = "[E] Instalar RAM";
     [SerializeField] private GameObject visualObject;
 
-    [Header("Etiqueta (opcional, vacio = sin etiqueta)")]
+    [Header("Etiqueta del slot (opcional, vacio = sin etiqueta)")]
     [SerializeField] private string labelTitle = "";
     [SerializeField] private string labelSubtitle = "";
     [SerializeField] private float proximityRadius = 10f;
     [SerializeField] private float labelHeight = 1.5f;
+
+    [Header("Etiqueta del modulo instalado (aparece recien al activarse)")]
+    [SerializeField] private string visualLabelSubtitle = "Módulo de memoria RAM";
+    [SerializeField] private float visualLabelHeight = 2f;
 
     private bool installed;
 
@@ -40,5 +44,15 @@ public class InstallRamSlot : MonoBehaviour, IInteractable
         if (!CanInteract) return;
         installed = true;
         StorageMission.Instance.ReportRamModuleInstalled(visualObject);
+
+        // Prompt 22: la etiqueta educativa del modulo (p.ej. "RAM3 / Modulo de memoria RAM")
+        // solo debe existir a partir de este momento, no mientras el objeto estaba inactivo.
+        // Se agrega aqui (no en el propio RAM3/RAM4) para no crear ni modificar ese GameObject
+        // mas alla de activarlo.
+        if (visualObject != null)
+        {
+            var label = visualObject.AddComponent<WorldLabel>();
+            label.Init(visualObject.transform, visualObject.name, visualLabelSubtitle, proximityRadius, visualLabelHeight);
+        }
     }
 }

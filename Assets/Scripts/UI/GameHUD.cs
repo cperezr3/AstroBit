@@ -128,7 +128,13 @@ public class GameHUD : MonoBehaviour
     private void UpdateProgressText()
     {
         if (progressText == null) return;
-        progressText.text = ObjectiveSystem.Instance.CompletedSteps + "/" + ObjectiveSystem.Instance.TotalSteps;
+        int completed = ObjectiveSystem.Instance.CompletedSteps;
+        int total = ObjectiveSystem.Instance.TotalSteps;
+        // Prompt 22: al llegar a 8/8 el contador se oculta (CompletedSteps/TotalSteps siguen
+        // funcionando igual, solo se deja de mostrar el texto).
+        bool allDone = completed >= total;
+        progressText.text = allDone ? "" : completed + "/" + total;
+        progressText.enabled = !allDone;
     }
 
     // Indicador de inventario minimalista (Prompt 20), p.ej. "RAM x2". Generico a proposito:

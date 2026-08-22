@@ -4787,7 +4787,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46016744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06825711, y: 0.8231921, z: -0.10133946, w: 0.5544602}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9683,6 +9683,8 @@ MonoBehaviour:
   labelSubtitle: 
   proximityRadius: 10
   labelHeight: 1.5
+  visualLabelSubtitle: "M\xF3dulo de memoria RAM"
+  visualLabelHeight: 2
 --- !u!65 &93226882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11351,8 +11353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleRam
   promptText: '[E] Recoger RAM'
-  labelTitle: MODULO RAM DE REPUESTO
-  labelSubtitle: Puede instalarse en la Room RAM
+  labelTitle: 
+  labelSubtitle: 
   proximityRadius: 10
   labelHeight: 2.5
 --- !u!65 &106817252
@@ -56319,6 +56321,8 @@ MonoBehaviour:
   labelSubtitle: 
   proximityRadius: 10
   labelHeight: 1.5
+  visualLabelSubtitle: "M\xF3dulo de memoria RAM"
+  visualLabelHeight: 2
 --- !u!65 &565730427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155471,8 +155475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionStepPoint
   step: 3
   promptText: '[E] Ejecutar programa'
-  labelTitle: EJECUCION
-  labelSubtitle: El programa en memoria puede ejecutarse
+  labelTitle: 
+  labelSubtitle: 
   proximityRadius: 10
   labelHeight: 2.5
 --- !u!65 &1528291043
