@@ -45,7 +45,15 @@ public class MissionStepPoint : MonoBehaviour, IInteractable
     {
         if (string.IsNullOrEmpty(labelTitle)) return;
         var label = gameObject.AddComponent<WorldLabel>();
-        label.Init(transform, labelTitle, labelSubtitle, proximityRadius, labelHeight);
+
+        // "Procesamiento de archivo" (CpuProcess) no debe aparecer desde el inicio: solo una
+        // vez que el archivo fue enviado desde el almacenamiento (ComputerOpened), siguiendo el
+        // flujo Shelf -> server -> TV -> CPU. Los demas pasos no necesitan condicion extra.
+        System.Func<bool> gate = step == Step.CpuProcess
+            ? () => StorageMission.Instance.ComputerOpened
+            : null;
+
+        label.Init(transform, labelTitle, labelSubtitle, proximityRadius, labelHeight, gate);
     }
 
     public void Interact()

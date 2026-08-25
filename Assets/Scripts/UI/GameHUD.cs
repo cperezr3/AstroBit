@@ -66,7 +66,7 @@ public class GameHUD : MonoBehaviour
 
         ObjectiveSystem.Instance.OnObjectiveChanged.AddListener(SetObjectiveText);
         ObjectiveSystem.Instance.OnHintChanged.AddListener(SetHintText);
-        ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(ShowFeedback);
+        ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(text => ShowFeedback(text));
         ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(_ => UpdateProgressText());
 
         SetObjectiveText(ObjectiveSystem.Instance.CurrentObjective);
@@ -245,14 +245,21 @@ public class GameHUD : MonoBehaviour
         promptText.enabled = false;
     }
 
-    public void ShowFeedback(string text)
+    // duration: null usa feedbackDuration (comportamiento normal para el resto de mensajes).
+    // Solo el diagnostico de RAM insuficiente pasa un valor explicito para quedarse mas tiempo
+    // en pantalla sin afectar la duracion global de los demas feedbacks.
+    public void ShowFeedback(string text, float? duration = null)
     {
         if (feedbackText == null) return;
         if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
         feedbackText.text = text;
         feedbackText.enabled = true;
-        feedbackRoutine = StartCoroutine(HideFeedbackAfterDelay());
+        feedbackRoutine = StartCoroutine(HideFeedbackAfterDelay(duration ?? feedbackDuration));
     }
+
+    // Duracion por defecto de un feedback, expuesta para que un llamador externo (StorageMission)
+    // pueda calcular "duracion actual + N" sin duplicar el valor serializado aqui.
+    public float FeedbackDuration => feedbackDuration;
 
     private void HideFeedbackImmediate()
     {
@@ -261,9 +268,9 @@ public class GameHUD : MonoBehaviour
         feedbackText.enabled = false;
     }
 
-    private IEnumerator HideFeedbackAfterDelay()
+    private IEnumerator HideFeedbackAfterDelay(float duration)
     {
-        yield return new WaitForSeconds(feedbackDuration);
+        yield return new WaitForSeconds(duration);
         HideFeedbackImmediate();
     }
 

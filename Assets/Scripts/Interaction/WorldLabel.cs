@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,15 +11,20 @@ public class WorldLabel : MonoBehaviour
     private Transform playerTransform;
     private float proximityRadius;
     private float labelHeight;
+    private Func<bool> visibilityGate;
 
     private GameObject labelRoot;
     private bool labelVisible;
 
-    public void Init(Transform followTarget, string title, string subtitle, float radius, float height)
+    // gate: condicion adicional (ademas de la proximidad) para poder mostrarse; null = siempre
+    // permitido, igual que antes (usado por MissionStepPoint para ocultar "Procesamiento de
+    // archivo" hasta que el archivo fue enviado desde el almacenamiento).
+    public void Init(Transform followTarget, string title, string subtitle, float radius, float height, Func<bool> gate = null)
     {
         target = followTarget;
         proximityRadius = radius;
         labelHeight = height;
+        visibilityGate = gate;
         BuildLabel(title, subtitle);
     }
 
@@ -83,7 +89,7 @@ public class WorldLabel : MonoBehaviour
         if (playerTransform == null) return;
 
         float dist = Vector3.Distance(playerTransform.position, target.position);
-        bool shouldShow = dist <= proximityRadius;
+        bool shouldShow = dist <= proximityRadius && (visibilityGate == null || visibilityGate());
 
         if (shouldShow != labelVisible)
         {

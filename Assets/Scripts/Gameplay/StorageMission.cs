@@ -46,8 +46,8 @@ public class StorageMission : MonoBehaviour
     private const string ProcessedHint = "Ve a la Room RAM.";
 
     private const string InsufficientFeedback =
-        "DIAGNOSTICO\n\nCPU ................. OK\nALMACENAMIENTO ...... OK\nRAM ................. INSUFICIENTE\n\n" +
-        "Memoria disponible: 2 GB\nMemoria requerida: 4 GB\n\nEl programa necesita mas memoria de la disponible actualmente.";
+        "DIAGNOSTICO\n\nMemoria RAM insuficiente.\n\nDisponible: 2 GB\nNecesaria: 4 GB\n\n" +
+        "El archivo necesita mas memoria RAM para poder cargarse.";
     private const string InsufficientObjective = "La memoria disponible no es suficiente. Busca modulos de RAM de repuesto en la bodega.";
     private const string InsufficientHint = "Ve a la bodega y busca modulos de RAM adicionales.";
 
@@ -207,7 +207,10 @@ public class StorageMission : MonoBehaviour
         if (!CanAttemptRamLoad) return;
         ramLoadAttempted = true;
         RamInsufficientDetected = true;
-        GameHUD.Instance?.ShowFeedback(InsufficientFeedback);
+        // +2s respecto a la duracion normal de feedback: el diagnostico tiene mas texto que
+        // leer que un mensaje corto y desaparecia demasiado rapido.
+        float duration = (GameHUD.Instance != null ? GameHUD.Instance.FeedbackDuration : 3.5f) + 2f;
+        GameHUD.Instance?.ShowFeedback(InsufficientFeedback, duration);
         ObjectiveSystem.Instance.SetObjective(InsufficientObjective);
         ObjectiveSystem.Instance.SetHint(InsufficientHint);
     }
