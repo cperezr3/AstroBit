@@ -1,11 +1,17 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameHUD : MonoBehaviour
 {
     public static GameHUD Instance { get; private set; }
+
+    // Prompt 26: el HUD de gameplay (objetivo, pista, prompt, feedback, progreso, inventario)
+    // no debe verse en el Main Menu. GameHUD sigue creandose igual (DontDestroyOnLoad) para no
+    // romper su inicializacion perezosa; solo se oculta/muestra el Canvas segun la escena activa.
+    private const string MenuSceneName = "MainMenu";
 
     private enum PanelMode { Info, Activity, Choice, Reward }
 
@@ -75,6 +81,28 @@ public class GameHUD : MonoBehaviour
         HideFeedbackImmediate();
         SetLocation("", "");
         UpdateProgressText();
+
+        SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        UpdateVisibilityForScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnActiveSceneChanged(Scene previous, Scene next)
+    {
+        UpdateVisibilityForScene(next.name);
+
+        // Bug (Prompt 28): LocationZone guarda la zona actual en un campo static que sobrevive
+        // a un recargado de SampleScene (Continuar/Reiniciar); sin este reset, el indicador
+        // superior podia quedar mostrando la ultima zona visitada de la partida anterior hasta
+        // que el jugador cruzara un LocationZone de nuevo.
+        if (next.name != MenuSceneName)
+        {
+            SetLocation("", "");
+        }
+    }
+
+    private void UpdateVisibilityForScene(string sceneName)
+    {
+        hudCanvasTransform.gameObject.SetActive(sceneName != MenuSceneName);
     }
 
     private void BuildUI()
@@ -182,6 +210,10 @@ public class GameHUD : MonoBehaviour
         if (objectiveText == null) return;
         objectiveText.text = "OBJETIVO ACTUAL\n" + text;
         RepositionHintBelowObjective();
+        // Prompt 28: el objetivo cambia tanto en progresion normal como en un reset de
+        // "Nueva Partida"/"Reiniciar" (ver ObjectiveSystem.ResetState); refrescar el contador
+        // aqui evita que quede mostrando un valor viejo (p.ej. "6/8") tras un reset.
+        UpdateProgressText();
     }
 
     private void SetHintText(string text)

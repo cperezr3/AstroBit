@@ -39,4 +39,10 @@ public class Inventory : MonoBehaviour
     public bool HasItem(string id, int amount = 1) => GetItemCount(id) >= amount;
 
     public int GetItemCount(string id) => counts.TryGetValue(id, out int value) ? value : 0;
+
+    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameSession).
+    public void ResetState()
+    {
+        counts.Clear();
+    }
 }

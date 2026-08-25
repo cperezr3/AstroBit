@@ -28,6 +28,12 @@ public class WorldObjectiveMarker : MonoBehaviour
     private void BuildMarker()
     {
         markerRoot = new GameObject("ObjectiveMarker_World");
+        // Bug (Prompt 28): sin esto, markerRoot vivia en la escena que estuviera activa al
+        // crearse (p.ej. MainMenu, la primera en cargar) sin heredar el DontDestroyOnLoad de
+        // este objeto -- al descargarse esa escena, Unity lo destruia y el marcador quedaba
+        // con una referencia colgante para siempre. MinimapController ya evita esto parentando
+        // su Canvas bajo su propio transform; aqui aplica el mismo patron.
+        markerRoot.transform.SetParent(transform, false);
 
         var canvas = markerRoot.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;

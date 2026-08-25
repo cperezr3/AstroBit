@@ -103,6 +103,19 @@ public class ObjectiveSystem : MonoBehaviour
         OnObjectiveCompleted.Invoke(completedText);
     }
 
+    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar". Aditivo -- no cambia
+    // ninguna logica existente, solo repone los campos privados de progresion a su estado
+    // inicial (el mismo que tendria una instancia recien creada) y vuelve a emitir los eventos
+    // de objetivo/pista para que GameHUD se actualice de inmediato.
+    public void ResetState()
+    {
+        currentIndex = 0;
+        sequenceStarted = false;
+        achievedKeys.Clear();
+        SetObjective(InitialObjective);
+        SetHint(InitialHint);
+    }
+
     // Verdadero solo si "key" es el paso que la progresion espera ahora mismo.
     public bool IsCurrentStep(string key)
     {

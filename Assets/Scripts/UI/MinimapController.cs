@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // Minimapa discreto (Prompt 23, Parte 4): camara ortografica secundaria que sigue al jugador
@@ -13,11 +14,17 @@ public class MinimapController : MonoBehaviour
     private const float CameraHeight = 120f;
     private const int RenderTextureSize = 256;
 
+    // Prompt 26: el minimapa no debe verse en el Main Menu. Igual que GameHUD, sigue
+    // creandose siempre (DontDestroyOnLoad) para no romper su inicializacion; solo se
+    // oculta/muestra su Canvas segun la escena activa.
+    private const string MenuSceneName = "MainMenu";
+
     private Camera minimapCamera;
     private RenderTexture renderTexture;
     private RectTransform playerIconRT;
     private RectTransform objectiveDotRT;
     private Transform playerTransform;
+    private GameObject minimapCanvasGO;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -31,6 +38,19 @@ public class MinimapController : MonoBehaviour
     {
         BuildCamera();
         BuildUI();
+
+        SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        UpdateVisibilityForScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnActiveSceneChanged(Scene previous, Scene next)
+    {
+        UpdateVisibilityForScene(next.name);
+    }
+
+    private void UpdateVisibilityForScene(string sceneName)
+    {
+        if (minimapCanvasGO != null) minimapCanvasGO.SetActive(sceneName != MenuSceneName);
     }
 
     private void BuildCamera()
@@ -55,6 +75,7 @@ public class MinimapController : MonoBehaviour
     {
         var canvasGO = new GameObject("MinimapCanvas");
         canvasGO.transform.SetParent(transform, false);
+        minimapCanvasGO = canvasGO;
         var canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = -1; // por debajo del backdrop modal de GameHUD, para no flotar sobre los paneles
