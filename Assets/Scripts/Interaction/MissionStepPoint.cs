@@ -48,9 +48,12 @@ public class MissionStepPoint : MonoBehaviour, IInteractable
 
         // "Procesamiento de archivo" (CpuProcess) no debe aparecer desde el inicio: solo una
         // vez que el archivo fue enviado desde el almacenamiento (ComputerOpened), siguiendo el
-        // flujo Shelf -> server -> TV -> CPU. Los demas pasos no necesitan condicion extra.
+        // flujo Shelf -> server -> TV -> CPU. Tampoco debe quedar flotando despues de procesar
+        // (CpuProcessed ya en true) -- sin el !CpuProcessed, ComputerOpened se queda en true
+        // para siempre y la etiqueta nunca se ocultaba tras presionar [E]. Los demas pasos no
+        // necesitan condicion extra.
         System.Func<bool> gate = step == Step.CpuProcess
-            ? () => StorageMission.Instance.ComputerOpened
+            ? () => StorageMission.Instance.ComputerOpened && !StorageMission.Instance.CpuProcessed
             : null;
 
         label.Init(transform, labelTitle, labelSubtitle, proximityRadius, labelHeight, gate);

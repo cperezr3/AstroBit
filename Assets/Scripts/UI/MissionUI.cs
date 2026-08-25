@@ -5,11 +5,36 @@ using UnityEngine.UI;
 // MissionNavigation -- no decide progresion ni mantiene su propia lista de objetivos. Ubicado en
 // el lateral izquierdo (no en la esquina superior izquierda, para no chocar con
 // ObjectiveText/HintText de GameHUD).
+//
+// Prompt 29: layout dinamico de arriba hacia abajo. Antes cada fila tenia una posicion Y fija
+// (pensada para 4 filas de historial siempre reservadas), asi que con pocas o ninguna mision
+// completada quedaba un hueco vacio grande arriba y todo se veia "hundido". Ahora cada Refresh()
+// recalcula las posiciones segun cuantas filas hay realmente que mostrar, empezando siempre
+// justo debajo del header.
 public class MissionUI : MonoBehaviour
 {
     private const int MaxCompletedRows = 4;
     private const float RefreshInterval = 0.2f;
 
+    private const float PanelWidth = 380f;
+    private const float PanelHeight = 300f;
+    private const float MarginX = 16f;
+    private const float IndentX = 32f;
+    private const float TopY = -14f;
+
+    private const float HeaderHeight = 28f;
+    private const float HeaderGap = 6f;
+    private const float SummaryHeight = 20f;
+    private const float SummaryGap = 4f;
+    private const float RowHeight = 24f;
+    private const float RowGap = 2f;
+    private const float GapBeforeCurrent = 8f;
+    private const float CurrentHeight = 30f;
+    private const float CurrentGap = 6f;
+    private const float DescriptionHeight = 46f;
+    private const float DescriptionGap = 6f;
+
+    private Text headerText;
     private Text completedSummaryText;
     private Text[] completedRows;
     private Text currentRowText;
@@ -50,36 +75,38 @@ public class MissionUI : MonoBehaviour
         var panelRT = panelGO.AddComponent<RectTransform>();
         panelRT.anchorMin = panelRT.anchorMax = new Vector2(0f, 0.5f);
         panelRT.pivot = new Vector2(0f, 0.5f);
-        panelRT.sizeDelta = new Vector2(320, 260);
+        panelRT.sizeDelta = new Vector2(PanelWidth, PanelHeight);
         panelRT.anchoredPosition = new Vector2(20, 0);
         var bg = panelGO.AddComponent<Image>();
         bg.color = new Color(0.04f, 0.07f, 0.1f, 0.72f);
 
         var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        float rowWidth = PanelWidth - MarginX * 2f;
+        float indentWidth = PanelWidth - IndentX - MarginX;
 
-        var headerText = CreateText(panelGO.transform, "Header", font, 20, TextAnchor.UpperLeft,
-            new Vector2(14, -12), new Vector2(290, 26), new Color(0.35f, 0.95f, 1f), FontStyle.Bold);
+        headerText = CreateText(panelGO.transform, "Header", font, 22, TextAnchor.UpperLeft,
+            new Vector2(MarginX, TopY), new Vector2(rowWidth, HeaderHeight), new Color(0.35f, 0.95f, 1f), FontStyle.Bold);
         headerText.text = "MISIÓN";
 
-        completedSummaryText = CreateText(panelGO.transform, "CompletedSummary", font, 14, TextAnchor.UpperLeft,
-            new Vector2(14, -40), new Vector2(290, 18), new Color(0.6f, 0.85f, 0.65f), FontStyle.Italic);
+        completedSummaryText = CreateText(panelGO.transform, "CompletedSummary", font, 15, TextAnchor.UpperLeft,
+            Vector2.zero, new Vector2(rowWidth, SummaryHeight), new Color(0.6f, 0.85f, 0.65f), FontStyle.Italic);
 
         completedRows = new Text[MaxCompletedRows];
         for (int i = 0; i < MaxCompletedRows; i++)
         {
-            completedRows[i] = CreateText(panelGO.transform, "Completed" + i, font, 14, TextAnchor.UpperLeft,
-                new Vector2(14, -60 - i * 20), new Vector2(290, 18), new Color(0.55f, 0.8f, 0.6f), FontStyle.Normal);
+            completedRows[i] = CreateText(panelGO.transform, "Completed" + i, font, 16, TextAnchor.UpperLeft,
+                Vector2.zero, new Vector2(rowWidth, RowHeight), new Color(0.55f, 0.8f, 0.6f), FontStyle.Normal);
         }
 
-        currentRowText = CreateText(panelGO.transform, "Current", font, 17, TextAnchor.UpperLeft,
-            new Vector2(14, -146), new Vector2(290, 26), new Color(1f, 0.85f, 0.1f, 1f), FontStyle.Bold);
+        currentRowText = CreateText(panelGO.transform, "Current", font, 19, TextAnchor.UpperLeft,
+            Vector2.zero, new Vector2(rowWidth, CurrentHeight), new Color(1f, 0.85f, 0.1f, 1f), FontStyle.Bold);
 
-        descriptionText = CreateText(panelGO.transform, "Description", font, 14, TextAnchor.UpperLeft,
-            new Vector2(30, -176), new Vector2(270, 40), Color.white, FontStyle.Normal);
+        descriptionText = CreateText(panelGO.transform, "Description", font, 16, TextAnchor.UpperLeft,
+            Vector2.zero, new Vector2(indentWidth, DescriptionHeight), Color.white, FontStyle.Normal);
         descriptionText.verticalOverflow = VerticalWrapMode.Overflow;
 
-        subProgressText = CreateText(panelGO.transform, "SubProgress", font, 13, TextAnchor.UpperLeft,
-            new Vector2(30, -222), new Vector2(270, 20), new Color(0.75f, 0.9f, 0.95f), FontStyle.Italic);
+        subProgressText = CreateText(panelGO.transform, "SubProgress", font, 14, TextAnchor.UpperLeft,
+            Vector2.zero, new Vector2(indentWidth, 20), new Color(0.75f, 0.9f, 0.95f), FontStyle.Italic);
     }
 
     private static Text CreateText(Transform parent, string name, Font font, int size, TextAnchor anchor,
@@ -133,24 +160,48 @@ public class MissionUI : MonoBehaviour
         int hiddenCount = Mathf.Max(0, completedCount - MaxCompletedRows);
         int shownCompleted = Mathf.Min(completedCount, MaxCompletedRows);
 
-        completedSummaryText.enabled = hiddenCount > 0;
-        completedSummaryText.text = hiddenCount > 0 ? ("+ " + hiddenCount + " fases anteriores") : "";
+        float y = TopY;
+        SetRowPosition(headerText, y);
+        y -= HeaderHeight + HeaderGap;
+
+        bool showSummary = hiddenCount > 0;
+        completedSummaryText.enabled = showSummary;
+        if (showSummary)
+        {
+            completedSummaryText.text = "+ " + hiddenCount + " fases anteriores";
+            SetRowPosition(completedSummaryText, y);
+            y -= SummaryHeight + SummaryGap;
+        }
 
         for (int i = 0; i < MaxCompletedRows; i++)
         {
-            bool show = i >= (MaxCompletedRows - shownCompleted);
+            bool show = i < shownCompleted;
             completedRows[i].enabled = show;
             if (!show) continue;
 
-            int phaseIdx = index - shownCompleted + (i - (MaxCompletedRows - shownCompleted));
+            int phaseIdx = index - shownCompleted + i;
             var p = MissionNavigation.Order[phaseIdx];
             completedRows[i].text = "✓ " + MissionNavigation.GetPhaseTitle(p);
+            SetRowPosition(completedRows[i], y);
+            y -= RowHeight + RowGap;
         }
 
+        y -= GapBeforeCurrent;
         currentRowText.text = "● " + nav.CurrentTitle;
+        SetRowPosition(currentRowText, y);
+        y -= CurrentHeight + CurrentGap;
+
         descriptionText.text = nav.CurrentDescription;
+        SetRowPosition(descriptionText, y, IndentX);
+        y -= DescriptionHeight + DescriptionGap;
 
         subProgressText.enabled = !string.IsNullOrEmpty(sub);
         subProgressText.text = sub;
+        SetRowPosition(subProgressText, y, IndentX);
+    }
+
+    private static void SetRowPosition(Text text, float y, float x = MarginX)
+    {
+        text.rectTransform.anchoredPosition = new Vector2(x, y);
     }
 }

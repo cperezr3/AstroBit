@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -58,6 +59,13 @@ public class PauseMenuController : MonoBehaviour
         panelRoot.SetActive(paused);
         Time.timeScale = paused ? 0f : 1f;
         SetPlayerControlEnabled(!paused);
+
+        // Los botones del panel nunca se destruyen, solo se ocultan -- el EventSystem sigue
+        // recordando cual fue clickeado por ultima vez (p.ej. "Continuar"), asi que al
+        // reactivar el panel ese boton se redibuja en estado Selected (borde celeste) sin que
+        // el mouse este encima. Limpiar la seleccion (no los componentes Selectable) al abrir y
+        // al cerrar deja cada apertura visualmente limpia sin afectar Highlighted/Pressed.
+        if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void SetPlayerControlEnabled(bool controlEnabled)
