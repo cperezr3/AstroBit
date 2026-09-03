@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class EducationalInteractable : MonoBehaviour, IInteractable
@@ -51,6 +52,7 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
     private GameObject labelRoot;
     private bool labelVisible;
     private Transform playerTransform;
+    private EmissiveToggle glow;
 
     public string PromptText => promptText;
     public bool CanInteract => state == State.Idle;
@@ -58,6 +60,38 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
     private void Awake()
     {
         BuildLabel();
+        BuildGlow();
+        RefreshVisualState();
+    }
+
+    // Prompt 04_implement (data flow, seccion 7): llamar esto solo desde Awake() NO alcanza para
+    // el caso real de "cargar partida desde el Main Menu" -- SceneManager.LoadScene(...) corre
+    // (y con el, TODOS los Awake() de la escena) antes de que MainMenuController.Continuar()
+    // pueda siquiera llamar a SaveManager.Instance.LoadGame(). En un arranque nuevo del juego,
+    // ObjectiveSystem todavia tiene sus valores por defecto en el momento de este Awake(); recien
+    // se restaura despues. Por eso SaveManager.LoadGame() vuelve a llamar a este metodo
+    // explicitamente tras restaurar ObjectiveSystem (mismo patron ya usado ahi para
+    // FinalActivity.ResumeIfInProgress()). Publico e idempotente a proposito.
+    public void RefreshVisualState()
+    {
+        if (ObjectiveSystem.Instance.IsKeyAchieved(progressionKey))
+            glow?.Activate();
+    }
+
+    // Prompt 03_gran (bloque polish visual, seccion 2): las 6 piezas de la CPU (ALU, Registros,
+    // Unidad de Control, Cache L1/L2/L3) son bloques de color solido sin ningun brillo -- la sala
+    // se sentia como "componentes gigantes colocados en una habitacion" en vez de "el interior de
+    // un procesador funcionando". Cada bloque ya tiene su propio material de instancia (no
+    // compartido, ver m_Name "ALU (Instance)" etc.), asi que se enciende en SU PROPIO color base
+    // en vez de un cian generico -- cada pieza "prende" con su propia identidad al comprenderse.
+    private void BuildGlow()
+    {
+        var renderer = GetComponent<MeshRenderer>();
+        if (renderer == null || renderer.sharedMaterial == null) return;
+
+        Color baseColor = renderer.sharedMaterial.color;
+        glow = gameObject.AddComponent<EmissiveToggle>();
+        glow.Configure(renderer, 0, baseColor, 2f);
     }
 
     private void Update()
@@ -111,6 +145,7 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
     private void HandleCorrectAnswer()
     {
         state = State.Completed;
+        glow?.Activate();
         GameHUD.Instance?.ShowReward(rewardTitle, rewardText, OnRewardContinue);
     }
 
@@ -144,15 +179,13 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
         rt.sizeDelta = new Vector2(400, 100);
         labelRoot.transform.localScale = Vector3.one * 0.012f;
 
-        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
         var titleGO = new GameObject("Title");
         titleGO.transform.SetParent(labelRoot.transform, false);
-        var titleText = titleGO.AddComponent<UnityEngine.UI.Text>();
-        titleText.font = font;
+        var titleText = titleGO.AddComponent<TextMeshProUGUI>();
+        titleText.font = TMP_Settings.defaultFontAsset;
         titleText.fontSize = 34;
-        titleText.fontStyle = FontStyle.Bold;
-        titleText.alignment = TextAnchor.LowerCenter;
+        titleText.fontStyle = FontStyles.Bold;
+        titleText.alignment = TextAlignmentOptions.Bottom;
         titleText.color = new Color(0.35f, 0.95f, 1f);
         titleText.text = title;
         var titleRT = titleGO.GetComponent<RectTransform>();
@@ -165,10 +198,10 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
 
         var subtitleGO = new GameObject("Subtitle");
         subtitleGO.transform.SetParent(labelRoot.transform, false);
-        var subtitleText = subtitleGO.AddComponent<UnityEngine.UI.Text>();
-        subtitleText.font = font;
+        var subtitleText = subtitleGO.AddComponent<TextMeshProUGUI>();
+        subtitleText.font = TMP_Settings.defaultFontAsset;
         subtitleText.fontSize = 22;
-        subtitleText.alignment = TextAnchor.UpperCenter;
+        subtitleText.alignment = TextAlignmentOptions.Top;
         subtitleText.color = Color.white;
         subtitleText.text = subtitle;
         var subtitleRT = subtitleGO.GetComponent<RectTransform>();

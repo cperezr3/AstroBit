@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,15 +39,13 @@ public class WorldLabel : MonoBehaviour
         rt.sizeDelta = new Vector2(400, 100);
         labelRoot.transform.localScale = Vector3.one * 0.012f;
 
-        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
         var titleGO = new GameObject("Title");
         titleGO.transform.SetParent(labelRoot.transform, false);
-        var titleText = titleGO.AddComponent<Text>();
-        titleText.font = font;
+        var titleText = titleGO.AddComponent<TextMeshProUGUI>();
+        titleText.font = TMP_Settings.defaultFontAsset;
         titleText.fontSize = 34;
-        titleText.fontStyle = FontStyle.Bold;
-        titleText.alignment = TextAnchor.LowerCenter;
+        titleText.fontStyle = FontStyles.Bold;
+        titleText.alignment = TextAlignmentOptions.Bottom;
         titleText.color = new Color(0.35f, 0.95f, 1f);
         titleText.text = title;
         var titleRT = titleGO.GetComponent<RectTransform>();
@@ -59,10 +58,10 @@ public class WorldLabel : MonoBehaviour
 
         var subtitleGO = new GameObject("Subtitle");
         subtitleGO.transform.SetParent(labelRoot.transform, false);
-        var subtitleText = subtitleGO.AddComponent<Text>();
-        subtitleText.font = font;
+        var subtitleText = subtitleGO.AddComponent<TextMeshProUGUI>();
+        subtitleText.font = TMP_Settings.defaultFontAsset;
         subtitleText.fontSize = 22;
-        subtitleText.alignment = TextAnchor.UpperCenter;
+        subtitleText.alignment = TextAlignmentOptions.Top;
         subtitleText.color = Color.white;
         subtitleText.text = subtitle;
         var subtitleRT = subtitleGO.GetComponent<RectTransform>();

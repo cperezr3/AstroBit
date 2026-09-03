@@ -26,4 +26,12 @@ public static class GameSession
 
         HasActiveGame = true;
     }
+
+    // Fase 2 (Prompt 35, 9.1): distinto de ResetAll -- se llama tras restaurar una partida
+    // guardada con exito (ver SaveManager.LoadGame via MainMenuController.Continuar), donde el
+    // estado real ya viene de SaveManager y NO debe reiniciarse a cero.
+    public static void MarkActiveGame()
+    {
+        HasActiveGame = true;
+    }
 }

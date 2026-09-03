@@ -93,6 +93,9 @@ public class FinalActivity : MonoBehaviour
         GameHUD.Instance?.HidePanel();
         ObjectiveSystem.Instance.SetObjective("Recorrido completado.");
         ObjectiveSystem.Instance.SetHint("Ya conoces como colaboran la ALU, los Registros, la Unidad de Control, la Cache y la RAM.");
+        // Prompt 02_continuacion (seccion 30): sin esto, el jugador quedaba deambulando con solo
+        // un texto de objetivo actualizado y ninguna sensacion real de cierre tras el recorrido.
+        GameCompleteScreen.Instance?.Show();
     }
 
     private void CloseFinalActivity()
@@ -107,5 +110,25 @@ public class FinalActivity : MonoBehaviour
     {
         started = false;
         questionIndex = 0;
+    }
+
+    // Fase 2 (Prompt 35, 9.1): expuestos solo para SaveManager.
+    public bool Started => started;
+    public int QuestionIndex => questionIndex;
+
+    public void RestoreState(bool started, int questionIndex)
+    {
+        this.started = started;
+        this.questionIndex = Mathf.Clamp(questionIndex, 0, Questions.Length);
+    }
+
+    // Si la partida se guardo a mitad de la actividad final, el punto de ejecucion que la abre
+    // (RAM2) ya quedo consumido (ramExecuted=true) y no puede volver a interactuarse -- sin esto
+    // el jugador se quedaria sin forma de reabrir el panel de preguntas tras cargar. Idempotente:
+    // no hace nada si la actividad no estaba en curso o ya se completo.
+    public void ResumeIfInProgress()
+    {
+        if (!started || questionIndex >= Questions.Length) return;
+        ShowCurrentQuestion();
     }
 }

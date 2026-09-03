@@ -130,6 +130,43 @@ public class ObjectiveSystem : MonoBehaviour
         return achievedKeys.Contains(key);
     }
 
+    // Fase 2 (Prompt 35, 9.1): fuente de verdad para SaveManager -- expone (solo lectura) lo
+    // que hace falta para reconstruir el progreso guardado sin duplicar este estado en otro
+    // sitio. No se agrega ningun campo nuevo, solo lectura de los que ya existian.
+    public System.Collections.Generic.IReadOnlyCollection<string> AchievedKeys => achievedKeys;
+    public int CurrentIndex => currentIndex;
+    public bool SequenceStarted => sequenceStarted;
+
+    // Contraparte de RestoreState de un guardado: repone la progresion exacta que tenia la
+    // partida guardada (a diferencia de ResetState, que siempre vuelve al inicio). Vuelve a
+    // emitir los eventos de objetivo/pista para que GameHUD se actualice de inmediato, igual
+    // que ResetState.
+    public void RestoreState(int index, bool started, System.Collections.Generic.IEnumerable<string> achieved)
+    {
+        currentIndex = Mathf.Clamp(index, 0, Sequence.Length);
+        sequenceStarted = started;
+        achievedKeys.Clear();
+        if (achieved != null)
+        {
+            foreach (var key in achieved) achievedKeys.Add(key);
+        }
+
+        // Nota: si currentIndex ya llego al final de Sequence, no se dispara OnAllStepsCompleted
+        // aqui a proposito -- StorageMission.RestoreState (llamado justo despues por SaveManager)
+        // pone el objetivo/pista correctos para lo que sea que el jugador ya avanzo despues de
+        // aprender CPU/RAM; disparar el evento aqui los pisaria con un texto desactualizado.
+        if (!sequenceStarted)
+        {
+            SetObjective(InitialObjective);
+            SetHint(InitialHint);
+        }
+        else if (currentIndex < Sequence.Length)
+        {
+            SetObjective(Sequence[currentIndex].ObjectiveText);
+            SetHint(Sequence[currentIndex].HintText);
+        }
+    }
+
     // Unica forma de avanzar la progresion real: una actividad resuelta correctamente.
     // Si "key" no es el paso esperado, se registra igualmente (para no repetirlo cuando
     // la progresion llegue a el) pero NO mueve el objetivo actual ni la pista.

@@ -117,6 +117,15 @@ public class StorageMission : MonoBehaviour
     private int wrongShelfIndex;
     private int ramModulesInstalled;
 
+    // Fase 2 (Prompt 35, 9.1): expuestos solo para SaveManager -- mismos campos que ya
+    // controlan CanInteract/CanOpenOnComputer/etc, sin duplicar el estado en otro lado.
+    public bool Started => started;
+    public bool CpuLearnedShown => cpuLearnedShown;
+    public bool RamLoadAttempted => ramLoadAttempted;
+    public bool RamExecuted => ramExecuted;
+    public int WrongShelfIndex => wrongShelfIndex;
+    public int RamModulesInstalled => ramModulesInstalled;
+
     // Detecta hitos dentro de los 8 pasos educativos de CPU/RAM (sin esperar a los 8/8) para
     // avisar en cuanto se completa el subconjunto CPU. RAM completo ya lo cubre OnCpuRamLearned.
     private void OnAnyPieceCompleted(string _)
@@ -290,6 +299,78 @@ public class StorageMission : MonoBehaviour
         ramExecuted = false;
         wrongShelfIndex = 0;
         ramModulesInstalled = 0;
+    }
+
+    // Contraparte de RestoreState de un guardado (Fase 2, Prompt 35, 9.1). A diferencia de
+    // ResetState, repone los campos exactos de la partida guardada y vuelve a fijar el
+    // objetivo/pista correspondientes al punto real donde el jugador se quedo -- ObjectiveSystem
+    // ya fue restaurado antes por SaveManager, pero solo sabe de los 8 pasos CPU/RAM; de aqui en
+    // adelante (recorrido del archivo) esta clase es la unica fuente de verdad del objetivo
+    // visible, igual que ya lo es en el flujo normal (ver cada Report*).
+    public void RestoreState(bool cpuRamLearned, bool fileFound, bool fileRetrieved, bool computerOpened,
+        bool cpuProcessed, bool ramInsufficientDetected, bool ramModulesFullyInstalled,
+        bool started, bool cpuLearnedShown, bool ramLoadAttempted, bool ramExecuted,
+        int wrongShelfIndex, int ramModulesInstalled)
+    {
+        CpuRamLearned = cpuRamLearned;
+        FileFound = fileFound;
+        FileRetrieved = fileRetrieved;
+        ComputerOpened = computerOpened;
+        CpuProcessed = cpuProcessed;
+        RamInsufficientDetected = ramInsufficientDetected;
+        RamModulesFullyInstalled = ramModulesFullyInstalled;
+
+        this.started = started;
+        this.cpuLearnedShown = cpuLearnedShown;
+        this.ramLoadAttempted = ramLoadAttempted;
+        this.ramExecuted = ramExecuted;
+        this.wrongShelfIndex = wrongShelfIndex;
+        this.ramModulesInstalled = ramModulesInstalled;
+
+        UpdateInventoryDisplay();
+
+        if (!started) return; // aun no entro a Zone_Storage; el objetivo de ObjectiveSystem ya es correcto.
+
+        if (ramExecuted)
+        {
+            ObjectiveSystem.Instance.SetObjective("Actividad final: repasa el flujo completo.");
+            ObjectiveSystem.Instance.SetHint("Responde correctamente cada pregunta para terminar el recorrido.");
+        }
+        else if (RamModulesFullyInstalled)
+        {
+            ObjectiveSystem.Instance.SetObjective(ExecuteReadyObjective);
+            ObjectiveSystem.Instance.SetHint(ExecuteReadyHint);
+        }
+        else if (RamInsufficientDetected)
+        {
+            ObjectiveSystem.Instance.SetObjective(CollectedObjective);
+            ObjectiveSystem.Instance.SetHint(CollectedHint);
+        }
+        else if (CpuProcessed)
+        {
+            ObjectiveSystem.Instance.SetObjective(ProcessedObjective);
+            ObjectiveSystem.Instance.SetHint(ProcessedHint);
+        }
+        else if (ComputerOpened)
+        {
+            ObjectiveSystem.Instance.SetObjective(OpenedObjective);
+            ObjectiveSystem.Instance.SetHint(OpenedHint);
+        }
+        else if (FileRetrieved)
+        {
+            ObjectiveSystem.Instance.SetObjective(RetrievedObjective);
+            ObjectiveSystem.Instance.SetHint(RetrievedHint);
+        }
+        else if (FileFound)
+        {
+            ObjectiveSystem.Instance.SetObjective(FoundObjective);
+            ObjectiveSystem.Instance.SetHint(FoundHint);
+        }
+        else
+        {
+            ObjectiveSystem.Instance.SetObjective(SearchObjective);
+            ObjectiveSystem.Instance.SetHint(SearchHint);
+        }
     }
 
     private void UpdateInventoryDisplay()

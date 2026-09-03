@@ -15,6 +15,9 @@ public class MusicManager : MonoBehaviour
 {
     private static MusicManager _instance;
 
+    private AudioSource source;
+    private float baseVolume;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -27,5 +30,20 @@ public class MusicManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Fase 2 (Prompt 35): volumen maestro/musica configurable. baseVolume conserva el 0.25
+        // configurado a mano en el Inspector como el 100% de "Volumen musica"; el multiplicador
+        // de SettingsManager se aplica encima, nunca lo reemplaza.
+        source = GetComponent<AudioSource>();
+        baseVolume = source.volume;
+        ApplyVolume();
+        SettingsManager.Instance.OnSettingsChanged.AddListener(ApplyVolume);
+    }
+
+    private void ApplyVolume()
+    {
+        // Volumen maestro se aplica globalmente via AudioListener.volume (ver SettingsManager);
+        // aqui solo se escala por el canal de musica, para no aplicar el maestro dos veces.
+        source.volume = baseVolume * SettingsManager.Instance.MusicVolume;
     }
 }

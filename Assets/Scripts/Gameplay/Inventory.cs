@@ -45,4 +45,14 @@ public class Inventory : MonoBehaviour
     {
         counts.Clear();
     }
+
+    // Fase 2 (Prompt 35, 9.1): solo lectura para SaveManager, sin exponer el diccionario interno.
+    public IReadOnlyDictionary<string, int> GetAllCounts() => counts;
+
+    public void RestoreState(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, int>> savedCounts)
+    {
+        counts.Clear();
+        if (savedCounts == null) return;
+        foreach (var kv in savedCounts) counts[kv.Key] = kv.Value;
+    }
 }

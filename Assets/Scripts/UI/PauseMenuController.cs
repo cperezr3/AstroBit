@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -5,17 +6,23 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // Menu de pausa (Prompt 28). Responsable unicamente de: abrir/cerrar la pausa, Time.timeScale,
-// visibilidad de su propio Canvas, y las tres acciones del menu (Continuar/Reiniciar/Volver al
-// Menu). No conoce nada de mision/progresion -- eso vive en GameSession y en los sistemas ya
-// existentes.
+// visibilidad de su propio Canvas, y las acciones del menu (Continuar/Configuración/Reiniciar/
+// Volver al Menu). No conoce nada de mision/progresion -- eso vive en GameSession y en los
+// sistemas ya existentes.
 //
 // Mismo patron que GameHUD/MinimapController/MissionUI: singleton unico creado una sola vez
 // via RuntimeInitializeOnLoadMethod + DontDestroyOnLoad, activo solo mientras la escena actual
 // sea SampleScene (igual que el resto de la UI de gameplay se oculta en MainMenu).
+//
+// Fase 2 (Prompt 35, secciones 6-9): migrado a TextMeshPro y agrega el boton "Configuración"
+// (abre SettingsUI, el mismo panel que el Main Menu). "Volver al Menu" ahora guarda la partida
+// antes de salir, para que "Continuar" desde el Main Menu la recupere igual que si se hubiera
+// cerrado el juego.
 public class PauseMenuController : MonoBehaviour
 {
     private const string GameplaySceneName = "SampleScene";
     private const string MenuSceneName = "MainMenu";
+    private static readonly Color AccentCyan = new Color(0f, 1f, 1f, 1f);
 
     private GameObject panelRoot;
     private bool isPaused;
@@ -82,10 +89,16 @@ public class PauseMenuController : MonoBehaviour
         SetPaused(false);
     }
 
+    public void Configuracion()
+    {
+        SettingsUI.Instance.Open();
+    }
+
     public void Reiniciar()
     {
         Time.timeScale = 1f;
         GameSession.ResetAll();
+        SaveManager.Instance.DeleteSave();
         panelRoot.SetActive(false);
         isPaused = false;
         SceneManager.LoadScene(GameplaySceneName);
@@ -93,6 +106,10 @@ public class PauseMenuController : MonoBehaviour
 
     public void VolverAlMenu()
     {
+        // Fase 2 (Prompt 35, 9.1): guarda antes de salir para que "Continuar" desde el Main Menu
+        // recupere exactamente este punto, igual que si el jugador hubiera cerrado AstroBit aqui.
+        SaveManager.Instance.SaveGame();
+
         Time.timeScale = 1f;
         panelRoot.SetActive(false);
         isPaused = false;
@@ -124,28 +141,23 @@ public class PauseMenuController : MonoBehaviour
         var backdrop = panelRoot.AddComponent<Image>();
         backdrop.color = new Color(0f, 0f, 0f, 0.75f);
 
-        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
         var titleGO = new GameObject("Title");
         titleGO.transform.SetParent(panelRoot.transform, false);
         var titleRT = titleGO.AddComponent<RectTransform>();
         titleRT.anchorMin = titleRT.anchorMax = new Vector2(0.5f, 0.5f);
-        titleRT.anchoredPosition = new Vector2(0, 180);
+        titleRT.anchoredPosition = new Vector2(0, 210);
         titleRT.sizeDelta = new Vector2(600, 80);
-        var titleText = titleGO.AddComponent<Text>();
-        titleText.font = font;
+        var titleText = titleGO.AddComponent<TextMeshProUGUI>();
         titleText.fontSize = 44;
-        titleText.fontStyle = FontStyle.Bold;
-        titleText.alignment = TextAnchor.MiddleCenter;
-        titleText.color = new Color(0.35f, 0.95f, 1f);
+        titleText.fontStyle = FontStyles.Bold;
+        titleText.alignment = TextAlignmentOptions.Center;
+        titleText.color = AccentCyan;
         titleText.text = "PAUSA";
-        var titleOutline = titleGO.AddComponent<Outline>();
-        titleOutline.effectColor = new Color(0f, 0f, 0f, 0.9f);
-        titleOutline.effectDistance = new Vector2(2f, -2f);
 
-        CreateMenuButton(panelRoot.transform, "Continuar", "CONTINUAR", 60f, Continuar);
-        CreateMenuButton(panelRoot.transform, "Reiniciar", "REINICIAR", -32f, Reiniciar);
-        CreateMenuButton(panelRoot.transform, "VolverAlMenu", "VOLVER AL MENÚ", -124f, VolverAlMenu);
+        CreateMenuButton(panelRoot.transform, "Continuar", "CONTINUAR", 108f, Continuar);
+        CreateMenuButton(panelRoot.transform, "Configuracion", "CONFIGURACIÓN", 24f, Configuracion);
+        CreateMenuButton(panelRoot.transform, "Reiniciar", "REINICIAR SECCIÓN", -60f, Reiniciar);
+        CreateMenuButton(panelRoot.transform, "VolverAlMenu", "VOLVER AL MENÚ", -144f, VolverAlMenu);
 
         panelRoot.SetActive(false);
     }
@@ -181,7 +193,6 @@ public class PauseMenuController : MonoBehaviour
         outline.effectColor = new Color(0, 1, 1, 1);
         outline.effectDistance = new Vector2(2, 2);
 
-        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         var labelGO = new GameObject("Label");
         labelGO.transform.SetParent(btnGO.transform, false);
         var labelRT = labelGO.AddComponent<RectTransform>();
@@ -189,11 +200,10 @@ public class PauseMenuController : MonoBehaviour
         labelRT.anchorMax = Vector2.one;
         labelRT.offsetMin = Vector2.zero;
         labelRT.offsetMax = Vector2.zero;
-        var labelText = labelGO.AddComponent<Text>();
-        labelText.font = font;
-        labelText.fontSize = 28;
-        labelText.fontStyle = FontStyle.Bold;
-        labelText.alignment = TextAnchor.MiddleCenter;
+        var labelText = labelGO.AddComponent<TextMeshProUGUI>();
+        labelText.fontSize = 26;
+        labelText.fontStyle = FontStyles.Bold;
+        labelText.alignment = TextAlignmentOptions.Center;
         labelText.color = Color.white;
         labelText.text = label;
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,31 +24,38 @@ public class GameHUD : MonoBehaviour
 
     private Transform hudCanvasTransform;
 
-    private Text objectiveText;
-    private Text hintText;
-    private Text promptText;
-    private Text feedbackText;
+    private TextMeshProUGUI objectiveText;
+    private TextMeshProUGUI hintText;
+    private RectTransform promptRoot;
+    private CanvasGroup promptCanvasGroup;
+    private TextMeshProUGUI promptKeyLabel;
+    private TextMeshProUGUI promptActionLabel;
+    private Coroutine promptAnimRoutine;
+    private const float PromptShownY = 130f;
+    private const float PromptSlideOffset = 14f;
+    private const float PromptFadeDuration = 0.12f;
+    private TextMeshProUGUI feedbackText;
     private Coroutine feedbackRoutine;
 
-    private Text locationText;
-    private Text locationSubtitleText;
+    private TextMeshProUGUI locationText;
+    private TextMeshProUGUI locationSubtitleText;
     private Coroutine locationSubtitleRoutine;
 
-    private Text progressText;
-    private Text inventoryText;
+    private TextMeshProUGUI progressText;
+    private TextMeshProUGUI inventoryText;
 
     private GameObject panelRoot;
-    private Text panelTitleText;
-    private Text panelSubtitleText;
-    private Text panelBodyText;
-    private Text panelQuestionText;
-    private Text panelResultText;
-    private InputField panelInputField;
+    private TextMeshProUGUI panelTitleText;
+    private TextMeshProUGUI panelSubtitleText;
+    private TextMeshProUGUI panelBodyText;
+    private TextMeshProUGUI panelQuestionText;
+    private TextMeshProUGUI panelResultText;
+    private TMP_InputField panelInputField;
     private Button panelPrimaryButton;
-    private Text panelPrimaryButtonLabel;
+    private TextMeshProUGUI panelPrimaryButtonLabel;
     private Button panelCloseButton;
     private Button[] panelOptionButtons;
-    private Text[] panelOptionLabels;
+    private TextMeshProUGUI[] panelOptionLabels;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -77,7 +85,7 @@ public class GameHUD : MonoBehaviour
 
         SetObjectiveText(ObjectiveSystem.Instance.CurrentObjective);
         SetHintText(ObjectiveSystem.Instance.CurrentHint);
-        HidePrompt();
+        HidePromptImmediate();
         HideFeedbackImmediate();
         SetLocation("", "");
         UpdateProgressText();
@@ -117,38 +125,103 @@ public class GameHUD : MonoBehaviour
         scaler.referenceResolution = new Vector2(1920, 1080);
         canvasGO.AddComponent<GraphicRaycaster>();
 
-        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
-        objectiveText = CreateText(canvasGO.transform, "ObjectiveText", font, 28, TextAnchor.UpperLeft,
+        objectiveText = CreateText(canvasGO.transform, "ObjectiveText", 28, TextAlignmentOptions.TopLeft,
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(20, -20), new Vector2(760, 40));
 
-        hintText = CreateText(canvasGO.transform, "HintText", font, 19, TextAnchor.UpperLeft,
+        hintText = CreateText(canvasGO.transform, "HintText", 19, TextAlignmentOptions.TopLeft,
             new Vector2(0, 1), new Vector2(0, 1), new Vector2(20, -58), new Vector2(760, 50));
         hintText.color = new Color(0.75f, 0.9f, 0.95f);
 
-        promptText = CreateText(canvasGO.transform, "PromptText", font, 32, TextAnchor.MiddleCenter,
-            new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 120), new Vector2(400, 50));
+        CreatePromptUI(canvasGO.transform);
 
-        feedbackText = CreateText(canvasGO.transform, "FeedbackText", font, 26, TextAnchor.LowerCenter,
+        feedbackText = CreateText(canvasGO.transform, "FeedbackText", 26, TextAlignmentOptions.Bottom,
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 190), new Vector2(960, 90));
 
-        locationText = CreateText(canvasGO.transform, "LocationText", font, 30, TextAnchor.UpperCenter,
+        locationText = CreateText(canvasGO.transform, "LocationText", 30, TextAlignmentOptions.Top,
             new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -20), new Vector2(500, 40));
-        locationText.fontStyle = FontStyle.Bold;
+        locationText.fontStyle = FontStyles.Bold;
         locationText.color = new Color(0.35f, 0.95f, 1f);
 
-        locationSubtitleText = CreateText(canvasGO.transform, "LocationSubtitleText", font, 18, TextAnchor.UpperCenter,
+        locationSubtitleText = CreateText(canvasGO.transform, "LocationSubtitleText", 18, TextAlignmentOptions.Top,
             new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -56), new Vector2(500, 30));
         locationSubtitleText.color = new Color(0.85f, 0.85f, 0.85f);
 
-        progressText = CreateText(canvasGO.transform, "ProgressText", font, 22, TextAnchor.UpperRight,
+        progressText = CreateText(canvasGO.transform, "ProgressText", 22, TextAlignmentOptions.TopRight,
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -20), new Vector2(200, 36));
         progressText.color = new Color(0.75f, 0.9f, 0.95f);
 
-        inventoryText = CreateText(canvasGO.transform, "InventoryText", font, 20, TextAnchor.UpperRight,
+        inventoryText = CreateText(canvasGO.transform, "InventoryText", 20, TextAlignmentOptions.TopRight,
             new Vector2(1, 1), new Vector2(1, 1), new Vector2(-20, -60), new Vector2(200, 30));
         inventoryText.color = new Color(0.75f, 0.9f, 0.95f);
         inventoryText.enabled = false;
+    }
+
+    // Prompt 01_maestro (seccion 18): antes era un unico TextMeshProUGUI con el texto crudo
+    // "[E] Interactuar" y un SetActive instantaneo. Ahora la tecla se separa visualmente en su
+    // propia "credencial" (fondo + borde) apilada sobre la accion, y aparece/desaparece con un
+    // fundido + deslizamiento breve en vez de un corte seco. Reutiliza la convencion de texto
+    // "[X] Accion" que ya usan los 7 IInteractable existentes -- no hace falta tocarlos.
+    private void CreatePromptUI(Transform parent)
+    {
+        var rootGO = new GameObject("PromptRoot", typeof(RectTransform));
+        rootGO.transform.SetParent(parent, false);
+        promptRoot = rootGO.GetComponent<RectTransform>();
+        promptRoot.anchorMin = promptRoot.anchorMax = promptRoot.pivot = new Vector2(0.5f, 0f);
+        promptRoot.sizeDelta = new Vector2(320, 78);
+        promptRoot.anchoredPosition = new Vector2(0, PromptShownY - PromptSlideOffset);
+        promptCanvasGroup = rootGO.AddComponent<CanvasGroup>();
+        promptCanvasGroup.alpha = 0f;
+        promptCanvasGroup.blocksRaycasts = false;
+        promptCanvasGroup.interactable = false;
+
+        var badgeGO = new GameObject("KeyBadge", typeof(RectTransform));
+        badgeGO.transform.SetParent(rootGO.transform, false);
+        var badgeRT = badgeGO.GetComponent<RectTransform>();
+        badgeRT.anchorMin = badgeRT.anchorMax = new Vector2(0.5f, 1f);
+        badgeRT.pivot = new Vector2(0.5f, 1f);
+        badgeRT.anchoredPosition = Vector2.zero;
+        badgeRT.sizeDelta = new Vector2(40, 40);
+        var badgeImg = badgeGO.AddComponent<Image>();
+        badgeImg.color = new Color(0f, 0f, 0f, 0.55f);
+        badgeImg.raycastTarget = false;
+        var badgeOutline = badgeGO.AddComponent<Outline>();
+        badgeOutline.effectColor = new Color(0.35f, 0.95f, 1f);
+        badgeOutline.effectDistance = new Vector2(1.5f, -1.5f);
+
+        var keyLabelGO = new GameObject("KeyLabel", typeof(RectTransform));
+        keyLabelGO.transform.SetParent(badgeGO.transform, false);
+        var keyLabelRT = keyLabelGO.GetComponent<RectTransform>();
+        keyLabelRT.anchorMin = Vector2.zero;
+        keyLabelRT.anchorMax = Vector2.one;
+        keyLabelRT.offsetMin = Vector2.zero;
+        keyLabelRT.offsetMax = Vector2.zero;
+        promptKeyLabel = keyLabelGO.AddComponent<TextMeshProUGUI>();
+        promptKeyLabel.font = TMP_Settings.defaultFontAsset;
+        promptKeyLabel.fontSize = 24;
+        promptKeyLabel.fontStyle = FontStyles.Bold;
+        promptKeyLabel.alignment = TextAlignmentOptions.Center;
+        promptKeyLabel.color = new Color(0.35f, 0.95f, 1f);
+        promptKeyLabel.raycastTarget = false;
+
+        var actionGO = new GameObject("ActionLabel", typeof(RectTransform));
+        actionGO.transform.SetParent(rootGO.transform, false);
+        var actionRT = actionGO.GetComponent<RectTransform>();
+        actionRT.anchorMin = actionRT.anchorMax = new Vector2(0.5f, 0f);
+        actionRT.pivot = new Vector2(0.5f, 0f);
+        actionRT.anchoredPosition = Vector2.zero;
+        actionRT.sizeDelta = new Vector2(320, 32);
+        promptActionLabel = actionGO.AddComponent<TextMeshProUGUI>();
+        promptActionLabel.font = TMP_Settings.defaultFontAsset;
+        promptActionLabel.fontSize = 26;
+        promptActionLabel.fontStyle = FontStyles.Bold;
+        promptActionLabel.alignment = TextAlignmentOptions.Center;
+        promptActionLabel.color = Color.white;
+        promptActionLabel.raycastTarget = false;
+        var actionOutline = actionGO.AddComponent<Outline>();
+        actionOutline.effectColor = new Color(0f, 0f, 0f, 0.85f);
+        actionOutline.effectDistance = new Vector2(1.5f, -1.5f);
+
+        rootGO.SetActive(false);
     }
 
     // Contador simple "X/8" de componentes comprendidos. Se actualiza con el mismo evento
@@ -176,7 +249,7 @@ public class GameHUD : MonoBehaviour
         inventoryText.enabled = show;
     }
 
-    private static Text CreateText(Transform parent, string name, Font font, int size, TextAnchor anchor,
+    private static TextMeshProUGUI CreateText(Transform parent, string name, int size, TextAlignmentOptions anchor,
         Vector2 anchorMin, Vector2 anchorMax, Vector2 anchoredPos, Vector2 sizeDelta)
     {
         var go = new GameObject(name);
@@ -189,14 +262,14 @@ public class GameHUD : MonoBehaviour
         rt.anchoredPosition = anchoredPos;
         rt.sizeDelta = sizeDelta;
 
-        var text = go.AddComponent<Text>();
-        text.font = font;
+        var text = go.AddComponent<TextMeshProUGUI>();
+        text.font = TMP_Settings.defaultFontAsset;
         text.fontSize = size;
         text.alignment = anchor;
         text.color = Color.white;
         text.text = "";
-        text.horizontalOverflow = HorizontalWrapMode.Wrap;
-        text.verticalOverflow = VerticalWrapMode.Overflow;
+        text.textWrappingMode = TextWrappingModes.Normal;
+        text.overflowMode = TextOverflowModes.Overflow;
 
         var outline = go.AddComponent<Outline>();
         outline.effectColor = new Color(0f, 0f, 0f, 0.85f);
@@ -265,16 +338,72 @@ public class GameHUD : MonoBehaviour
 
     public void ShowPrompt(string text)
     {
-        if (promptText == null) return;
-        promptText.text = text;
-        promptText.enabled = true;
+        if (promptRoot == null) return;
+        ApplyPromptText(text);
+        promptRoot.gameObject.SetActive(true);
+        AnimatePrompt(show: true);
     }
 
     public void HidePrompt()
     {
-        if (promptText == null) return;
-        promptText.text = "";
-        promptText.enabled = false;
+        if (promptRoot == null) return;
+        AnimatePrompt(show: false);
+    }
+
+    private void HidePromptImmediate()
+    {
+        if (promptRoot == null) return;
+        if (promptAnimRoutine != null) { StopCoroutine(promptAnimRoutine); promptAnimRoutine = null; }
+        promptCanvasGroup.alpha = 0f;
+        promptRoot.anchoredPosition = new Vector2(0, PromptShownY - PromptSlideOffset);
+        promptRoot.gameObject.SetActive(false);
+    }
+
+    // Convencion existente en los IInteractable del proyecto: "[X] Accion" (ver FileShelf,
+    // EducationalInteractable, CollectibleRam, etc.). Si algun texto no la sigue, se muestra
+    // completo en la etiqueta de accion y la credencial de tecla cae de vuelta a "E".
+    private void ApplyPromptText(string text)
+    {
+        string key = "E";
+        string action = text ?? "";
+        if (action.StartsWith("[", StringComparison.Ordinal))
+        {
+            int close = action.IndexOf(']');
+            if (close > 0)
+            {
+                key = action.Substring(1, close - 1);
+                action = action.Substring(close + 1).Trim();
+            }
+        }
+        promptKeyLabel.text = key;
+        promptActionLabel.text = action.ToUpperInvariant();
+    }
+
+    private void AnimatePrompt(bool show)
+    {
+        if (promptAnimRoutine != null) StopCoroutine(promptAnimRoutine);
+        promptAnimRoutine = StartCoroutine(AnimatePromptRoutine(show));
+    }
+
+    private IEnumerator AnimatePromptRoutine(bool show)
+    {
+        float startAlpha = promptCanvasGroup.alpha;
+        float endAlpha = show ? 1f : 0f;
+        float endY = show ? PromptShownY : PromptShownY - PromptSlideOffset;
+        float startY = promptRoot.anchoredPosition.y;
+        float t = 0f;
+        while (t < PromptFadeDuration)
+        {
+            t += Time.deltaTime;
+            float f = Mathf.Clamp01(t / PromptFadeDuration);
+            promptCanvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, f);
+            promptRoot.anchoredPosition = new Vector2(0, Mathf.Lerp(startY, endY, f));
+            yield return null;
+        }
+        promptCanvasGroup.alpha = endAlpha;
+        promptRoot.anchoredPosition = new Vector2(0, endY);
+        if (!show) promptRoot.gameObject.SetActive(false);
+        promptAnimRoutine = null;
     }
 
     // duration: null usa feedbackDuration (comportamiento normal para el resto de mensajes).
@@ -335,49 +464,47 @@ public class GameHUD : MonoBehaviour
         boxRT.sizeDelta = new Vector2(720, 460);
         boxRT.anchoredPosition = Vector2.zero;
 
-        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
-        panelTitleText = CreatePanelText(boxGO.transform, "Title", font, 32, TextAnchor.UpperCenter,
-            new Vector2(0, 190), new Vector2(660, 50), new Color(0.35f, 0.95f, 1f), FontStyle.Bold);
-        panelSubtitleText = CreatePanelText(boxGO.transform, "Subtitle", font, 22, TextAnchor.UpperCenter,
-            new Vector2(0, 145), new Vector2(660, 35), new Color(0.75f, 0.9f, 0.95f), FontStyle.Normal);
-        panelBodyText = CreatePanelText(boxGO.transform, "Body", font, 24, TextAnchor.UpperLeft,
-            new Vector2(0, 10), new Vector2(660, 230), Color.white, FontStyle.Normal);
+        panelTitleText = CreatePanelText(boxGO.transform, "Title", 32, TextAlignmentOptions.Top,
+            new Vector2(0, 190), new Vector2(660, 50), new Color(0.35f, 0.95f, 1f), FontStyles.Bold);
+        panelSubtitleText = CreatePanelText(boxGO.transform, "Subtitle", 22, TextAlignmentOptions.Top,
+            new Vector2(0, 145), new Vector2(660, 35), new Color(0.75f, 0.9f, 0.95f), FontStyles.Normal);
+        panelBodyText = CreatePanelText(boxGO.transform, "Body", 24, TextAlignmentOptions.TopLeft,
+            new Vector2(0, 10), new Vector2(660, 230), Color.white, FontStyles.Normal);
         // Texto informativo (Panel 1) y de recompensa (Panel 3): igual que la pregunta del
         // Panel 2, nunca debe cortarse aunque la descripcion sea larga.
-        panelBodyText.verticalOverflow = VerticalWrapMode.Overflow;
-        panelQuestionText = CreatePanelText(boxGO.transform, "Question", font, 28, TextAnchor.MiddleCenter,
-            new Vector2(0, 90), new Vector2(660, 130), Color.white, FontStyle.Bold);
+        panelBodyText.overflowMode = TextOverflowModes.Overflow;
+        panelQuestionText = CreatePanelText(boxGO.transform, "Question", 28, TextAlignmentOptions.Center,
+            new Vector2(0, 90), new Vector2(660, 130), Color.white, FontStyles.Bold);
         // Las preguntas conceptuales pueden ocupar 2-3 lineas; a diferencia del resto de textos
         // del panel (que se truncan si no caben), esta nunca debe cortarse.
-        panelQuestionText.verticalOverflow = VerticalWrapMode.Overflow;
-        panelResultText = CreatePanelText(boxGO.transform, "Result", font, 20, TextAnchor.MiddleCenter,
-            new Vector2(0, -30), new Vector2(660, 35), new Color(1f, 0.45f, 0.45f), FontStyle.Normal);
+        panelQuestionText.overflowMode = TextOverflowModes.Overflow;
+        panelResultText = CreatePanelText(boxGO.transform, "Result", 20, TextAlignmentOptions.Center,
+            new Vector2(0, -30), new Vector2(660, 35), new Color(1f, 0.45f, 0.45f), FontStyles.Normal);
 
-        panelInputField = CreateInputField(boxGO.transform, font, new Vector2(0, -90), new Vector2(220, 50));
+        panelInputField = CreateInputField(boxGO.transform, new Vector2(0, -90), new Vector2(220, 50));
 
         panelOptionButtons = new Button[ChoiceOptionCount];
-        panelOptionLabels = new Text[ChoiceOptionCount];
+        panelOptionLabels = new TextMeshProUGUI[ChoiceOptionCount];
         for (int i = 0; i < ChoiceOptionCount; i++)
         {
-            var optionButton = CreateButton(boxGO.transform, "Option" + i, font, new Vector2(0, -10 - i * 60),
-                new Vector2(500, 50), new Color(0.15f, 0.2f, 0.24f), out Text optionLabel);
+            var optionButton = CreateButton(boxGO.transform, "Option" + i, new Vector2(0, -10 - i * 60),
+                new Vector2(500, 50), new Color(0.15f, 0.2f, 0.24f), out TextMeshProUGUI optionLabel);
             panelOptionButtons[i] = optionButton;
             panelOptionLabels[i] = optionLabel;
         }
 
-        panelCloseButton = CreateButton(boxGO.transform, "CloseButton", font, new Vector2(-165, -200),
-            new Vector2(220, 55), new Color(0.25f, 0.28f, 0.32f), out _);
-        panelCloseButton.GetComponentInChildren<Text>().text = "Cerrar";
+        panelCloseButton = CreateButton(boxGO.transform, "CloseButton", new Vector2(-165, -200),
+            new Vector2(220, 55), new Color(0.25f, 0.28f, 0.32f), out TextMeshProUGUI closeLabel);
+        closeLabel.text = "Cerrar";
 
-        panelPrimaryButton = CreateButton(boxGO.transform, "PrimaryButton", font, new Vector2(165, -200),
+        panelPrimaryButton = CreateButton(boxGO.transform, "PrimaryButton", new Vector2(165, -200),
             new Vector2(220, 55), new Color(0.15f, 0.55f, 0.65f), out panelPrimaryButtonLabel);
 
         panelRoot.SetActive(false);
     }
 
-    private static Text CreatePanelText(Transform parent, string name, Font font, int size, TextAnchor anchor,
-        Vector2 anchoredPos, Vector2 sizeDelta, Color color, FontStyle style)
+    private static TextMeshProUGUI CreatePanelText(Transform parent, string name, int size, TextAlignmentOptions anchor,
+        Vector2 anchoredPos, Vector2 sizeDelta, Color color, FontStyles style)
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);
@@ -387,20 +514,20 @@ public class GameHUD : MonoBehaviour
         rt.sizeDelta = sizeDelta;
         rt.anchoredPosition = anchoredPos;
 
-        var text = go.AddComponent<Text>();
-        text.font = font;
+        var text = go.AddComponent<TextMeshProUGUI>();
+        text.font = TMP_Settings.defaultFontAsset;
         text.fontSize = size;
         text.fontStyle = style;
         text.alignment = anchor;
         text.color = color;
         text.text = "";
-        text.horizontalOverflow = HorizontalWrapMode.Wrap;
-        text.verticalOverflow = VerticalWrapMode.Truncate;
+        text.textWrappingMode = TextWrappingModes.Normal;
+        text.overflowMode = TextOverflowModes.Truncate;
 
         return text;
     }
 
-    private static InputField CreateInputField(Transform parent, Font font, Vector2 anchoredPos, Vector2 sizeDelta)
+    private static TMP_InputField CreateInputField(Transform parent, Vector2 anchoredPos, Vector2 sizeDelta)
     {
         var go = new GameObject("AnswerInput");
         go.transform.SetParent(parent, false);
@@ -413,31 +540,41 @@ public class GameHUD : MonoBehaviour
         var image = go.AddComponent<Image>();
         image.color = new Color(1f, 1f, 1f, 0.92f);
 
-        var inputField = go.AddComponent<InputField>();
-        inputField.contentType = InputField.ContentType.IntegerNumber;
+        var inputField = go.AddComponent<TMP_InputField>();
+        inputField.contentType = TMP_InputField.ContentType.IntegerNumber;
         inputField.characterLimit = 6;
-        inputField.lineType = InputField.LineType.SingleLine;
+        inputField.lineType = TMP_InputField.LineType.SingleLine;
+
+        var viewportGO = new GameObject("TextViewport");
+        viewportGO.transform.SetParent(go.transform, false);
+        var viewportRT = viewportGO.AddComponent<RectTransform>();
+        viewportRT.anchorMin = Vector2.zero;
+        viewportRT.anchorMax = Vector2.one;
+        viewportRT.offsetMin = new Vector2(10, 4);
+        viewportRT.offsetMax = new Vector2(-10, -4);
+        viewportGO.AddComponent<RectMask2D>();
 
         var textGO = new GameObject("Text");
-        textGO.transform.SetParent(go.transform, false);
+        textGO.transform.SetParent(viewportGO.transform, false);
         var textRT = textGO.AddComponent<RectTransform>();
         textRT.anchorMin = Vector2.zero;
         textRT.anchorMax = Vector2.one;
-        textRT.offsetMin = new Vector2(10, 4);
-        textRT.offsetMax = new Vector2(-10, -4);
-        var textComp = textGO.AddComponent<Text>();
-        textComp.font = font;
+        textRT.offsetMin = Vector2.zero;
+        textRT.offsetMax = Vector2.zero;
+        var textComp = textGO.AddComponent<TextMeshProUGUI>();
+        textComp.font = TMP_Settings.defaultFontAsset;
         textComp.fontSize = 26;
-        textComp.alignment = TextAnchor.MiddleCenter;
+        textComp.alignment = TextAlignmentOptions.Center;
         textComp.color = Color.black;
 
+        inputField.textViewport = viewportRT;
         inputField.textComponent = textComp;
 
         return inputField;
     }
 
-    private static Button CreateButton(Transform parent, string name, Font font, Vector2 anchoredPos,
-        Vector2 sizeDelta, Color color, out Text label)
+    private static Button CreateButton(Transform parent, string name, Vector2 anchoredPos,
+        Vector2 sizeDelta, Color color, out TextMeshProUGUI label)
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);
@@ -459,10 +596,10 @@ public class GameHUD : MonoBehaviour
         labelRT.anchorMax = Vector2.one;
         labelRT.offsetMin = Vector2.zero;
         labelRT.offsetMax = Vector2.zero;
-        label = labelGO.AddComponent<Text>();
-        label.font = font;
+        label = labelGO.AddComponent<TextMeshProUGUI>();
+        label.font = TMP_Settings.defaultFontAsset;
         label.fontSize = 22;
-        label.alignment = TextAnchor.MiddleCenter;
+        label.alignment = TextAlignmentOptions.Center;
         label.color = Color.white;
 
         return button;
