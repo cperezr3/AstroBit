@@ -41,8 +41,14 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
     [SerializeField] private string[] conceptOptions = new string[3];
     [SerializeField] private int conceptCorrectIndex = 0;
 
+    // Bug preexistente (encontrado durante Prompt 09, Bloque 1): "LiberationSans SDF - Fallback"
+    // es un font Dynamic cuyo source (Liberation Sans) no incluye los glifos de simbolos como
+    // el check "✓" (U+2713) ni la cruz "✗" (U+2717) -- TMP los reemplaza en pantalla por "□".
+    // "->"/flechas/circulos (ya usados en GameCompleteScreen/MissionUI) SI funcionan porque
+    // Liberation Sans si trae esos glifos. Por eso "[OK]"/"[ERROR]" (ASCII puro, siempre
+    // disponible) en vez de "✓"/"✗" en todo texto nuevo de recompensa/error.
     [Header("Recompensa")]
-    [SerializeField] private string rewardTitle = "✓ ALU ANALIZADA";
+    [SerializeField] private string rewardTitle = "[OK] ALU ANALIZADA";
     [TextArea]
     [SerializeField] private string rewardText = "Has aprendido como la Unidad Aritmetico-Logica procesa operaciones.";
     [SerializeField] private string objectiveCompletedText = "Objetivo completado: ALU analizada.";
@@ -131,7 +137,7 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
         if (answer == correctAnswer)
             HandleCorrectAnswer();
         else
-            GameHUD.Instance?.ShowActivityError("✗ Resultado incorrecto. Intentalo nuevamente.");
+            GameHUD.Instance?.ShowActivityError("[ERROR] Resultado incorrecto. Intentalo nuevamente.");
     }
 
     private void SubmitChoice(int optionIndex)
@@ -139,7 +145,7 @@ public class EducationalInteractable : MonoBehaviour, IInteractable
         if (optionIndex == conceptCorrectIndex)
             HandleCorrectAnswer();
         else
-            GameHUD.Instance?.ShowActivityError("✗ No es correcto. Intentalo de nuevo.");
+            GameHUD.Instance?.ShowActivityError("[ERROR] No es correcto. Intentalo de nuevo.");
     }
 
     private void HandleCorrectAnswer()

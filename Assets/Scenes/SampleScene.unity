@@ -309,7 +309,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873270}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 827343497}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
   - RAM
   - CACHE
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 ALU COMPRENDIDA"
+  rewardTitle: '[OK] ALU COMPRENDIDA'
   rewardText: Has aprendido que la ALU es el componente que realiza operaciones aritmeticas
     y logicas sobre los datos.
   objectiveCompletedText: 'Objetivo completado: ALU comprendida.'
@@ -4585,7 +4585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46016744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.08624849, y: 0.70301, z: -0.086544484, w: 0.70060563}
   m_LocalPosition: {x: 0, y: 0.00000047683716, z: -0.0000019073486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6269,7 +6269,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62732884}
-  m_Material: {fileID: 1552824992}
+  m_Material: {fileID: 1464126252}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6388,7 +6388,7 @@ MonoBehaviour:
   - RAM
   - CACHE L1
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 CACHE L2 COMPRENDIDA"
+  rewardTitle: '[OK] CACHE L2 COMPRENDIDA'
   rewardText: Has aprendido que la Cache L2 tiene mas capacidad que la L1, a cambio
     de ser un poco mas lenta.
   objectiveCompletedText: 'Objetivo completado: Cache L2 comprendida.'
@@ -8502,7 +8502,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84312258}
-  m_Material: {fileID: 760739923}
+  m_Material: {fileID: 1993741722}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -8622,7 +8622,7 @@ MonoBehaviour:
   - RAM
   - UNIDAD DE CONTROL
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 CACHE L3 COMPRENDIDA"
+  rewardTitle: '[OK] CACHE L3 COMPRENDIDA'
   rewardText: Has aprendido que la Cache L3 es el ultimo y mayor nivel de cache,
     compartido por los nucleos, antes de acceder a la RAM.
   objectiveCompletedText: 'Objetivo completado: Cache L3 comprendida.'
@@ -10484,7 +10484,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105373347}
-  m_Material: {fileID: 566692277}
+  m_Material: {fileID: 2076676305}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -10606,7 +10606,7 @@ MonoBehaviour:
   - UNIDAD DE CONTROL
   - RAM
   conceptCorrectIndex: 1
-  rewardTitle: "\u2713 UNIDAD DE CONTROL COMPRENDIDA"
+  rewardTitle: '[OK] UNIDAD DE CONTROL COMPRENDIDA'
   rewardText: Has aprendido que la Unidad de Control coordina la ejecucion de instrucciones
     entre la ALU, los registros y la memoria.
   objectiveCompletedText: 'Objetivo completado: Unidad de Control comprendida.'
@@ -37043,7 +37043,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386021350}
-  m_Material: {fileID: 657234819}
+  m_Material: {fileID: 633891607}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -37164,7 +37164,7 @@ MonoBehaviour:
   - RAM
   - CACHE L3
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 CACHE L1 COMPRENDIDA"
+  rewardTitle: '[OK] CACHE L1 COMPRENDIDA'
   rewardText: Has aprendido que la Cache L1 es la memoria mas rapida, la mas pequena
     y la mas cercana al procesador.
   objectiveCompletedText: 'Objetivo completado: Cache L1 comprendida.'
@@ -54629,19 +54629,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566242117}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!134 &566692277
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &567114119
 GameObject:
   m_ObjectHideFlags: 0
@@ -60951,6 +60938,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 633271790}
   m_PrefabAsset: {fileID: 0}
+--- !u!134 &633891607
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &633944024
 GameObject:
   m_ObjectHideFlags: 0
@@ -63069,6 +63069,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650798188}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &650820372
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &650913085
 GameObject:
   m_ObjectHideFlags: 0
@@ -63465,19 +63478,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 656929364}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &657234819
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &660574152
 GameObject:
   m_ObjectHideFlags: 0
@@ -69277,7 +69277,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725825229}
-  m_Material: {fileID: 1014378272}
+  m_Material: {fileID: 650820372}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -69592,7 +69592,7 @@ MonoBehaviour:
   - CACHE
   - REGISTROS
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 RAM COMPRENDIDA"
+  rewardTitle: '[OK] RAM COMPRENDIDA'
   rewardText: Has aprendido que la RAM mantiene temporalmente los programas y datos
     en uso, y se borra al apagar el equipo.
   objectiveCompletedText: 'Objetivo completado: RAM comprendida.'
@@ -72806,19 +72806,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 760411893}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &760739923
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &760932988
 GameObject:
   m_ObjectHideFlags: 0
@@ -79342,7 +79329,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813948712}
-  m_Material: {fileID: 885311213}
+  m_Material: {fileID: 1470502759}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -79467,7 +79454,7 @@ MonoBehaviour:
   - DISCO
   - MONITOR
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 REGISTROS COMPRENDIDOS"
+  rewardTitle: '[OK] REGISTROS COMPRENDIDOS'
   rewardText: Has aprendido que los registros almacenan temporalmente, dentro de
     la propia CPU, los datos que se usan al instante.
   objectiveCompletedText: 'Objetivo completado: Registros comprendidos.'
@@ -81229,6 +81216,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826858151}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &827343497
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &829244593
 GameObject:
   m_ObjectHideFlags: 0
@@ -85801,19 +85801,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884164161}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!134 &885311213
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &885319868
 GameObject:
   m_ObjectHideFlags: 0
@@ -99179,19 +99166,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014357282}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!134 &1014378272
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1001 &1015941943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102351,9 +102325,7 @@ Transform:
   m_LocalPosition: {x: 30.348501, y: 2.0644102, z: 29.197176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1824161695}
-  - {fileID: 436711648}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1064202180
@@ -108170,19 +108142,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
   m_PrefabInstance: {fileID: 1124386849}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &1124940702
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ' (Instance)'
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &1126444299
 GameObject:
   m_ObjectHideFlags: 0
@@ -129802,7 +129761,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331161945}
-  m_Material: {fileID: 1124940702}
+  m_Material: {fileID: 1618350226}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -130116,7 +130075,7 @@ MonoBehaviour:
   - OTRA ALU
   - OTRA CACHE
   conceptCorrectIndex: 0
-  rewardTitle: "\u2713 SEGUNDO MODULO DE RAM COMPRENDIDO"
+  rewardTitle: '[OK] SEGUNDO MODULO DE RAM COMPRENDIDO'
   rewardText: Has aprendido que se pueden combinar varios modulos de RAM para aumentar
     la memoria total disponible.
   objectiveCompletedText: 'Objetivo completado: segundo modulo de RAM comprendido.'
@@ -143226,6 +143185,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6954531691785998512, guid: cf8443763fc34314490f8a3e2f94dd37, type: 3}
   m_PrefabInstance: {fileID: 1463483876}
   m_PrefabAsset: {fileID: 0}
+--- !u!134 &1464126252
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1001 &1465238556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143771,6 +143743,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468390784}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &1470502759
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &1472115157
 GameObject:
   m_ObjectHideFlags: 0
@@ -152530,19 +152515,6 @@ Transform:
   - {fileID: 506539352}
   m_Father: {fileID: 962302854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!134 &1552824992
-PhysicsMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 2
-  m_DynamicFriction: 0.6
-  m_StaticFriction: 0.6
-  m_Bounciness: 0
-  m_FrictionCombine: 0
-  m_BounceCombine: 0
 --- !u!1 &1553025418
 GameObject:
   m_ObjectHideFlags: 0
@@ -158063,6 +158035,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617856517}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &1618350226
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance) (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1 &1618770116
 GameObject:
   m_ObjectHideFlags: 0
@@ -193031,6 +193016,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993097712}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &1993741722
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1001 &1993841777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201851,6 +201849,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725000371507048362, guid: b2452a5c2cd649a4db9eebcd16f7b155, type: 3}
   m_PrefabInstance: {fileID: 2074559056}
   m_PrefabAsset: {fileID: 0}
+--- !u!134 &2076676305
+PhysicsMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ' (Instance)'
+  serializedVersion: 2
+  m_DynamicFriction: 0.6
+  m_StaticFriction: 0.6
+  m_Bounciness: 0
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
 --- !u!1001 &2077102343
 PrefabInstance:
   m_ObjectHideFlags: 0

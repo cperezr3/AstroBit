@@ -185,7 +185,7 @@ public class MissionUI : MonoBehaviour
 
             int phaseIdx = index - shownCompleted + i;
             var p = MissionNavigation.Order[phaseIdx];
-            completedRows[i].text = "✓ " + MissionNavigation.GetPhaseTitle(p);
+            completedRows[i].text = "[OK] " + MissionNavigation.GetPhaseTitle(p);
             SetRowPosition(completedRows[i], y);
             y -= RowHeight + RowGap;
         }

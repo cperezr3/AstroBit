@@ -75,7 +75,7 @@ public class FinalActivity : MonoBehaviour
         var question = Questions[questionIndex];
         if (optionIndex != question.CorrectIndex)
         {
-            GameHUD.Instance?.ShowActivityError("✗ No es correcto. Intentalo de nuevo.");
+            GameHUD.Instance?.ShowActivityError("[ERROR] No es correcto. Intentalo de nuevo.");
             return;
         }
 
@@ -83,7 +83,7 @@ public class FinalActivity : MonoBehaviour
         if (questionIndex < Questions.Length)
             ShowCurrentQuestion();
         else
-            GameHUD.Instance?.ShowReward("✓ RECORRIDO COMPLETADO",
+            GameHUD.Instance?.ShowReward("[OK] RECORRIDO COMPLETADO",
                 "INSTRUCCION -> UNIDAD DE CONTROL -> REGISTROS/CACHE -> ALU -> RESULTADO -> MEMORIA\n\nAsi es como una CPU real coordina sus partes, de forma simplificada.",
                 FinishFinalActivity);
     }
