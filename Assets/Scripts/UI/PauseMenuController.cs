@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 // Menu de pausa (Prompt 28). Responsable unicamente de: visibilidad de su propio Canvas y las
@@ -57,9 +56,11 @@ public class PauseMenuController : MonoBehaviour
     private void Update()
     {
         if (GameStateManager.Instance.Current == GameState.MainMenu) return;
-        if (Keyboard.current == null) return;
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        // Prompt 10 (Bloque 2): antes Keyboard.current.escapeKey directo -- ahora la accion
+        // "Pause" de GameInput, que ademas del Escape ya trae el equivalente de mando
+        // (Gamepad start) sin duplicar el binding aqui.
+        if (GameInput.Instance.PauseAction.WasPressedThisFrame())
         {
             if (GameStateManager.Instance.Current == GameState.Paused)
                 GameStateManager.Instance.Resume();
@@ -68,12 +69,16 @@ public class PauseMenuController : MonoBehaviour
         }
     }
 
+    // Prompt 10 (Bloque 2): antes alternaba MovementInput.enabled -- MovementInput (vendored)
+    // ahora queda permanentemente deshabilitado, reemplazado por PlayerMovementController (ver
+    // ese archivo para el porque). Reactivar el MovementInput legado aqui volveria a traer
+    // Input.GetAxis y produciria doble movimiento junto al componente nuevo.
     private void SetPlayerControlEnabled(bool controlEnabled)
     {
         var interaction = FindFirstObjectByType<PlayerInteraction>();
         if (interaction != null) interaction.enabled = controlEnabled;
 
-        var movement = FindFirstObjectByType<MovementInput>();
+        var movement = FindFirstObjectByType<PlayerMovementController>();
         if (movement != null) movement.enabled = controlEnabled;
     }
 

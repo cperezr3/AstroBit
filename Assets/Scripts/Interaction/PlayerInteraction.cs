@@ -1,6 +1,9 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+// Prompt 10 (Bloque 2): el chequeo de tecla paso de Keyboard.current.eKey directo a la accion
+// "Interact" de GameInput -- mismo binding de teclado (E) mas el equivalente de mando
+// (Gamepad buttonSouth) definido en Resources/AstroBitControls.inputactions, sin duplicar la
+// logica de deteccion aqui.
 public class PlayerInteraction : MonoBehaviour
 {
     public Camera playerCamera;
@@ -13,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         UpdateLookTarget();
 
-        if (currentTarget != null && Keyboard.current.eKey.wasPressedThisFrame)
+        if (currentTarget != null && GameInput.Instance.InteractAction.WasPressedThisFrame())
         {
             currentTarget.Interact();
 
