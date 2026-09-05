@@ -45,6 +45,7 @@ public class MissionUI : MonoBehaviour
     private TextMeshProUGUI currentRowText;
     private TextMeshProUGUI descriptionText;
     private TextMeshProUGUI subProgressText;
+    private GameObject missionCanvasGO;
 
     private MissionNavigation.Phase lastPhase = (MissionNavigation.Phase)(-1);
     private string lastSub;
@@ -61,12 +62,31 @@ public class MissionUI : MonoBehaviour
     private void Awake()
     {
         BuildUI();
+
+        // Prompt 09 (Bloque 1, arquitectura): este panel no tenia ninguna logica de
+        // visibilidad por escena -- a diferencia de GameHUD/MinimapController, que si ocultan su
+        // Canvas en el Main Menu, MissionUI dependia solo de quedar detras del propio Canvas del
+        // menu por sorting order implicito. Se corrige aqui usando el mismo mecanismo ya
+        // centralizado en GameStateManager, en vez de agregar una comprobacion de escena mas.
+        GameStateManager.Instance.OnStateChanged.AddListener(HandleStateChanged);
+        UpdateVisibility(GameStateManager.Instance.Current);
+    }
+
+    private void HandleStateChanged(GameState state)
+    {
+        UpdateVisibility(state);
+    }
+
+    private void UpdateVisibility(GameState state)
+    {
+        if (missionCanvasGO != null) missionCanvasGO.SetActive(state != GameState.MainMenu);
     }
 
     private void BuildUI()
     {
         var canvasGO = new GameObject("MissionUICanvas");
         canvasGO.transform.SetParent(transform, false);
+        missionCanvasGO = canvasGO;
         var canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = -1; // por debajo del backdrop modal de GameHUD, para no flotar sobre los paneles
