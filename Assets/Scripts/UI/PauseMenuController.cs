@@ -2,13 +2,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// Menu de pausa (Prompt 28). Responsable unicamente de: abrir/cerrar la pausa, Time.timeScale,
-// visibilidad de su propio Canvas, y las acciones del menu (Continuar/Configuración/Reiniciar/
-// Volver al Menu). No conoce nada de mision/progresion -- eso vive en GameSession y en los
-// sistemas ya existentes.
+// Menu de pausa (Prompt 28). Responsable unicamente de: visibilidad de su propio Canvas y las
+// acciones del menu (Continuar/Configuración/Reiniciar/Volver al Menu). Ya no decide nada de
+// Time.timeScale ni de que es "estar pausado" -- eso ahora es responsabilidad exclusiva de
+// GameStateManager (Prompt 09, Bloque 1); este controlador solo dibuja el panel en reaccion a
+// GameStateManager.OnStateChanged y traduce clicks de boton en llamadas a GameStateManager.
 //
 // Mismo patron que GameHUD/MinimapController/MissionUI: singleton unico creado una sola vez
 // via RuntimeInitializeOnLoadMethod + DontDestroyOnLoad, activo solo mientras la escena actual
@@ -20,12 +20,9 @@ using UnityEngine.UI;
 // cerrado el juego.
 public class PauseMenuController : MonoBehaviour
 {
-    private const string GameplaySceneName = "SampleScene";
-    private const string MenuSceneName = "MainMenu";
     private static readonly Color AccentCyan = new Color(0f, 1f, 1f, 1f);
 
     private GameObject panelRoot;
-    private bool isPaused;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -38,34 +35,16 @@ public class PauseMenuController : MonoBehaviour
     private void Awake()
     {
         BuildUI();
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        GameStateManager.Instance.OnStateChanged.AddListener(HandleStateChanged);
     }
 
-    private void OnActiveSceneChanged(Scene previous, Scene next)
+    // Unica fuente de verdad de "estar pausado" ahora es GameStateManager.Current -- este
+    // metodo solo refleja ese estado en el panel/control del jugador, nunca lo decide.
+    private void HandleStateChanged(GameState state)
     {
-        // Si el jugador vuelve a MainMenu (o a cualquier otra escena) mientras la pausa seguia
-        // abierta, hay que soltar el timeScale y el control del jugador -- si no, "Volver al
-        // Menu" dejaria el juego congelado en timeScale 0 para siempre.
-        if (isPaused) SetPaused(false);
-    }
-
-    private void Update()
-    {
-        if (SceneManager.GetActiveScene().name != GameplaySceneName) return;
-        if (Keyboard.current == null) return;
-
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            SetPaused(!isPaused);
-        }
-    }
-
-    private void SetPaused(bool paused)
-    {
-        isPaused = paused;
+        bool paused = state == GameState.Paused;
         panelRoot.SetActive(paused);
-        Time.timeScale = paused ? 0f : 1f;
-        SetPlayerControlEnabled(!paused);
+        SetPlayerControlEnabled(state == GameState.Playing);
 
         // Los botones del panel nunca se destruyen, solo se ocultan -- el EventSystem sigue
         // recordando cual fue clickeado por ultima vez (p.ej. "Continuar"), asi que al
@@ -73,6 +52,20 @@ public class PauseMenuController : MonoBehaviour
         // el mouse este encima. Limpiar la seleccion (no los componentes Selectable) al abrir y
         // al cerrar deja cada apertura visualmente limpia sin afectar Highlighted/Pressed.
         if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    private void Update()
+    {
+        if (GameStateManager.Instance.Current == GameState.MainMenu) return;
+        if (Keyboard.current == null) return;
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (GameStateManager.Instance.Current == GameState.Paused)
+                GameStateManager.Instance.Resume();
+            else
+                GameStateManager.Instance.Pause();
+        }
     }
 
     private void SetPlayerControlEnabled(bool controlEnabled)
@@ -86,7 +79,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void Continuar()
     {
-        SetPaused(false);
+        GameStateManager.Instance.Resume();
     }
 
     public void Configuracion()
@@ -96,25 +89,12 @@ public class PauseMenuController : MonoBehaviour
 
     public void Reiniciar()
     {
-        Time.timeScale = 1f;
-        GameSession.ResetAll();
-        SaveManager.Instance.DeleteSave();
-        panelRoot.SetActive(false);
-        isPaused = false;
-        SceneManager.LoadScene(GameplaySceneName);
+        GameStateManager.Instance.RestartSection();
     }
 
     public void VolverAlMenu()
     {
-        // Fase 2 (Prompt 35, 9.1): guarda antes de salir para que "Continuar" desde el Main Menu
-        // recupere exactamente este punto, igual que si el jugador hubiera cerrado AstroBit aqui.
-        SaveManager.Instance.SaveGame();
-
-        Time.timeScale = 1f;
-        panelRoot.SetActive(false);
-        isPaused = false;
-        SetPlayerControlEnabled(true);
-        SceneManager.LoadScene(MenuSceneName);
+        GameStateManager.Instance.ReturnToMenu();
     }
 
     // ---- UI: mismo lenguaje visual que MainMenuController (fondo negro, acento cian) ----
