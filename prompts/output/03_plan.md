@@ -9,8 +9,8 @@ cada hueco ya confirmado. Ningún punto de este plan se implementa todavía
 
 | # | Bloque | Esfuerzo | Beneficio | Por qué este orden |
 |---|---|---|---|---|
-| 1 | A.2 Descomponer `GameHUD` | Medio | Medio-Alto | Todo lo demás (accesibilidad, SFX, nuevas mecánicas) engancha a GameHUD; hacerlo primero evita tocar el God Object dos veces |
-| 2 | A.1 Máquina de estados | Medio-Alto | Alto | Elimina la clase de bugs "olvidé resetear X al volver al menú" antes de añadir más estado (SFX, rebind, mecánicas nuevas) |
+| 1 | A.2 Descomponer `GameHUD` | Medio | Medio-Alto | ✅ **COMPLETADO** (Prompt 09, Bloque 1, rama `feature/arquitectura-hud-estados`) — ver detalle abajo |
+| 2 | A.1 Máquina de estados | Medio-Alto | Alto | ✅ **COMPLETADO** (Prompt 09, Bloque 1, misma rama) — ver detalle abajo |
 | 3 | B.1 Migrar movimiento a Input System | Medio | Alto | Requisito duro para B.2 (gamepad) y B.3 (remapeo); cuanto antes se haga, menos código nuevo depende del input mixto |
 | 4 | C. Audio (SFX) | Medio | Alto | Gancho más barato y más citado como "se siente vacío"; los canales de volumen ya existen sin nada que reproducir |
 | 5 | B.2 + B.3 Gamepad + Remapeo | Medio-Alto | Alto | Depende de (3); es el hueco de accesibilidad más grande y más repetido en los prompts |
@@ -25,6 +25,14 @@ cada hueco ya confirmado. Ningún punto de este plan se implementa todavía
 ## A. Arquitectura
 
 ### A.1 Máquina de estados formal
+
+> ✅ **COMPLETADO (Prompt 09, Bloque 1).** Implementado como se describe abajo,
+> con dos ajustes reales sobre el diseño original (ver el resumen del bloque al
+> final de este documento para el detalle completo): el enum quedó
+> `{ MainMenu, Playing, Paused }` (sin `Boot`/`Cutscene`/`Complete`, que no
+> tenían un uso real todavía), y `CameraSensitivityController`/
+> `WorldObjectiveMarker` se dejaron sin tocar tras verificar que no mantenían
+> estado de menú/pausa propio.
 
 **Qué haré:** una clase `GameStateManager` (singleton real, ver A.3) con un
 `enum GameState { Boot, MainMenu, Playing, Paused, Cutscene, Complete }`, un
@@ -53,6 +61,10 @@ el mismo patrón una vez más.
 
 ### A.2 Descomponer `GameHUD.cs`
 
+> ✅ **COMPLETADO (Prompt 09, Bloque 1).** Implementado tal cual se describe
+> abajo, más un quinto archivo no planeado (`HUDText.cs`, helper estático
+> compartido) — ver el resumen del bloque al final de este documento.
+
 **Qué haré:** dividir las ~720 líneas actuales en componentes de
 responsabilidad única, todos siguiendo el mismo patrón ya usado en el proyecto
 (construcción de UI en código + `RuntimeInitializeOnLoadMethod`):
@@ -78,6 +90,15 @@ fachada). **Beneficio:** medio-alto, y es prerequisito práctico de A.1, B.4,
 B.5 y C.
 
 ### A.3 Auditoría de singletons — qué queda singleton y qué no
+
+> ⏳ **PENDIENTE — no incluido en el Bloque 1.** `MinimapController`/
+> `MissionUI`/`GameHUD` ahora escuchan `GameStateManager.OnStateChanged` para
+> su visibilidad (en vez de comparar el nombre de escena), pero siguen siendo
+> `DontDestroyOnLoad` para siempre, tal como estaban. La recomendación de
+> abajo (que `GameStateManager` los cree/destruya en vez de que se oculten
+> solos) no se tocó en este bloque — es un cambio de ciclo de vida más
+> arriesgado que la sola migración de visibilidad, y no era el foco de este
+> prompt. Queda para un bloque futuro si se confirma.
 
 **Quedan como singleton real (`DontDestroyOnLoad`, estado de progreso o
 servicio global que debe sobrevivir a cualquier cambio de escena):**
@@ -286,3 +307,56 @@ paneles".
 Este plan no toca código todavía. Quedo a la espera de tu confirmación de
 alcance (en particular: ¿A.4 completo o solo `SfxLibrarySO`? ¿las 3 mecánicas
 de D o menos?) antes de empezar la Fase 2 (implementación).
+
+---
+
+## Bloque 1 — Arquitectura base (A.1 + A.2): COMPLETADO
+
+Implementado en `prompts/09_implementacion_bloque1.md`, rama
+`feature/arquitectura-hud-estados` (commits `e3122c4`, `fe6a47c`, `bd3ebcf`,
+`b443982` sobre `main`).
+
+**Clases nuevas:**
+- `GameStateManager` (`Assets/Scripts/Gameplay/GameStateManager.cs`) — enum
+  `GameState { MainMenu, Playing, Paused }`, `OnStateChanged`,
+  `StartNewGame()`/`ContinueGame()`/`Pause()`/`Resume()`/`RestartSection()`/
+  `ReturnToMenu()`.
+- `HUDPrompt`, `HUDFeedbackBanner`, `HUDObjectiveDisplay`, `HUDModalPanel`
+  (`Assets/Scripts/UI/`) — los 4 componentes extraídos de `GameHUD`.
+- `HUDText` (`Assets/Scripts/UI/HUDText.cs`) — helper estático no planeado
+  originalmente: unifica el `CreateText` que `GameHUD.cs` repetía 7 veces, usado
+  por `HUDObjectiveDisplay` y `HUDFeedbackBanner`.
+
+**Clases eliminadas:**
+- `GameSession.cs` (reemplazada por `GameStateManager`).
+
+**Clases modificadas (migradas a `GameStateManager`, sin cambiar su
+comportamiento observable):**
+- `MainMenuController` — `Jugar()`/`Continuar()` delegan en
+  `GameStateManager.StartNewGame()/ContinueGame()`.
+- `PauseMenuController` — ya no mantiene `isPaused`/`Time.timeScale` propios;
+  refleja `GameStateManager.OnStateChanged` en su panel y en
+  `PlayerInteraction`/`MovementInput`.
+- `GameHUD` — pasó de ~720 líneas a fachada de ~110 líneas.
+- `MinimapController` / `MissionUI` — visibilidad ahora deriva de
+  `GameStateManager.OnStateChanged` en vez de comparar el nombre de escena
+  directamente. `MissionUI` no tenía ningún mecanismo de ocultamiento propio
+  antes de este bloque (hueco real encontrado durante la implementación, no
+  solo refactor — ver "Decisiones tomadas sobre la marcha" en el resumen que
+  se entregó en el chat).
+- `FinalActivity`, `Inventory`, `StorageMission` — solo comentarios
+  actualizados (referenciaban a `GameSession`, ahora referencian
+  `GameStateManager`).
+
+**Verificado en Play Mode vía UnityMCP** (`MainMenu` → Nueva Partida con
+guardado previo → diálogo de confirmación → `SampleScene` → interacción real
+con ALU vía `EducationalInteractable` → panel/recompensa/feedback/progreso →
+Pausa/Reanudar → Volver al Menú → Continuar → Reiniciar): todos los estados,
+visibilidades de Canvas y transiciones de escena se comportaron igual que
+antes del refactor. Sin errores de compilación ni excepciones nuevas en
+consola. Se encontraron 2 problemas preexistentes **no relacionados con este
+bloque** (detallados en el resumen del chat): `PlayRandomSound` con un
+`AudioClip` sin asignar, y el carácter "✓" faltante en el fallback de TMP.
+
+No se avanzó al Bloque 2 (Input System unificado) — pendiente de
+confirmación.

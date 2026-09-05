@@ -280,7 +280,7 @@ public class StorageMission : MonoBehaviour
         FinalActivity.Instance.BeginFinalActivity();
     }
 
-    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameSession).
+    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameStateManager).
     // Aditivo -- repone todos los campos de progresion al estado que tendria una instancia
     // recien creada; no cambia ninguna logica de las demas llamadas publicas.
     public void ResetState()

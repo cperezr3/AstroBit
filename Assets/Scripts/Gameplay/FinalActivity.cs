@@ -103,7 +103,7 @@ public class FinalActivity : MonoBehaviour
         GameHUD.Instance?.HidePanel();
     }
 
-    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameSession).
+    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameStateManager).
     // Sin esto, "started" quedaria en true tras una primera partida completa y una segunda
     // partida en la misma sesion nunca podria volver a disparar la actividad final.
     public void ResetState()

@@ -1,25 +1,27 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // Controlador del Main Menu (Prompt 26): equivalente limpio de NewMonoBehaviourScript del
 // proyecto AstroBitMenu, adaptado para cargar la escena de gameplay por nombre en vez de por
 // build index (evita depender del orden accidental en Build Settings).
 //
-// Prompt 28: agrega el botón "Continuar" -- habilitado solo si GameSession.HasActiveGame es
-// true (ver GameSession). El wiring de su OnClick se hace en Awake con AddListener normal (no
-// persistente) porque, a diferencia de "Nueva Partida"/"Salir", su disponibilidad depende de
-// estado que solo se conoce en tiempo de ejecucion.
+// Prompt 28: agrega el botón "Continuar" -- habilitado solo si hay partida activa (ver
+// GameStateManager.HasActiveGame). El wiring de su OnClick se hace en Awake con AddListener
+// normal (no persistente) porque, a diferencia de "Nueva Partida"/"Salir", su disponibilidad
+// depende de estado que solo se conoce en tiempo de ejecucion.
 //
 // Fase 2 (Prompt 35, 9.1): "Continuar" ahora tambien se habilita si hay una partida guardada en
 // disco (SaveManager.HasSave), no solo si ya se jugo en esta misma sesion. "Nueva Partida" pide
 // confirmacion si ya existe un guardado, para no perderlo por accidente. El dialogo de
 // confirmacion y el boton "Opciones" se construyen aqui en codigo (mismo lenguaje visual que ya
 // tenian los botones autorados a mano en la escena: fondo negro, borde cian, TextMeshPro).
+//
+// Prompt 09 (Bloque 1, arquitectura): "Jugar"/"Continuar" ya no reinician sistemas ni cargan la
+// escena directamente -- delegan en GameStateManager.StartNewGame()/ContinueGame(), que es ahora
+// el unico punto de esa logica (antes duplicada aqui y en PauseMenuController).
 public class MainMenuController : MonoBehaviour
 {
-    private const string GameplaySceneName = "SampleScene";
     private static readonly Color AccentCyan = new Color(0f, 1f, 1f, 1f);
 
     private Button continuarButton;
@@ -72,7 +74,7 @@ public class MainMenuController : MonoBehaviour
     private void RefreshContinuarInteractable()
     {
         if (continuarButton == null) return;
-        continuarButton.interactable = GameSession.HasActiveGame || SaveManager.Instance.HasSave;
+        continuarButton.interactable = GameStateManager.Instance.HasActiveGame || SaveManager.Instance.HasSave;
     }
 
     public void Jugar()
@@ -83,31 +85,12 @@ public class MainMenuController : MonoBehaviour
             return;
         }
 
-        StartNewGame();
-    }
-
-    private void StartNewGame()
-    {
-        GameSession.ResetAll();
-        SaveManager.Instance.DeleteSave();
-        SceneManager.LoadScene(GameplaySceneName);
+        GameStateManager.Instance.StartNewGame();
     }
 
     public void Continuar()
     {
-        if (!GameSession.HasActiveGame && !SaveManager.Instance.HasSave) return;
-
-        SceneManager.LoadScene(GameplaySceneName);
-
-        // Si ya habia partida activa en esta misma sesion (p.ej. Pausa -> Volver al Menu ->
-        // Continuar), el estado en memoria ya es el correcto: cargar el guardado de disco aqui
-        // lo pisaria con una version mas vieja. Solo se restaura desde disco en un arranque
-        // fresco del juego, donde GameSession.HasActiveGame todavia es false.
-        if (!GameSession.HasActiveGame)
-        {
-            SaveManager.Instance.LoadGame();
-            GameSession.MarkActiveGame();
-        }
+        GameStateManager.Instance.ContinueGame();
     }
 
     public void Salir()
@@ -254,7 +237,7 @@ public class MainMenuController : MonoBehaviour
         CreateDialogButton(boxGO.transform, "Si", "SI, EMPEZAR DE NUEVO", new Vector2(-165, -95), () =>
         {
             HideConfirmDialog();
-            StartNewGame();
+            GameStateManager.Instance.StartNewGame();
         });
         CreateDialogButton(boxGO.transform, "No", "CANCELAR", new Vector2(165, -95), HideConfirmDialog);
 

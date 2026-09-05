@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
 
     public int GetItemCount(string id) => counts.TryGetValue(id, out int value) ? value : 0;
 
-    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameSession).
+    // Prompt 28: unico punto de reinicio para "Nueva Partida"/"Reiniciar" (ver GameStateManager).
     public void ResetState()
     {
         counts.Clear();

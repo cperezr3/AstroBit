@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // Minimapa discreto (Prompt 23, Parte 4): camara ortografica secundaria que sigue al jugador
@@ -13,11 +12,6 @@ public class MinimapController : MonoBehaviour
     private const float MapWorldRadius = 35f;
     private const float CameraHeight = 120f;
     private const int RenderTextureSize = 256;
-
-    // Prompt 26: el minimapa no debe verse en el Main Menu. Igual que GameHUD, sigue
-    // creandose siempre (DontDestroyOnLoad) para no romper su inicializacion; solo se
-    // oculta/muestra su Canvas segun la escena activa.
-    private const string MenuSceneName = "MainMenu";
 
     private Camera minimapCamera;
     private RenderTexture renderTexture;
@@ -39,18 +33,21 @@ public class MinimapController : MonoBehaviour
         BuildCamera();
         BuildUI();
 
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
-        UpdateVisibilityForScene(SceneManager.GetActiveScene().name);
+        // Prompt 26: el minimapa no debe verse en el Main Menu. Prompt 09 (Bloque 1): la
+        // visibilidad ahora se deriva de GameStateManager.Current en vez de comparar el nombre de
+        // la escena activa directamente -- mismo resultado, una sola fuente de verdad.
+        GameStateManager.Instance.OnStateChanged.AddListener(HandleStateChanged);
+        UpdateVisibility(GameStateManager.Instance.Current);
     }
 
-    private void OnActiveSceneChanged(Scene previous, Scene next)
+    private void HandleStateChanged(GameState state)
     {
-        UpdateVisibilityForScene(next.name);
+        UpdateVisibility(state);
     }
 
-    private void UpdateVisibilityForScene(string sceneName)
+    private void UpdateVisibility(GameState state)
     {
-        if (minimapCanvasGO != null) minimapCanvasGO.SetActive(sceneName != MenuSceneName);
+        if (minimapCanvasGO != null) minimapCanvasGO.SetActive(state != GameState.MainMenu);
     }
 
     private void BuildCamera()
