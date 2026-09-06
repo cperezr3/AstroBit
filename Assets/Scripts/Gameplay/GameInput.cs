@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 // Prompt 10 (Bloque 2): punto unico de entrada al Input System, reemplazando los dos usos del
@@ -24,6 +25,12 @@ public class GameInput : MonoBehaviour
     // Input.GetAxis, y el tuning existente de m_MaxSpeed/m_AccelTime del FreeLook
     // (CameraSensitivityController) se siga sintiendo igual sin tocar esos valores.
     private const float LegacyMouseSensitivity = 0.1f;
+
+    // Prompt 06 (Bloque 3): mismo patron de persistencia que SettingsManager (PlayerPrefs, no el
+    // JSON de SaveManager) -- un binding remapeado es una preferencia del jugador, no progreso de
+    // partida, y no debe borrarse al presionar "Nueva Partida"/"Reiniciar" (que si borra
+    // astrobit_save.json via SaveManager.DeleteSave()).
+    private const string BindingOverridesPrefsKey = "astrobit.input.bindingoverrides";
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Bootstrap()
@@ -53,6 +60,11 @@ public class GameInput : MonoBehaviour
     public InputAction InteractAction { get; private set; }
     public InputAction PauseAction { get; private set; }
 
+    // Se dispara despues de guardar un rebind nuevo y despues de restaurar los valores por
+    // defecto -- ControlsRebindingPanel lo escucha para refrescar los textos de binding actuales
+    // sin que este archivo sepa nada de UI.
+    public UnityEvent OnBindingsChanged = new UnityEvent();
+
     private void Init()
     {
         Actions = Resources.Load<InputActionAsset>(AssetResourcePath);
@@ -67,6 +79,8 @@ public class GameInput : MonoBehaviour
         LookAction = player.FindAction("Look");
         InteractAction = player.FindAction("Interact");
         PauseAction = player.FindAction("Pause");
+
+        LoadBindingOverrides();
         player.Enable();
 
         // Reemplaza el override por defecto de Cinemachine (Input.GetAxis) -- unico punto de
@@ -100,5 +114,33 @@ public class GameInput : MonoBehaviour
     private void OnDestroy()
     {
         if (_instance == this) CinemachineCore.GetInputAxis = null;
+    }
+
+    // Prompt 06 (Bloque 3): carga los overrides guardados de una sesion anterior, si existen.
+    // Idempotente y silenciosa -- un jugador que nunca remapeo nada simplemente no tiene la key
+    // en PlayerPrefs y esto no hace nada.
+    private void LoadBindingOverrides()
+    {
+        string json = PlayerPrefs.GetString(BindingOverridesPrefsKey, "");
+        if (!string.IsNullOrEmpty(json)) Actions.LoadBindingOverridesFromJson(json);
+    }
+
+    // Unico punto de guardado de rebinds -- llamado por ControlsRebindingPanel despues de cada
+    // reasignacion exitosa. SaveBindingOverridesAsJson() (del propio Input System) ya serializa
+    // solo los bindings efectivamente sobreescritos, no el asset entero.
+    public void SaveBindingOverrides()
+    {
+        string json = Actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString(BindingOverridesPrefsKey, json);
+        PlayerPrefs.Save();
+        OnBindingsChanged.Invoke();
+    }
+
+    public void ResetBindingOverrides()
+    {
+        foreach (var map in Actions.actionMaps) map.RemoveAllBindingOverrides();
+        PlayerPrefs.DeleteKey(BindingOverridesPrefsKey);
+        PlayerPrefs.Save();
+        OnBindingsChanged.Invoke();
     }
 }
