@@ -220,6 +220,12 @@ public class HUDModalPanel : MonoBehaviour
     {
         panelRoot.SetActive(true);
         SetPanelMode(PanelMode.Info);
+        // Prompt 07 (Bloque 4): unico punto de "abrir panel" -- el momento real en que el
+        // jugador interactua con un objeto por primera vez (ver EducationalInteractable.Interact).
+        // ShowActivityPanel/ShowChoicePanel/ShowReward son continuaciones de una misma secuencia
+        // ya abierta, no una interaccion nueva -- reproducir el sonido ahi tambien lo dispararia
+        // 2-3 veces por interaccion.
+        AudioManager.Instance?.PlayInteractOpen();
 
         panelTitleText.text = title;
         panelSubtitleText.text = subtitle;
@@ -285,6 +291,11 @@ public class HUDModalPanel : MonoBehaviour
     public void ShowActivityError(string message)
     {
         panelResultText.text = message;
+        // Prompt 07 (Bloque 4): unico llamador real es una respuesta incorrecta
+        // (FinalActivity/EducationalInteractable) -- a diferencia de ShowFeedback (generico, se
+        // usa para mensajes neutrales tambien), este metodo es especificamente "el jugador se
+        // equivoco", asi que es un gancho limpio para el sonido de error.
+        AudioManager.Instance?.PlayError();
     }
 
     public void ShowReward(string title, string body, Action onContinue)
@@ -302,6 +313,10 @@ public class HUDModalPanel : MonoBehaviour
 
     public void HidePanel()
     {
+        // Prompt 07 (Bloque 4): unico punto de "cerrar panel" -- todos los caminos de cierre
+        // (Cerrar, Continuar de la recompensa, cerrar la actividad final) pasan por aqui, asi que
+        // no hace falta enganchar el sonido en cada uno por separado.
+        if (panelRoot.activeSelf) AudioManager.Instance?.PlayPanelClose();
         panelRoot.SetActive(false);
     }
 }
