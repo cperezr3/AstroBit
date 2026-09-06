@@ -183,6 +183,7 @@ public class SettingsUI : MonoBehaviour
             colors.pressedColor = new Color(0f, 0.545f, 0.545f, 1f);
             button.colors = colors;
             button.onClick.AddListener(() => SelectTab(index));
+            button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
 
             var labelGO = new GameObject("Label", typeof(RectTransform));
             labelGO.transform.SetParent(btnGO.transform, false);
@@ -480,6 +481,7 @@ public class SettingsUI : MonoBehaviour
         colors.highlightedColor = AccentCyan;
         colors.pressedColor = new Color(0, 0.545f, 0.545f, 1);
         button.colors = colors;
+        button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
 
         var labelGO = new GameObject("Label", typeof(RectTransform));
         labelGO.transform.SetParent(btnGO.transform, false);
@@ -517,6 +519,7 @@ public class SettingsUI : MonoBehaviour
         colors.pressedColor = new Color(0, 0.545f, 0.545f, 1);
         button.colors = colors;
         button.onClick.AddListener(Close);
+        button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
 
         var outline = btnGO.AddComponent<Outline>();
         outline.effectColor = AccentCyan;
