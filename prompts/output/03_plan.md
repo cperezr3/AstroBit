@@ -165,6 +165,12 @@ nueva confirmada.
 
 ### B.1 Migrar movimiento al Input System
 
+> ✅ **COMPLETADO (Prompt 10, Bloque 2).** Implementado tal como se describe
+> abajo, con el script llamado `PlayerMovementController` (no
+> `PlayerInputController`) y una decisión adicional no especificada aquí:
+> `MovementInput` no se quitó de `Jammo_Player`, se dejó deshabilitado (ver
+> el resumen del bloque al final de este documento).
+
 **Restricción real a resolver primero:** `MovementInput.cs`
 (`Assets/Jammo-Character/`) es un asset vendored de solo lectura por
 convención del proyecto, y sus campos `InputX`/`InputZ` se sobrescriben cada
@@ -187,12 +193,22 @@ sensación de movimiento no cambie — probar en Play Mode antes/después).
 
 ### B.2 Soporte de gamepad
 
+> ✅ **COMPLETADO (Prompt 10, Bloque 2).** Implementado, pero no vía
+> `CinemachineInputProvider` como sugería este punto — ver el resumen del
+> bloque al final de este documento para el mecanismo real usado
+> (`CinemachineCore.GetInputAxis` reemplazado directamente).
+
 Una vez unificado el input (B.1): mapear movimiento/cámara a los sticks
 (Cinemachine ya soporta un Input Provider del Input System para el
 `FreeLook`) y `[E]`/`Esc` a botones de mando (Sur/A para interactuar, Start
 para pausa). **Esfuerzo:** bajo-medio una vez hecho B.1. **Beneficio:** alto.
 
 ### B.3 Pantalla de remapeo de controles
+
+> ⏳ **PENDIENTE — no incluido en el Bloque 2** (explícitamente diferido por
+> `10_implementacion_bloque2.md`). Ya existe el `InputActionAsset`
+> (`Resources/AstroBitControls.inputactions`) que esta pantalla necesitaría
+> para rebindear.
 
 UI de rebinding usando las extensiones del propio Input System
 (`InputActionRebindingExtensions`, "presiona una tecla para reasignar"),
@@ -360,3 +376,116 @@ bloque** (detallados en el resumen del chat): `PlayRandomSound` con un
 
 No se avanzó al Bloque 2 (Input System unificado) — pendiente de
 confirmación.
+
+---
+
+## Bloque 2 — Input System unificado (B.1 + B.2): COMPLETADO
+
+Implementado en `prompts/10_implementacion_bloque2.md`, rama
+`feature/input-system-unificado` sobre `main` ya actualizado (Bloque 1
+mergeado + los 2 fixes de bugs), commits `117c1a5`, `8666b19`, `41a38e7`.
+
+**Clases nuevas:**
+- `GameInput` (`Assets/Scripts/Gameplay/GameInput.cs`) — singleton que carga
+  `Resources/AstroBitControls.inputactions` y expone `MoveAction`/
+  `LookAction`/`InteractAction`/`PauseAction`. También reemplaza
+  `Cinemachine.CinemachineCore.GetInputAxis` (el delegate estático que por
+  defecto llama a `Input.GetAxis("Mouse X"/"Mouse Y")`) por una función propia
+  respaldada en el Input System — esto integra la cámara sin agregar
+  `CinemachineInputProvider` ni `InputActionReference` al FreeLook, y sin
+  tocar `CameraSensitivityController` (que sigue escalando `m_MaxSpeed`/
+  `m_InvertInput` exactamente igual, sin que le importe la fuente del valor).
+- `PlayerMovementController` (`Assets/Scripts/Gameplay/`) — reemplaza a
+  `MovementInput` como el componente que mueve al jugador.
+- `Resources/AstroBitControls.inputactions` — mapa "Player": Move (Vector2:
+  WASD/flechas + stick izquierdo), Look (Vector2: stick derecho; el mouse se
+  lee directo por separado, ver decisiones abajo), Interact (E + botón sur),
+  Pause (Escape + Start).
+
+**Clases modificadas:**
+- `PlayerInteraction`, `PauseMenuController` — el chequeo de tecla pasó de
+  `Keyboard.current.eKey`/`escapeKey` directo a `GameInput.InteractAction`/
+  `PauseAction`, agregando el equivalente de mando sin duplicar lógica.
+- `PauseMenuController.SetPlayerControlEnabled` — alterna
+  `PlayerMovementController.enabled` en vez de `MovementInput.enabled` (ver
+  decisiones abajo, es necesario para no correr movimiento dos veces).
+
+**Escena (`SampleScene.unity`), sobre `Jammo_Player`:**
+- `MovementInput` (vendored) queda con `m_Enabled: 0` — no se quita el
+  componente.
+- `PlayerMovementController` agregado y habilitado, con los mismos valores
+  tuneados a mano que ya tenía `MovementInput` (Velocity 10,
+  desiredRotationSpeed 0.3).
+
+**Hallazgo no obvio encontrado y resuelto (Prompt 10, sección 6):** la cámara
+(`CM FreeLook1`) también dependía del Input Manager legado de forma implícita
+— no vía código propio del repo, sino porque Cinemachine, al no tener
+`CinemachineInputProvider`, usa por defecto `Input.GetAxis("Mouse X"/"Mouse
+Y")` internamente. Esto no aparecía en ningún grep de `Input.GetAxis` sobre
+`Assets/Scripts` porque la dependencia vive dentro del propio paquete
+Cinemachine, activada solo por el nombre de eje configurado en el Inspector
+del FreeLook. Resuelto sin tocar el vcam (ver `GameInput` arriba).
+
+**Hallazgo documentado, NO resuelto en este bloque (Prompt 10, sección 6):**
+`CharacterSkinController` (`Assets/Jammo-Character/`, vendored, activo en
+`Jammo_Player`) usa `Input.GetKeyDown(KeyCode.Alpha1..4)` para cambiar la
+expresión facial del robot — una función de debug/demo del asset original,
+no documentada en ningún prompt previo como mecánica real de AstroBit. Sigue
+funcionando (no se tocó), pero es la razón por la que **no se puede** cambiar
+`Active Input Handling` de "Both" a "Input System Package (New)" todavía: ese
+cambio haría que las llamadas `Input.*` de este script lancen una excepción
+en cada frame. El warning de consola "Input Manager deprecated" seguirá
+apareciendo hasta que se decida qué hacer con esta función (quitarla,
+reemplazarla, o aceptar convivir con "Both" indefinidamente) — **pregunto:
+¿querés que la quite/reemplace en un futuro bloque, o la dejamos como está?**
+
+**Decisiones tomadas sobre la marcha (no 100% especificadas en el plan):**
+1. **`MovementInput` no se elimina, se deshabilita.** Removerlo habría roto
+   las ~5 llamadas existentes a `FindFirstObjectByType<MovementInput>()`
+   (`WorldLabel`, `EducationalInteractable`, `PlayerInteraction`,
+   `MinimapController`, `MissionNavigation`) que solo necesitan el
+   `Transform` del jugador — un componente deshabilitado sigue siendo
+   encontrado por `FindObjectByType`, solo deja de correr su propio
+   `Update()`. Evita tocar esos 5 archivos.
+2. **Cámara integrada reemplazando `CinemachineCore.GetInputAxis` en vez de
+   usar `CinemachineInputProvider`.** Más simple y con cero cambios de
+   escena: no requiere generar un `InputActionReference` como asset ni
+   agregar un componente al vcam. Mismo resultado funcional.
+3. **El mouse-look se lee directo de `Mouse.current.delta`, no a través de
+   una acción del Input System.** Solo el stick derecho del gamepad está
+   definido como acción "Look" en el asset. Evita ambigüedad de cómo el
+   Input System resolvería dos bindings Vector2 sin componer apuntando a la
+   misma acción (mouse delta y stick), y de todos modos remapear "el mouse"
+   no es algo que la mayoría de los juegos ofrezcan (la sensibilidad, que sí
+   es configurable, ya existe desde antes).
+4. **La rampa de aceleración de `Horizontal`/`Vertical` del Input Manager
+   legado (gravity/sensitivity 3, ~1/3s para llegar a velocidad plena) no se
+   replicó byte a byte.** El Input System no tiene un equivalente directo
+   para un composite de botones; se aproximó con
+   `Vector2.MoveTowards(smoothedMove, rawMove, 3f * Time.deltaTime)`, que da
+   un ritmo de rampa muy similar sin tener que leer botones individuales y
+   reimplementar el algoritmo de snap/gravity del Input Manager. Diferencia
+   menor, documentada — recomiendo un playtest manual para confirmar que se
+   siente igual.
+5. **No se cambió `ProjectSettings` → `Active Input Handling`.** Sigue en
+   "Both" a propósito, por el hallazgo de `CharacterSkinController` arriba.
+
+**Verificado en Play Mode vía UnityMCP** (simulando dispositivos con
+`InputSystem.QueueStateEvent`, no un teclado/mando físico): `GameInput` carga
+el asset y expone las 4 acciones correctamente; presionar W mueve
+efectivamente al `CharacterController` (posición cambió, sin choque con la
+pseudo-gravedad); `CinemachineCore.GetInputAxis("Mouse X"/"Mouse Y")`
+devuelve el valor esperado tanto para delta de mouse simulado (con el factor
+0.1 aplicado) como para un gamepad virtual conectado (stick derecho, sin
+escalar); el mismo gamepad virtual dispara `InteractAction`/`PauseAction`
+correctamente. **Limitación de esta verificación, no del código:** no pude
+confirmar de forma confiable el flanco de un solo frame
+(`WasPressedThisFrame()`) para teclado E/Escape específicamente por una
+limitación del propio método de prueba (inyectar eventos desde fuera del
+bucle de frames de Unity vía `execute_code` no se alinea de forma
+determinística con la ventana de un frame) — el mismo problema de medición
+ocurre igual con el código viejo (`Keyboard.current.eKey.wasPressedThisFrame`
+tampoco es medible así), así que no es una regresión, pero sí falta un
+playtest manual con teclado real para cerrar esa duda al 100%.
+
+No se avanzó al Bloque 3 — pendiente de confirmación.
