@@ -216,6 +216,9 @@ public class StorageMission : MonoBehaviour
         if (!CanAttemptRamLoad) return;
         ramLoadAttempted = true;
         RamInsufficientDetected = true;
+        // Prompt 07 (Bloque 4): "RAM insuficiente", el otro ejemplo de error nombrado
+        // explicitamente en el prompt (el otro es el conflicto de rebinding, en ControlsRebindingPanel).
+        AudioManager.Instance?.PlayError();
         // +2s respecto a la duracion normal de feedback: el diagnostico tiene mas texto que
         // leer que un mensaje corto y desaparecia demasiado rapido.
         float duration = (GameHUD.Instance != null ? GameHUD.Instance.FeedbackDuration : 3.5f) + 2f;

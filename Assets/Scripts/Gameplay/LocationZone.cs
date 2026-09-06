@@ -22,6 +22,9 @@ public class LocationZone : MonoBehaviour
         current = this;
         ObjectiveSystem.Instance.BeginSequenceIfNeeded();
         GameHUD.Instance?.SetLocation(locationName, locationDescription);
+        // Prompt 07 (Bloque 4): unico punto de "entro a una zona nombrada" -- cubre las
+        // transiciones CPU -> RAM -> Almacenamiento sin duplicar deteccion de zona.
+        AudioManager.Instance?.PlayRoomTransition();
     }
 
     private void OnTriggerExit(Collider other)
