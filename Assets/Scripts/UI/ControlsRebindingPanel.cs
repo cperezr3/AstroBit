@@ -179,7 +179,6 @@ public class ControlsRebindingPanel : MonoBehaviour
             return;
         }
 
-        button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
         button.onClick.AddListener(() => StartRebind(row));
     }
 
@@ -233,7 +232,6 @@ public class ControlsRebindingPanel : MonoBehaviour
         colors.highlightedColor = new Color(1f, 0.4f, 0.35f, 0.6f);
         colors.pressedColor = new Color(0.6f, 0.2f, 0.15f, 1f);
         button.colors = colors;
-        button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
         button.onClick.AddListener(() => GameInput.Instance.ResetBindingOverrides());
 
         var outline = btnGO.AddComponent<Outline>();
@@ -284,9 +282,6 @@ public class ControlsRebindingPanel : MonoBehaviour
         if (IsDuplicateBinding(row.Action, row.BindingIndex))
         {
             row.Action.RemoveBindingOverride(row.BindingIndex);
-            // Prompt 07 (Bloque 4): conflicto de rebinding -- uno de los dos ejemplos de error
-            // explicitamente nombrados en el prompt (el otro es "RAM insuficiente", en StorageMission).
-            AudioManager.Instance?.PlayError();
         }
         else
         {

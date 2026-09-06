@@ -65,10 +65,6 @@ public class MainMenuController : MonoBehaviour
             var colors = button.colors;
             colors.selectedColor = AccentCyan;
             button.colors = colors;
-
-            // Prompt 07 (Bloque 4): unico lugar que ya itera los 5 botones del menu principal --
-            // agregar el click de UI aqui cubre los 5 sin repetir el AddListener en cada uno.
-            button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
         }
 
         BuildConfirmDialog();
@@ -266,7 +262,6 @@ public class MainMenuController : MonoBehaviour
         colors.pressedColor = new Color(0, 0.545f, 0.545f, 1);
         button.colors = colors;
         button.onClick.AddListener(onClick);
-        button.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
 
         var outline = btnGO.AddComponent<Outline>();
         outline.effectColor = AccentCyan;

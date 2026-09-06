@@ -150,13 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   interactOpenClip: {fileID: 8300000, guid: ee223f361260c5e4f99df31ab304e5f9, type: 3}
-  panelCloseClip: {fileID: 8300000, guid: 948c004ccb2fa3044ab093c4e17abd5f, type: 3}
-  successClip: {fileID: 8300000, guid: b13753a6b6b4b3446a8731a670ee2553, type: 3}
-  errorClip: {fileID: 8300000, guid: 68894d1b1e513bc4d95ed72bb482ef72, type: 3}
-  roomTransitionClip: {fileID: 8300000, guid: f4ffc20a91970de48ab96a781d5a9a82, type: 3}
-  uiClickClip: {fileID: 8300000, guid: 357e61475d5582c4c9335b780abcff46, type: 3}
-  pauseClip: {fileID: 8300000, guid: 0f6e0bfdd8708ad4fb8969aa453bc6cf, type: 3}
-  resumeClip: {fileID: 8300000, guid: 51ff0001029f94a469a6e1d6ccde9a4f, type: 3}
+  fileDeliveredClip: {fileID: 8300000, guid: b13753a6b6b4b3446a8731a670ee2553, type: 3}
 --- !u!82 &10041820
 AudioSource:
   m_ObjectHideFlags: 0

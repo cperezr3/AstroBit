@@ -74,9 +74,6 @@ public class GameStateManager : MonoBehaviour
         Current = GameState.Paused;
         Time.timeScale = 0f;
         OnStateChanged.Invoke(Current);
-        // Prompt 07 (Bloque 4): unico punto centralizado de pausa/reanudar (Bloque 1) -- cubre
-        // tanto Escape/boton de mando como el boton "Continuar" del menu de pausa.
-        AudioManager.Instance?.PlayPause();
     }
 
     public void Resume()
@@ -85,7 +82,6 @@ public class GameStateManager : MonoBehaviour
         Current = GameState.Playing;
         Time.timeScale = 1f;
         OnStateChanged.Invoke(Current);
-        AudioManager.Instance?.PlayResume();
     }
 
     // Reemplaza MainMenuController.StartNewGame() + GameSession.ResetAll(): repone los sistemas

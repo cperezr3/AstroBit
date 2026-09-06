@@ -186,6 +186,11 @@ public class StorageMission : MonoBehaviour
     {
         if (!FileFound || FileRetrieved) return;
         FileRetrieved = true;
+        // Bugfix de saturacion de audio: evento especifico de "entrega exitosa del archivo en el
+        // almacenamiento" -- a diferencia del resto de hitos de esta clase (que antes tambien
+        // sonaban via el listener generico de HUDFeedbackBanner), este es el unico que conserva
+        // sonido tras la reduccion pedida por el usuario.
+        AudioManager.Instance?.PlayFileDelivered();
         ObjectiveSystem.Instance.CompleteObjective(RetrievedFeedback);
         ObjectiveSystem.Instance.SetObjective(RetrievedObjective);
         ObjectiveSystem.Instance.SetHint(RetrievedHint);
@@ -216,9 +221,6 @@ public class StorageMission : MonoBehaviour
         if (!CanAttemptRamLoad) return;
         ramLoadAttempted = true;
         RamInsufficientDetected = true;
-        // Prompt 07 (Bloque 4): "RAM insuficiente", el otro ejemplo de error nombrado
-        // explicitamente en el prompt (el otro es el conflicto de rebinding, en ControlsRebindingPanel).
-        AudioManager.Instance?.PlayError();
         // +2s respecto a la duracion normal de feedback: el diagnostico tiene mas texto que
         // leer que un mensaje corto y desaparecia demasiado rapido.
         float duration = (GameHUD.Instance != null ? GameHUD.Instance.FeedbackDuration : 3.5f) + 2f;

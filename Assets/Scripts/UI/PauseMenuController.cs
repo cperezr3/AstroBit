@@ -173,9 +173,6 @@ public class PauseMenuController : MonoBehaviour
         colors.disabledColor = new Color(0.784f, 0.784f, 0.784f, 0.5f);
         btn.colors = colors;
         btn.onClick.AddListener(onClick);
-        // Prompt 07 (Bloque 4): unico helper de boton del menu de pausa -- cubre los 4 botones
-        // (Continuar/Configuracion/Reiniciar/VolverAlMenu) sin repetir el listener en cada uno.
-        btn.onClick.AddListener(() => AudioManager.Instance?.PlayUiClick());
 
         var outline = btnGO.AddComponent<Outline>();
         outline.effectColor = new Color(0, 1, 1, 1);

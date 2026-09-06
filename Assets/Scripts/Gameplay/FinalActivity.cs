@@ -91,9 +91,6 @@ public class FinalActivity : MonoBehaviour
     private void FinishFinalActivity()
     {
         GameHUD.Instance?.HidePanel();
-        // Prompt 07 (Bloque 4): cierre total del juego -- no pasa por ObjectiveSystem.
-        // OnObjectiveCompleted (ver HUDFeedbackBanner), asi que necesita su propio gancho de exito.
-        AudioManager.Instance?.PlaySuccess();
         ObjectiveSystem.Instance.SetObjective("Recorrido completado.");
         ObjectiveSystem.Instance.SetHint("Ya conoces como colaboran la ALU, los Registros, la Unidad de Control, la Cache y la RAM.");
         // Prompt 02_continuacion (seccion 30): sin esto, el jugador quedaba deambulando con solo
