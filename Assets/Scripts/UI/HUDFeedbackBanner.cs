@@ -24,7 +24,15 @@ public class HUDFeedbackBanner : MonoBehaviour
             new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 190), new Vector2(960, 90));
 
         HideImmediate();
-        ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(text => Show(text));
+        // Prompt 07 (Bloque 4): unico punto de "exito/objetivo cumplido" que cubre tanto los
+        // aprendizajes de CPU/RAM como todos los hitos de StorageMission -- no se engancha ademas
+        // en HUDModalPanel.ShowReward() porque ReportActivityCompleted ya invoca este mismo evento
+        // internamente al continuar la recompensa, y sonaria dos veces por interaccion.
+        ObjectiveSystem.Instance.OnObjectiveCompleted.AddListener(text =>
+        {
+            Show(text);
+            AudioManager.Instance?.PlaySuccess();
+        });
     }
 
     // duration: null usa DefaultDuration (comportamiento normal para el resto de mensajes). Solo
