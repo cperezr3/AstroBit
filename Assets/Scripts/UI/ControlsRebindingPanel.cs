@@ -40,6 +40,10 @@ public class ControlsRebindingPanel : MonoBehaviour
     private readonly List<RebindableRow> rows = new List<RebindableRow>();
     private InputActionRebindingExtensions.RebindingOperation activeRebind;
 
+    // Bugfix (Esc jerarquico): expuesto para que PauseMenuController no toque Pausa/Configuracion
+    // mientras hay una captura de tecla en curso -- ver PauseMenuController.Update().
+    public bool IsRebinding => activeRebind != null;
+
     private float labelX;
     private float controlX;
     private float controlWidth;

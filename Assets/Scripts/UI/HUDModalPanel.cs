@@ -220,6 +220,12 @@ public class HUDModalPanel : MonoBehaviour
     {
         panelRoot.SetActive(true);
         SetPanelMode(PanelMode.Info);
+        // Prompt 07 (Bloque 4): unico punto de "abrir panel" -- el momento real en que el
+        // jugador interactua con un objeto por primera vez (ver EducationalInteractable.Interact).
+        // ShowActivityPanel/ShowChoicePanel/ShowReward son continuaciones de una misma secuencia
+        // ya abierta, no una interaccion nueva -- reproducir el sonido ahi tambien lo dispararia
+        // 2-3 veces por interaccion.
+        AudioManager.Instance?.PlayInteractOpen();
 
         panelTitleText.text = title;
         panelSubtitleText.text = subtitle;
@@ -304,4 +310,9 @@ public class HUDModalPanel : MonoBehaviour
     {
         panelRoot.SetActive(false);
     }
+
+    // Bugfix (Esc jerarquico): expone si el panel esta visible para que PauseMenuController
+    // pueda cerrarlo con Esc antes de considerar alternar Pausa/Reanudar -- ver
+    // PauseMenuController.Update().
+    public bool IsPanelOpen => panelRoot != null && panelRoot.activeSelf;
 }

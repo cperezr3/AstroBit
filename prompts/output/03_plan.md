@@ -12,7 +12,7 @@ cada hueco ya confirmado. Ningún punto de este plan se implementa todavía
 | 1 | A.2 Descomponer `GameHUD` | Medio | Medio-Alto | ✅ **COMPLETADO** (Prompt 09, Bloque 1, rama `feature/arquitectura-hud-estados`) — ver detalle abajo |
 | 2 | A.1 Máquina de estados | Medio-Alto | Alto | ✅ **COMPLETADO** (Prompt 09, Bloque 1, misma rama) — ver detalle abajo |
 | 3 | B.1 Migrar movimiento a Input System | Medio | Alto | ✅ **COMPLETADO** (Prompt 10, Bloque 2, rama `feature/input-system-unificado`) — ver detalle abajo |
-| 4 | C. Audio (SFX) | Medio | Alto | Gancho más barato y más citado como "se siente vacío"; los canales de volumen ya existen sin nada que reproducir |
+| 4 | C. Audio (SFX) | Medio | Alto | ✅ **COMPLETADO** (Prompt 07, Bloque 4, rama `feature/audio-interaccion-ui`) — ver detalle abajo |
 | 5 | B.2 + B.3 Gamepad + Remapeo | Medio-Alto | Alto | ✅ **COMPLETADO** (Prompt 10 Bloque 2 para B.2; Prompt 06 Bloque 3 para B.3, rama `feature/ui-remapeo-controles`) — ver detalle abajo |
 | 6 | D. Variedad de interacción | Medio (x cada una) | Alto | Alto impacto en percepción de calidad, pero requiere que el HUD (1) y el input (3) ya estén estables |
 | 7 | A.3 Auditoría de singletons | Medio | Medio | Limpieza estructural, no bloquea nada externo — se hace en paralelo o después de (1)/(2) |
@@ -240,6 +240,13 @@ recomputación dinámica. **Esfuerzo:** medio. **Beneficio:** medio.
 ---
 
 ## C. Audio
+
+> ✅ **COMPLETADO (Prompt 07, Bloque 4).** Implementado sin `SfxLibrarySO`
+> (ver el resumen del bloque al final de este documento para por qué 8 campos
+> `[SerializeField]` directos en `AudioManager` fueron suficientes) y con los
+> clips del pack Kenney "Sci-fi Sounds" reasignados temáticamente, porque
+> resultó ser un pack de combate espacial, no de UI genérica como asumía
+> `03_assets_recomendados.md` — ver detalle abajo.
 
 **Qué haré:** un `AudioManager` ligero + `SfxLibrarySO` (clips con nombre:
 `UIClick`, `UIConfirm`, `UIError`, `InteractSuccess`, `InteractDeny`,
@@ -584,3 +591,121 @@ la entrada de PlayerPrefs.
 
 No se avanzó al Bloque 4 (audio) — pendiente de que descargues/importes los
 packs de Kenney recomendados en `prompts/output/03_assets_recomendados.md`.
+
+---
+
+## Bloque 4 — Audio de interacción/UI (C): COMPLETADO
+
+Implementado a partir del prompt dado en el chat ("Prompt 07 — Implementación
+Fase 2, Bloque 4: Audio de interacción/UI" — no se guardó como archivo en
+`prompts/`, igual que el Bloque 3), rama `feature/audio-interaccion-ui` sobre
+`main` ya actualizado (Bloque 3 mergeado + import de los 3 packs de Kenney),
+commits `45792df`, `8f551af`, `3d95527`, `109013f`, `bd88a1b`.
+
+**Clases nuevas:**
+- `AudioManager` (`Assets/Scripts/Gameplay/AudioManager.cs`) — único
+  reproductor de SFX del juego, 8 métodos `PlayXxx()` sobre 8
+  `[SerializeField] AudioClip` asignados a mano en el Inspector. Mismo patrón
+  que `MusicManager` (objeto autorado a mano en `MainMenu.unity`, con
+  `AudioSource`+`AudioManager` y `DontDestroyOnLoad` en `Awake()`), no un
+  singleton perezoso por código, porque los `AudioClip` necesitan una
+  referencia serializada que solo existe si hay un GameObject de escena real
+  donde colgarla.
+
+**Clases modificadas (un `AudioManager.Instance?.PlayXxx()` en el punto exacto
+donde el evento ya se disparaba, sin lógica de detección nueva):**
+- `HUDModalPanel` — `PlayInteractOpen()` en `ShowEducationalPanel()`,
+  `PlayPanelClose()` en `HidePanel()`, `PlayError()` en `ShowActivityError()`.
+- `MainMenuController` — `PlayUiClick()` en el `foreach` que ya itera los 5
+  botones del menú principal, y en `CreateDialogButton` (confirmar/cancelar
+  nueva partida, cerrar créditos).
+- `PauseMenuController` — `PlayUiClick()` en `CreateMenuButton`
+  (Continuar/Configuración/Reiniciar/VolverAlMenu).
+- `SettingsUI` — `PlayUiClick()` en el botón de cada pestaña, en
+  `CreateArrowButton` y en `CreateCloseButton`.
+- `ControlsRebindingPanel` — `PlayUiClick()` en "Reasignar" y "Restaurar
+  valores por defecto"; `PlayError()` en la rama de conflicto de binding
+  duplicado de `OnRebindComplete`.
+- `HUDFeedbackBanner` — `PlaySuccess()` dentro del listener existente de
+  `ObjectiveSystem.OnObjectiveCompleted`.
+- `FinalActivity` — `PlaySuccess()` en `FinishFinalActivity()`.
+- `StorageMission` — `PlayError()` en `ReportRamLoadAttempt()` ("RAM
+  insuficiente").
+- `LocationZone` — `PlayRoomTransition()` en `OnTriggerEnter()`.
+- `GameStateManager` — `PlayPause()`/`PlayResume()` en `Pause()`/`Resume()`.
+
+**Mapeo de clips (todos de `Assets/ThirdParty/Kenney/SciFiSounds/Audio/`,
+CC0) y por qué cada uno:**
+
+| Evento | Clip | Por qué |
+|---|---|---|
+| Interactuar (abrir panel) | `doorOpen_000.ogg` | Sonido de apertura mecánica, encaja con "se abre un panel" |
+| Cerrar panel | `doorClose_000.ogg` | Contraparte directa del anterior |
+| Éxito/objetivo cumplido | `computerNoise_002.ogg` | El clip "de computadora" más neutro/afirmativo del pack, coherente con la temática CPU/RAM del juego |
+| Error/advertencia | `impactMetal_000.ogg` | Golpe metálico seco, se lee como "error" sin ser un sonido de combate obvio (láser/explosión) |
+| Transición de sala | `engineCircular_000.ogg` | Sonido de motor/mecanismo continuo, se siente como "cruzando a otra zona" sin ser una alarma |
+| Click de UI | `computerNoise_000.ogg` | Variante corta del mismo "computerNoise" que el de éxito, para que ambos sonidos de UI/computadora compartan familia sonora |
+| Pausa | `doorClose_001.ogg` | Variante alternativa de puerta, distinta a la de cerrar panel para no confundir ambos eventos |
+| Reanudar | `doorOpen_001.ogg` | Contraparte de la anterior |
+
+**Discrepancia encontrada y no oculta:** el pack "Sci-fi Sounds" es de
+temática espacial/combate (láseres, explosiones, motores, fuerza, impactos),
+no un pack de SFX de UI genéricos (blips/clicks/chimes) como asumía
+`03_assets_recomendados.md`. Tampoco "UI Pack: Sci-Fi" trae audio (es
+gráficos únicamente: fuentes, PNG, vectores) pese a que ese documento
+especulaba "puede traer algún sonido también". Se eligieron los clips más
+neutros/mecánicos disponibles para cada evento en vez de inventar sonidos
+nuevos o descargar un pack adicional no autorizado.
+
+**Verificado en Play Mode vía UnityMCP:** `AudioManager.Instance` existe y
+tiene su `AudioSource` (`playOnAwake=false`) desde el arranque de `MainMenu`;
+los 8 métodos `PlayXxx()` se invocaron directamente sin excepciones ni
+errores de consola. Simulé el flujo real de menú: clic en "Opciones" (dispara
+`PlayUiClick` desde el `foreach` de `MainMenuController` y abre
+`SettingsUI`), cambio a la pestaña "Controles" (dispara `PlayUiClick` del
+botón de pestaña), clic en "Restaurar valores por defecto" (dispara
+`PlayUiClick` + `GameInput.ResetBindingOverrides()`), clic en "Cerrar"
+(dispara `PlayUiClick` + cierra el panel) — sin errores en consola en ningún
+paso. Confirmé que `SettingsManager.SetSfxVolume(...)` cambia el valor que
+`AudioManager.PlaySfx`/`PlayUi` leen en cada llamada (`0` → `0.5` → valor
+original), que es el mecanismo real por el que subir/bajar/mutear el slider
+afecta a todos los sonidos nuevos en tiempo real (no hay caché de volumen
+viejo). No pude verificar audiblemente el volumen real de los clips (el
+entorno de prueba no reproduce audio), pero el camino de código
+(`PlayOneShot(clip, SettingsManager.Instance.SfxVolume)`) es el mismo patrón
+ya usado y confiable de `MusicManager`.
+
+**Eventos que quedaron fuera de este bloque, a propósito:**
+- Los botones internos de `HUDModalPanel` (Entendido/Cerrar/Continuar/opciones
+  de choice) **no** tienen `PlayUiClick()` propio — ya están cubiertos por
+  `PlayInteractOpen`/`PlayPanelClose`/`PlaySuccess` en los mismos flujos, y
+  agregar el click genérico ahí encima habría sonado 2 sonidos superpuestos
+  por un solo clic.
+- No se creó `SfxLibrarySO` (mencionado en el punto C original de este plan):
+  con solo 8 eventos fijos, 8 campos `[SerializeField]` en `AudioManager` son
+  igual de mantenibles y no requieren la indirección de un ScriptableObject
+  con enum/diccionario. Se puede migrar después si la cantidad de SFX crece.
+
+**Decisiones tomadas sobre la marcha (no 100% especificadas en el prompt):**
+1. **"Confirmación/éxito" tiene dos ganchos, no uno, porque son dos eventos
+   genuinamente distintos.** `HUDFeedbackBanner` (vía
+   `ObjectiveSystem.OnObjectiveCompleted`) cubre aprendizajes de
+   CPU/RAM y todos los hitos de `StorageMission`; `FinalActivity
+   .FinishFinalActivity()` cubre el cierre total del recorrido, que no pasa
+   por `ObjectiveSystem` en absoluto. Se descartó enganchar en
+   `HUDModalPanel.ShowReward()` porque `ReportActivityCompleted` ya invoca
+   `OnObjectiveCompleted` internamente tras continuar la recompensa — hacerlo
+   ahí también habría sonado dos veces por interacción.
+2. **"Error/advertencia" tiene tres ganchos, no uno, por el mismo motivo:**
+   son tres eventos de error conceptualmente distintos, no el mismo evento
+   repetido — respuesta incorrecta (`HUDModalPanel.ShowActivityError`), RAM
+   insuficiente (`StorageMission.ReportRamLoadAttempt`, nombrado
+   explícitamente en el prompt) y conflicto de rebinding
+   (`ControlsRebindingPanel.OnRebindComplete`, también nombrado
+   explícitamente).
+3. **"Click de botón genérico" se limitó a Main Menu/Pausa/Configuración/
+   Rebinding**, excluyendo deliberadamente los botones de `HUDModalPanel` (ver
+   "Eventos que quedaron fuera" arriba).
+4. **Sin `SfxLibrarySO`** (ver "Eventos que quedaron fuera" arriba).
+
+No se avanzó al Bloque 5 — pendiente de confirmación.

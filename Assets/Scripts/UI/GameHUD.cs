@@ -119,4 +119,6 @@ public class GameHUD : MonoBehaviour
     public void ShowReward(string title, string body, Action onContinue) => modalPanel.ShowReward(title, body, onContinue);
 
     public void HidePanel() => modalPanel.HidePanel();
+
+    public bool IsPanelOpen => modalPanel.IsPanelOpen;
 }

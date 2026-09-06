@@ -186,6 +186,11 @@ public class StorageMission : MonoBehaviour
     {
         if (!FileFound || FileRetrieved) return;
         FileRetrieved = true;
+        // Bugfix de saturacion de audio: evento especifico de "entrega exitosa del archivo en el
+        // almacenamiento" -- a diferencia del resto de hitos de esta clase (que antes tambien
+        // sonaban via el listener generico de HUDFeedbackBanner), este es el unico que conserva
+        // sonido tras la reduccion pedida por el usuario.
+        AudioManager.Instance?.PlayFileDelivered();
         ObjectiveSystem.Instance.CompleteObjective(RetrievedFeedback);
         ObjectiveSystem.Instance.SetObjective(RetrievedObjective);
         ObjectiveSystem.Instance.SetHint(RetrievedHint);

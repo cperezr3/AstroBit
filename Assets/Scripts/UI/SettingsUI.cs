@@ -88,6 +88,11 @@ public class SettingsUI : MonoBehaviour
         panelRoot.SetActive(false);
     }
 
+    // Bugfix (Esc jerarquico): expuestos para que PauseMenuController decida que hace Esc segun
+    // que este abierto -- ver PauseMenuController.Update().
+    public bool IsOpen => panelRoot != null && panelRoot.activeSelf;
+    public bool IsRebindingActive => rebindingPanel != null && rebindingPanel.IsRebinding;
+
     private void RefreshFromSettings()
     {
         var s = SettingsManager.Instance;
