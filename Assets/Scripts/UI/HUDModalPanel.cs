@@ -310,4 +310,9 @@ public class HUDModalPanel : MonoBehaviour
     {
         panelRoot.SetActive(false);
     }
+
+    // Bugfix (Esc jerarquico): expone si el panel esta visible para que PauseMenuController
+    // pueda cerrarlo con Esc antes de considerar alternar Pausa/Reanudar -- ver
+    // PauseMenuController.Update().
+    public bool IsPanelOpen => panelRoot != null && panelRoot.activeSelf;
 }

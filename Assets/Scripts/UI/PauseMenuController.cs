@@ -60,8 +60,39 @@ public class PauseMenuController : MonoBehaviour
         // Prompt 10 (Bloque 2): antes Keyboard.current.escapeKey directo -- ahora la accion
         // "Pause" de GameInput, que ademas del Escape ya trae el equivalente de mando
         // (Gamepad start) sin duplicar el binding aqui.
+        //
+        // Bugfix: Esc alternaba Pausa/Reanudar sin importar que panel estuviera abierto encima,
+        // asi que reanudar mientras Configuracion (o un panel de HUDModalPanel) seguia visible
+        // dejaba al jugador moverse con el panel superpuesto -- estado inconsistente. Ahora Esc
+        // cierra primero lo que este "mas arriba" en la pila de UI, y solo alterna Pausa/Reanudar
+        // si no hay ningun panel abierto. Se consulta el estado ya existente de cada panel
+        // (HUDModalPanel.IsPanelOpen, SettingsUI.IsOpen/IsRebindingActive) en vez de crear una
+        // pila de UI nueva -- ninguno de los paneles del proyecto se anida mas de un nivel hoy.
         if (GameInput.Instance.PauseAction.WasPressedThisFrame())
         {
+            if (SettingsUI.Instance != null && SettingsUI.Instance.IsRebindingActive)
+            {
+                // Hay una captura de tecla en curso (pestaña Controles): el propio Input System
+                // ya la cancela via WithCancelingThrough("<Keyboard>/escape") en
+                // ControlsRebindingPanel.StartRebind. No hacemos nada mas con este Esc -- ni
+                // cerrar Configuracion ni tocar Pausa -- para que un solo toque tenga un solo
+                // efecto (cancelar el rebind). Un segundo Esc, ya sin rebind activo, cierra
+                // Configuracion.
+                return;
+            }
+
+            if (GameHUD.Instance != null && GameHUD.Instance.IsPanelOpen)
+            {
+                GameHUD.Instance.HidePanel();
+                return;
+            }
+
+            if (SettingsUI.Instance != null && SettingsUI.Instance.IsOpen)
+            {
+                SettingsUI.Instance.Close();
+                return;
+            }
+
             if (GameStateManager.Instance.Current == GameState.Paused)
                 GameStateManager.Instance.Resume();
             else
