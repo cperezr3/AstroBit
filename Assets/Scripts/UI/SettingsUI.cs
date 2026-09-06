@@ -16,9 +16,13 @@ using UnityEngine.UI;
 // pensado para un anclaje centrado (x = -320), lo que empujaba cada slider/label/toggle cientos
 // de unidades fuera del panel hacia la izquierda. Reconstruido con un layout de dos columnas
 // (label a la izquierda, control a la derecha) anclado siempre a la esquina superior-izquierda
-// con offsets positivos, para que todo quede garantizado dentro del cuadro. Tambien se agrega la
-// seccion GRÁFICOS (resolucion, pantalla completa, VSync, calidad) que el prompt pedia y que
-// antes no existia.
+// con offsets positivos, para que todo quede garantizado dentro del cuadro.
+//
+// Prompt 06 (Bloque 3): reorganizado en pestañas (Audio/Controles/Gráficos) -- agregar la UI de
+// remapeo de controles como una sección mas dentro de la unica columna vertical anterior no
+// entraba en los 1010px de alto del panel junto con lo que ya habia. El contenido de cada
+// pestaña vive en su propio contenedor, mostrado/ocultado con SetActive; los helpers de
+// construccion (CreateSlider/CreateToggle/CreateCycleSelector/etc.) no cambiaron de forma.
 public class SettingsUI : MonoBehaviour
 {
     private static readonly Color AccentCyan = new Color(0.35f, 0.95f, 1f);
@@ -31,6 +35,7 @@ public class SettingsUI : MonoBehaviour
     private const float ControlX = 360f;
     private const float ControlWidth = 420f;
     private const float RowHeight = 56f;
+    private const float TabContentTopY = -170f;
 
     public static SettingsUI Instance { get; private set; }
 
@@ -53,6 +58,10 @@ public class SettingsUI : MonoBehaviour
     private Toggle vsyncToggle;
     private CycleSelector resolutionSelector;
     private CycleSelector qualitySelector;
+    private ControlsRebindingPanel rebindingPanel;
+
+    private GameObject[] tabContents;
+    private Image[] tabButtonBackgrounds;
 
     private void Awake()
     {
@@ -70,6 +79,7 @@ public class SettingsUI : MonoBehaviour
     public void Open()
     {
         RefreshFromSettings();
+        rebindingPanel.RefreshLabels();
         panelRoot.SetActive(true);
     }
 
@@ -125,33 +135,144 @@ public class SettingsUI : MonoBehaviour
         boxOutline.effectDistance = new Vector2(2, 2);
 
         CreateTitle(boxGO.transform, "CONFIGURACIÓN");
+        BuildTabs(boxGO.transform);
 
-        // Todas las filas se anclan a la esquina superior-izquierda del cuadro (0,1) con offsets
-        // POSITIVOS -- garantiza que cada elemento cae dentro de los 820px de ancho del panel.
-        float y = -110f;
-        CreateSectionLabel(boxGO.transform, "AUDIO", y); y -= RowHeight;
-        masterSlider = CreateSlider(boxGO.transform, "Volumen maestro", y, 0f, 1f, v => SettingsManager.Instance.SetMasterVolume(v)); y -= RowHeight;
-        musicSlider = CreateSlider(boxGO.transform, "Volumen de música", y, 0f, 1f, v => SettingsManager.Instance.SetMusicVolume(v)); y -= RowHeight;
-        sfxSlider = CreateSlider(boxGO.transform, "Volumen de efectos", y, 0f, 1f, v => SettingsManager.Instance.SetSfxVolume(v)); y -= RowHeight;
-        uiSlider = CreateSlider(boxGO.transform, "Volumen de interfaz", y, 0f, 1f, v => SettingsManager.Instance.SetUiVolume(v)); y -= (RowHeight + 20f);
-
-        CreateSectionLabel(boxGO.transform, "CONTROLES", y); y -= RowHeight;
-        sensitivitySlider = CreateSlider(boxGO.transform, "Sensibilidad de cámara", y,
-            SettingsManager.MinSensitivity, SettingsManager.MaxSensitivity, v => SettingsManager.Instance.SetCameraSensitivity(v)); y -= RowHeight;
-        invertYToggle = CreateToggle(boxGO.transform, "Invertir eje Y", y, v => SettingsManager.Instance.SetInvertY(v)); y -= (RowHeight + 20f);
-
-        CreateSectionLabel(boxGO.transform, "GRÁFICOS", y); y -= RowHeight;
-        var sm = SettingsManager.Instance;
-        resolutionSelector = CreateCycleSelector(boxGO.transform, "Resolución", y, sm.ResolutionCount, sm.GetResolutionLabel,
-            i => SettingsManager.Instance.SetResolutionIndex(i)); y -= RowHeight;
-        fullscreenToggle = CreateToggle(boxGO.transform, "Pantalla completa", y, v => SettingsManager.Instance.SetFullscreen(v)); y -= RowHeight;
-        vsyncToggle = CreateToggle(boxGO.transform, "VSync", y, v => SettingsManager.Instance.SetVSync(v)); y -= RowHeight;
-        qualitySelector = CreateCycleSelector(boxGO.transform, "Calidad", y, sm.QualityNames.Length, i => sm.QualityNames[i],
-            i => SettingsManager.Instance.SetQualityLevel(i));
+        var audioTab = BuildAudioTab(boxGO.transform);
+        var controlsTab = BuildControlsTab(boxGO.transform);
+        var graphicsTab = BuildGraphicsTab(boxGO.transform);
+        tabContents = new[] { audioTab, controlsTab, graphicsTab };
 
         CreateCloseButton(boxGO.transform);
 
+        SelectTab(0);
         panelRoot.SetActive(false);
+    }
+
+    // ---- Pestañas ----
+
+    private void BuildTabs(Transform parent)
+    {
+        string[] names = { "AUDIO", "CONTROLES", "GRÁFICOS" };
+        tabButtonBackgrounds = new Image[names.Length];
+
+        const float tabWidth = 250f;
+        const float tabHeight = 46f;
+        const float gap = 15f;
+        float totalWidth = tabWidth * names.Length + gap * (names.Length - 1);
+        float startX = -totalWidth / 2f + tabWidth / 2f;
+
+        for (int i = 0; i < names.Length; i++)
+        {
+            int index = i; // captura por valor para el closure del listener
+            var btnGO = new GameObject("Tab_" + names[i], typeof(RectTransform));
+            btnGO.transform.SetParent(parent, false);
+            var rt = btnGO.GetComponent<RectTransform>();
+            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 1f);
+            rt.pivot = new Vector2(0.5f, 1f);
+            rt.anchoredPosition = new Vector2(startX + i * (tabWidth + gap), -100f);
+            rt.sizeDelta = new Vector2(tabWidth, tabHeight);
+
+            var img = btnGO.AddComponent<Image>();
+            img.color = new Color(1f, 1f, 1f, 0.08f);
+            tabButtonBackgrounds[i] = img;
+
+            var button = btnGO.AddComponent<Button>();
+            button.targetGraphic = img;
+            var colors = button.colors;
+            colors.highlightedColor = new Color(1f, 1f, 1f, 0.2f);
+            colors.pressedColor = new Color(0f, 0.545f, 0.545f, 1f);
+            button.colors = colors;
+            button.onClick.AddListener(() => SelectTab(index));
+
+            var labelGO = new GameObject("Label", typeof(RectTransform));
+            labelGO.transform.SetParent(btnGO.transform, false);
+            var labelRT = labelGO.GetComponent<RectTransform>();
+            labelRT.anchorMin = Vector2.zero;
+            labelRT.anchorMax = Vector2.one;
+            labelRT.offsetMin = Vector2.zero;
+            labelRT.offsetMax = Vector2.zero;
+            var labelTmp = labelGO.AddComponent<TextMeshProUGUI>();
+            labelTmp.text = names[i];
+            labelTmp.fontSize = 18;
+            labelTmp.fontStyle = FontStyles.Bold;
+            labelTmp.alignment = TextAlignmentOptions.Center;
+            labelTmp.color = Color.white;
+        }
+    }
+
+    private void SelectTab(int index)
+    {
+        for (int i = 0; i < tabContents.Length; i++)
+        {
+            tabContents[i].SetActive(i == index);
+            tabButtonBackgrounds[i].color = i == index
+                ? new Color(AccentCyan.r, AccentCyan.g, AccentCyan.b, 0.35f)
+                : new Color(1f, 1f, 1f, 0.08f);
+        }
+    }
+
+    // ---- Contenido de cada pestaña ----
+
+    private GameObject BuildAudioTab(Transform parent)
+    {
+        var content = new GameObject("Tab_Audio_Content", typeof(RectTransform));
+        content.transform.SetParent(parent, false);
+        SetFullRect(content.GetComponent<RectTransform>());
+
+        float y = TabContentTopY;
+        masterSlider = CreateSlider(content.transform, "Volumen maestro", y, 0f, 1f, v => SettingsManager.Instance.SetMasterVolume(v)); y -= RowHeight;
+        musicSlider = CreateSlider(content.transform, "Volumen de música", y, 0f, 1f, v => SettingsManager.Instance.SetMusicVolume(v)); y -= RowHeight;
+        sfxSlider = CreateSlider(content.transform, "Volumen de efectos", y, 0f, 1f, v => SettingsManager.Instance.SetSfxVolume(v)); y -= RowHeight;
+        uiSlider = CreateSlider(content.transform, "Volumen de interfaz", y, 0f, 1f, v => SettingsManager.Instance.SetUiVolume(v));
+
+        return content;
+    }
+
+    private GameObject BuildControlsTab(Transform parent)
+    {
+        var content = new GameObject("Tab_Controls_Content", typeof(RectTransform));
+        content.transform.SetParent(parent, false);
+        SetFullRect(content.GetComponent<RectTransform>());
+
+        float y = TabContentTopY;
+        CreateSectionLabel(content.transform, "CÁMARA", y); y -= RowHeight;
+        sensitivitySlider = CreateSlider(content.transform, "Sensibilidad de cámara", y,
+            SettingsManager.MinSensitivity, SettingsManager.MaxSensitivity, v => SettingsManager.Instance.SetCameraSensitivity(v)); y -= RowHeight;
+        invertYToggle = CreateToggle(content.transform, "Invertir eje Y", y, v => SettingsManager.Instance.SetInvertY(v)); y -= (RowHeight + 16f);
+
+        var rebindGO = new GameObject("RebindingPanel", typeof(RectTransform));
+        rebindGO.transform.SetParent(content.transform, false);
+        SetFullRect(rebindGO.GetComponent<RectTransform>());
+        rebindingPanel = rebindGO.AddComponent<ControlsRebindingPanel>();
+        rebindingPanel.Init(rebindGO.transform, y, LabelX, ControlX, ControlWidth);
+
+        return content;
+    }
+
+    private GameObject BuildGraphicsTab(Transform parent)
+    {
+        var content = new GameObject("Tab_Graphics_Content", typeof(RectTransform));
+        content.transform.SetParent(parent, false);
+        SetFullRect(content.GetComponent<RectTransform>());
+
+        float y = TabContentTopY;
+        var sm = SettingsManager.Instance;
+        resolutionSelector = CreateCycleSelector(content.transform, "Resolución", y, sm.ResolutionCount, sm.GetResolutionLabel,
+            i => SettingsManager.Instance.SetResolutionIndex(i)); y -= RowHeight;
+        fullscreenToggle = CreateToggle(content.transform, "Pantalla completa", y, v => SettingsManager.Instance.SetFullscreen(v)); y -= RowHeight;
+        vsyncToggle = CreateToggle(content.transform, "VSync", y, v => SettingsManager.Instance.SetVSync(v)); y -= RowHeight;
+        qualitySelector = CreateCycleSelector(content.transform, "Calidad", y, sm.QualityNames.Length, i => sm.QualityNames[i],
+            i => SettingsManager.Instance.SetQualityLevel(i));
+
+        return content;
+    }
+
+    private static void SetFullRect(RectTransform rt)
+    {
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
     }
 
     private void CreateTitle(Transform parent, string text)
@@ -171,7 +292,7 @@ public class SettingsUI : MonoBehaviour
         tmp.color = AccentCyan;
     }
 
-    private void CreateSectionLabel(Transform parent, string text, float y)
+    private static void CreateSectionLabel(Transform parent, string text, float y)
     {
         var go = new GameObject("Section_" + text, typeof(RectTransform));
         go.transform.SetParent(parent, false);
@@ -187,7 +308,7 @@ public class SettingsUI : MonoBehaviour
         tmp.color = SectionColor;
     }
 
-    private RectTransform CreateRowLabel(Transform parent, string label, float y)
+    private static RectTransform CreateRowLabel(Transform parent, string label, float y)
     {
         var labelGO = new GameObject("Label_" + label, typeof(RectTransform));
         labelGO.transform.SetParent(parent, false);
@@ -203,7 +324,7 @@ public class SettingsUI : MonoBehaviour
         return labelRT;
     }
 
-    private Slider CreateSlider(Transform parent, string label, float y, float min, float max, UnityEngine.Events.UnityAction<float> onChanged)
+    private static Slider CreateSlider(Transform parent, string label, float y, float min, float max, UnityEngine.Events.UnityAction<float> onChanged)
     {
         CreateRowLabel(parent, label, y);
 
@@ -265,7 +386,7 @@ public class SettingsUI : MonoBehaviour
         return slider;
     }
 
-    private Toggle CreateToggle(Transform parent, string label, float y, UnityEngine.Events.UnityAction<bool> onChanged)
+    private static Toggle CreateToggle(Transform parent, string label, float y, UnityEngine.Events.UnityAction<bool> onChanged)
     {
         CreateRowLabel(parent, label, y);
 
@@ -306,7 +427,7 @@ public class SettingsUI : MonoBehaviour
     // Selector "< valor >" para opciones discretas (resolucion, calidad) sin depender del
     // andamiaje completo de TMP_Dropdown (Template/Viewport/Scrollbar), dificil de construir bien
     // desde codigo sin verificacion visual interactiva. Mismo lenguaje visual que el resto.
-    private CycleSelector CreateCycleSelector(Transform parent, string label, float y, int optionCount,
+    private static CycleSelector CreateCycleSelector(Transform parent, string label, float y, int optionCount,
         System.Func<int, string> labelForIndex, UnityEngine.Events.UnityAction<int> onChanged)
     {
         CreateRowLabel(parent, label, y);
@@ -341,7 +462,7 @@ public class SettingsUI : MonoBehaviour
         return selector;
     }
 
-    private Button CreateArrowButton(Transform parent, string label, Vector2 anchor, Vector2 pivotSide)
+    private static Button CreateArrowButton(Transform parent, string label, Vector2 anchor, Vector2 pivotSide)
     {
         var btnGO = new GameObject("Arrow_" + label, typeof(RectTransform));
         btnGO.transform.SetParent(parent, false);

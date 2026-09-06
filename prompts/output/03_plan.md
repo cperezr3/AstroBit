@@ -11,9 +11,9 @@ cada hueco ya confirmado. Ningún punto de este plan se implementa todavía
 |---|---|---|---|---|
 | 1 | A.2 Descomponer `GameHUD` | Medio | Medio-Alto | ✅ **COMPLETADO** (Prompt 09, Bloque 1, rama `feature/arquitectura-hud-estados`) — ver detalle abajo |
 | 2 | A.1 Máquina de estados | Medio-Alto | Alto | ✅ **COMPLETADO** (Prompt 09, Bloque 1, misma rama) — ver detalle abajo |
-| 3 | B.1 Migrar movimiento a Input System | Medio | Alto | Requisito duro para B.2 (gamepad) y B.3 (remapeo); cuanto antes se haga, menos código nuevo depende del input mixto |
+| 3 | B.1 Migrar movimiento a Input System | Medio | Alto | ✅ **COMPLETADO** (Prompt 10, Bloque 2, rama `feature/input-system-unificado`) — ver detalle abajo |
 | 4 | C. Audio (SFX) | Medio | Alto | Gancho más barato y más citado como "se siente vacío"; los canales de volumen ya existen sin nada que reproducir |
-| 5 | B.2 + B.3 Gamepad + Remapeo | Medio-Alto | Alto | Depende de (3); es el hueco de accesibilidad más grande y más repetido en los prompts |
+| 5 | B.2 + B.3 Gamepad + Remapeo | Medio-Alto | Alto | ✅ **COMPLETADO** (Prompt 10 Bloque 2 para B.2; Prompt 06 Bloque 3 para B.3, rama `feature/ui-remapeo-controles`) — ver detalle abajo |
 | 6 | D. Variedad de interacción | Medio (x cada una) | Alto | Alto impacto en percepción de calidad, pero requiere que el HUD (1) y el input (3) ya estén estables |
 | 7 | A.3 Auditoría de singletons | Medio | Medio | Limpieza estructural, no bloquea nada externo — se hace en paralelo o después de (1)/(2) |
 | 8 | B.4 + B.5 Alto contraste + escalado UI | Medio | Medio | Depende de (1) (HUD descompuesto) para no tocar 720 líneas de una vez |
@@ -205,10 +205,10 @@ para pausa). **Esfuerzo:** bajo-medio una vez hecho B.1. **Beneficio:** alto.
 
 ### B.3 Pantalla de remapeo de controles
 
-> ⏳ **PENDIENTE — no incluido en el Bloque 2** (explícitamente diferido por
-> `10_implementacion_bloque2.md`). Ya existe el `InputActionAsset`
-> (`Resources/AstroBitControls.inputactions`) que esta pantalla necesitaría
-> para rebindear.
+> ✅ **COMPLETADO (Prompt 06, Bloque 3).** Implementado dentro de una nueva
+> pestaña "Controles" en `SettingsUI` (que se reorganizó en pestañas para
+> esto) — ver el resumen del bloque al final de este documento para el
+> alcance exacto de qué es remapeable y qué no.
 
 UI de rebinding usando las extensiones del propio Input System
 (`InputActionRebindingExtensions`, "presiona una tecla para reasignar"),
@@ -489,3 +489,98 @@ tampoco es medible así), así que no es una regresión, pero sí falta un
 playtest manual con teclado real para cerrar esa duda al 100%.
 
 No se avanzó al Bloque 3 — pendiente de confirmación.
+
+---
+
+## Bloque 3 — UI de remapeo de controles (B.3): COMPLETADO
+
+Implementado a partir del prompt dado en el chat ("Prompt 06 — Implementación
+Fase 2, Bloque 3: UI de remapeo de controles" — no se guardó como archivo en
+`prompts/`, a diferencia de los bloques anteriores), rama
+`feature/ui-remapeo-controles` sobre `main` ya actualizado (Bloques 1 y 2
+mergeados), commits `c53c684`, `f4894b0`, `0716d41`.
+
+**Clases nuevas:**
+- `ControlsRebindingPanel` (`Assets/Scripts/UI/`) — construye las filas de
+  reasignación dentro de la pestaña "Controles" y traduce clicks a
+  `InputActionRebindingExtensions.PerformInteractiveRebinding`.
+
+**Clases modificadas:**
+- `GameInput` — `SaveBindingOverrides()`/`ResetBindingOverrides()` (PlayerPrefs,
+  no el JSON de `SaveManager` — ver decisión 1 abajo), `LoadBindingOverrides()`
+  llamado en `Init()`, evento `OnBindingsChanged`.
+- `SettingsUI` — reorganizado en 3 pestañas (Audio/Controles/Gráficos) en vez
+  de una sola columna vertical; el comportamiento de Audio y Gráficos no
+  cambió, solo dónde vive en el layout.
+
+**Alcance real de qué es remapeable (decisión de diseño, ver más abajo):**
+Mover (solo tecla primaria WASD, no las flechas), Interactuar (teclado +
+mando), Pausa (teclado + mando). Mirar y el stick del mando para moverse
+quedan fijos/informativos — no tiene sentido remapear "cuál stick es cuál" en
+un mando estándar, y el mouse-look ni siquiera pasa por una acción del Input
+System (ver `GameInput.GetCinemachineInputAxis`, Bloque 2).
+
+**Verificado en Play Mode vía UnityMCP:** abrir Configuración desde el Main
+Menu, cambiar entre las 3 pestañas (Audio se muestra por defecto,
+Controles/Gráficos ocultan las demás) — confirmado con screenshots reales,
+sin overflow. Reasigné "Interactuar (teclado)" de E a F simulando la tecla
+física: el binding se actualiza a "F" en la UI, `PlayerPrefs` guarda el JSON
+de overrides correcto (`"path":"<Keyboard>/f"`), y confirmé que **presionar E
+ya no abre el panel educativo** (la acción realmente dejó de responder a la
+tecla vieja). Lo que **no pude confirmar de forma limpia** es que F
+efectivamente abra el panel extremo a extremo en esta sesión de pruebas: la
+combinación de la limitación de foco de ventana (decisión 5) con un problema
+geométrico preexistente y no relacionado con este bloque (el raycast de
+línea de visión de `PlayerInteraction.FindNearestInteractable()` puede
+autobloquearse contra la propia caja del componente CPU cuando el jugador
+queda muy cerca/ligeramente incrustado tras un teletransporte de prueba,
+algo que no ocurre caminando normalmente) hizo que mis intentos de acercarme
+por código a un componente y confirmar la apertura del panel fueran poco
+confiables. La acción en sí (binding, habilitación, ausencia de conflicto)
+quedó verificada por otras vías directas. Probé además un conflicto real:
+reasignar "Pausa (teclado)" a W (ya usado por "Arriba") — se revirtió solo a
+"Esc" sin tocar el binding de Arriba, confirmando la detección de conflictos.
+"Restaurar valores por defecto" volvió todo a los bindings originales y borró
+la entrada de PlayerPrefs.
+
+**Decisiones tomadas sobre la marcha (no 100% especificadas en el prompt):**
+1. **Persistencia via `SettingsManager`/`PlayerPrefs`, no `SaveManager`/JSON
+   de progreso.** El prompt decía "revisa cómo `SaveManager` guarda otras
+   preferencias" pero `SaveManager` no guarda ninguna preferencia —
+   `SettingsManager` sí, vía `PlayerPrefs` (volumen, sensibilidad, invertir Y,
+   gráficos). Seguí ese patrón real en vez del nombrado en el prompt: un
+   binding remapeado es una preferencia, no progreso de partida, y no debe
+   borrarse al presionar "Nueva Partida"/"Reiniciar" (que sí borra
+   `astrobit_save.json`). Sigue siendo JSON (`SaveBindingOverridesAsJson()`
+   del propio Input System), solo que el contenedor es `PlayerPrefs` en vez
+   del archivo de guardado.
+2. **`SettingsUI` se reorganizó en pestañas**, no en una sección más apilada
+   verticalmente — la UI de remapeo no entraba en los 1010px del panel junto
+   a lo que ya había. Esto es un cambio de layout más grande de lo que el
+   prompt pedía literalmente ("agrega una sección/pestaña"), pero "pestaña"
+   ya sugería esta solución y era la única forma de que todo entrara sin
+   scroll ni un panel gigante.
+3. **Solo la tecla primaria de movimiento (WASD) es remapeable, no las
+   flechas ni el stick del mando.** Cada dirección del composite "Move" tiene
+   2 bindings de teclado (ej. W y flecha arriba, ambos disparan "Arriba");
+   remapear busca el binding por su path original (`<Keyboard>/w`), deja la
+   flecha como alternativa fija siempre disponible. El stick del mando no es
+   individualmente remapeable porque no tiene sentido "reasignar cuál stick
+   es cuál" en un mando estándar de dos sticks.
+4. **Detección de conflictos por comparación directa de
+   `InputBinding.effectivePath`/`.id`** entre todos los bindings del mapa
+   "Player" tras cada reasignación (revirtiendo con `RemoveBindingOverride`
+   si hay choque) — es el patrón que la documentación y las muestras
+   oficiales del Input System usan para esto; no existe un método
+   `IsDuplicate()` de una sola llamada en el propio Input System.
+5. **Hallazgo de entorno, no de código:** confirmé (otra vez, como en el
+   Bloque 2) que tanto `RebindingOperation` como la detección de proximidad
+   de `PlayerInteraction` dependen de que la ventana del Editor tenga foco de
+   sistema operativo real para que Unity procese `Update()`/eventos de input
+   con normalidad durante las pruebas automatizadas vía `execute_code` — sin
+   foco, ninguno de los dos avanza, y esto no tiene relación con el código
+   del juego (un jugador real siempre tiene foco en la ventana). Tuve que
+   refocar la Game View varias veces durante la verificación.
+
+No se avanzó al Bloque 4 (audio) — pendiente de que descargues/importes los
+packs de Kenney recomendados en `prompts/output/03_assets_recomendados.md`.
